@@ -8,10 +8,10 @@ matrix:
     - language: node_js
       node_js:
         - "stable"
-      before_script:
-        - cd advert-board-frontend
       cache:
         directories:
-        - advert-board-frontend/node_modules
+        - node_modules
+      before_script:
+        - cd advert-board-frontend
       script:
         - npm test
