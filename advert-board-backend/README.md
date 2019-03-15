@@ -1,2 +1,0 @@
-AdvertBoard Server - Spring Boot
-

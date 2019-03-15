@@ -1,6 +1,7 @@
 HELP.md
-advert-board-backend/target/
-!advert-board-backend/.mvn/wrapper/maven-wrapper.jar
+/target/
+!.mvn/wrapper/maven-wrapper.jar
+/node_modules/
 
 ### STS ###
 .apt_generated
