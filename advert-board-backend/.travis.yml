@@ -1,0 +1,15 @@
+matrix:
+  include:
+    - language: java
+      jdk: oraclejdk8
+      before_script:
+        - cd advert-board-backend
+
+    - language: node_js
+    node_js:
+      - "stable"
+    cache:
+      directiories:
+       - node_modules
+    script:
+      - npm test
