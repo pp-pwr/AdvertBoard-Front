@@ -27,3 +27,7 @@ HELP.md
 
 ### Linux Files ###
 .attach_pid*
+
+
+### Visual Studio Code ###
+.vscode/
