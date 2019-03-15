@@ -6,10 +6,12 @@ matrix:
         - cd advert-board-backend
 
     - language: node_js
-    node_js:
-      - "stable"
-    cache:
-      directiories:
-       - node_modules
-    script:
-      - npm test
+      node_js:
+        - "stable"
+      before_script:
+        - cd advert-board-frontend
+      cache:
+        directories:
+        - advert-board-frontend/node_modules
+      script:
+        - npm test
