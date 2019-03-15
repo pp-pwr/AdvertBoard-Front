@@ -14,5 +14,6 @@ matrix:
         - node_modules
       before_script:
         - cd advert-board-frontend
+        - npm install
       script:
         - npm test
