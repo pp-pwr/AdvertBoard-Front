@@ -5,6 +5,7 @@ matrix:
       before_script:
         - cd advert-board-backend
       before_install:
+        - cd advert-board-backend
         - chmod +x mvnw
 
     - language: node_js
