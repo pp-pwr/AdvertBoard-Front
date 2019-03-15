@@ -1,5 +1,5 @@
 HELP.md
-/target/
+advert-board-backend/target/
 !.mvn/wrapper/maven-wrapper.jar
 
 ### STS ###
@@ -30,4 +30,3 @@ HELP.md
 
 
 ### Visual Studio Code ###
-.vscode/
