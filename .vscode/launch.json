@@ -1,0 +1,18 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - AdvertBoardServerApplication",
+            "request": "launch",
+            "mainClass": "com.ztwpp.adboardpp.AdvertBoardServer.AdvertBoardServerApplication",
+            "projectName": "AdvertBoard-Server"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - AdvertBoardServerApplication",
+            "request": "launch",
+            "mainClass": "com.example.adboardpp.AdvertBoardServer.AdvertBoardServerApplication",
+            "projectName": "AdvertBoard-Server"
+        }
+    ]
+}
