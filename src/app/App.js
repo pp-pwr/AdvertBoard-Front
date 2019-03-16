@@ -13,6 +13,7 @@ import NavigationBar from "../common/NavigationBar"
 import MainPage from "../main-page/MainPage"
 import Login from "../user/login/Login"
 import Signup from "../user/signup/Signup"
+import OAuth2RedirectHandler from "../user/oauth2/OAuth2RedirectHandler"
 
 
 import { ACCESS_TOKEN } from "../constants"
@@ -85,6 +86,8 @@ class App extends Component {
             <Route path="/signup"
               render={ (props) => <Signup authenticated={ this.state.authenticated} {...props}/>}></Route>
 
+            <Route path="/oauth2/redirect" component={OAuth2RedirectHandler}></Route>}
+            
             <Route component={ NotFound }></Route>
           </Switch>
         </div>
