@@ -8,22 +8,21 @@ class NavigationBar extends Component {
             <Navbar bg="light" expand="lg">
                 <Navbar.Brand href="/">AdvertBoard</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                <Navbar.Collapse id="basic-navbar-nav">
-                    <Nav className="mr-auto">
+                <Navbar.Collapse className="justify-content-end" id="basic-navbar-nav">
                     { this.props.authenticated ? (
-                            <div>
-                                <Nav.Link href="/profile">Mój profil</Nav.Link>
-                                <button onClick={ this.props.onLogout } value="Wyloguj się!">Wyloguj się</button>
-                            </div>
-                            ) : (
-                            <div>
-                                <Nav.Link href="/login">Logowanie</Nav.Link>
-                                <Nav.Link href="/signup">Rejestracja</Nav.Link>                            </div>
-                            )}
-                    </Nav>
+                        <Nav>
+                            <Nav.Link href="/profile">Mój profil</Nav.Link>
+                            <Nav.Link title="logout" onClick={ this.props.onLogout }>Wyloguj się</Nav.Link>
+                        </Nav>
+                        ) : (
+                        <Nav>
+                            <Nav.Link href="/login">Logowanie</Nav.Link>
+                            <Nav.Link href="/signup">Rejestracja</Nav.Link>
+                        </Nav>
+                    )}
                 </Navbar.Collapse>
             </Navbar>
-        )
+        );
     }
 }
 
