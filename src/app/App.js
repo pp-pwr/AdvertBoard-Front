@@ -7,13 +7,12 @@ import 'react-s-alert/dist/s-alert-css-effects/slide.css'
 import './App.css'
 
 import NotFound from "../common/NotFound"
-import LoadingIndicator from "../common/LoadingIndicator.js"
+import LoadingIndicator from "../common/LoadingIndicator"
 import PrivateRoute from "../common/PrivateRoute"
+import NavigationBar from "../common/NavigationBar"
+import MainPage from "../main-page/MainPage"
+import Login from "../user/login/Login"
 
-import MainPage from "../components/pages/MainPage"
-import Login from "../components/pages/Login"
-import Registration from "../components/pages/Registration"
-import Profile from "../components/pages/Profile"
 
 import { ACCESS_TOKEN } from "../constants"
 import { getCurrentUser } from "../utils/APIUtils"
@@ -71,8 +70,23 @@ class App extends Component {
     }
 
     return (
-      <div>
-        <p>Main</p>
+      <div className="app">
+        <div className="app-top-box">
+          <NavigationBar authenticated={ !this.state.authenticated } onLogout={ this.handleLogout } />
+        </div>
+        <div className="app-body">
+          <Switch>
+            <Route exact path="/" component={ MainPage }></Route>
+              
+            <Route path="/login"
+              render={ (props) => <Login authenticated={ this.state.authenticated} {...props}/>}></Route>
+          
+            <Route component={ NotFound }></Route>
+          </Switch>
+        </div>
+        <Alert stack={{ limit: 3 }}
+          timeout = { 3000 }
+          position='top-right' effect='slide' offset={ 65 } />
       </div>
       );
   }
