@@ -6,12 +6,16 @@ import 'react-s-alert/dist/s-alert-default.css'
 import 'react-s-alert/dist/s-alert-css-effects/slide.css'
 import './App.css'
 
+import NotFound from "../common/NotFound"
+import LoadingIndicator from "../common/LoadingIndicator.js"
+import PrivateRoute from "../common/PrivateRoute"
+
 import MainPage from "../components/pages/MainPage"
 import Login from "../components/pages/Login"
 import Registration from "../components/pages/Registration"
-import NotFound from "../common/NotFound"
 import Profile from "../components/pages/Profile"
 
+import { ACCESS_TOKEN } from "../constants"
 import { getCurrentUser } from "../utils/APIUtils"
 
 class App extends Component {
@@ -48,6 +52,24 @@ class App extends Component {
       });
   }
 
+  handleLogout() {
+    localStorage.removeItem(ACCESS_TOKEN);
+    this.setState({
+      authenticated: false,
+      user: null
+    });
+    Alert.success("Zostałeś wylogowany!");
+  }
+
+  componentDidMount() {
+    this.loadCurrentlyLoggedInUser();
+  }
+
+  render() {
+    if(this.state.loading) {
+      return <LoadingIndicator />
+    }
+  }
 }
 
 export default App;
