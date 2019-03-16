@@ -127,7 +127,7 @@ class Signup extends Component {
                     <div className="or-separator">
                         <span className="or-text">lub skorzystaj z logowania przez:</span>
                     </div>
-                        <p>Miejsce na rejestracje OAuth2, Facebook!</p>
+                        <SocialSignup/>
                 </div>
             </div>
         );
