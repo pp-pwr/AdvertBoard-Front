@@ -8,7 +8,6 @@ import './App.css'
 
 import NotFound from "../common/NotFound"
 import LoadingIndicator from "../common/LoadingIndicator"
-import PrivateRoute from "../common/PrivateRoute"
 import NavigationBar from "../common/NavigationBar"
 import MainPage from "../main-page/MainPage"
 import Login from "../user/login/Login"
@@ -79,27 +78,26 @@ class App extends Component {
     
     return (
       <div className="app">
-        <div className="app-top-box">
-          <NavigationBar authenticated={ this.state.authenticated } onLogout={ this.handleLogout } />
-        </div>
-        <div className="app-body">
-          <Switch>
-            <Route exact path="/" component={ MainPage }></Route>
-              
-            <Route path="/login" 
-              render={ (props) => <Login authenticated={ this.state.authenticated} {...props} {...childProps}/>}></Route>
+          <div className="app-top-box">
+            <NavigationBar authenticated={ this.state.authenticated } onLogout={ this.handleLogout } />
+          </div>
+          <div className="app-body">
+            <Switch>
+              <Route exact path="/" component={ MainPage }></Route>                    
+                <Route path="/login" 
+                  render={ (props) => <Login authenticated={ this.state.authenticated} {...props} {...childProps}/>}></Route>
 
-            <Route path="/signup"
-              render={ (props) => <Signup authenticated={ this.state.authenticated} {...props}/>}></Route>
+                <Route path="/signup"
+                  render={ (props) => <Signup authenticated={ this.state.authenticated} {...props}/>}></Route>
 
-            <Route path="/oauth2/redirect" component={OAuth2RedirectHandler}></Route>}
-            
-            <Route component={ NotFound }></Route>
-          </Switch>
-        </div>
-        <Alert stack={{ limit: 3 }}
-          timeout = { 3000 }
-          position='top-right' effect='slide' offset={ 65 } />
+                <Route path="/oauth2/redirect" component={OAuth2RedirectHandler}></Route>}
+                  
+                <Route component={ NotFound }></Route>
+              </Switch>
+          </div>
+          <Alert stack={{ limit: 3 }}
+            timeout = { 3000 }
+            position='top-right' effect='slide' offset={ 65 } />
       </div>
       );
   }
