@@ -27,8 +27,6 @@ class LoginForm extends Component {
         const target = event.target;
         const inputName = target.name;
         const inputValue = target.value;
-        
-        console.log(this.state)
 
         this.setState({
             userInfo: {
