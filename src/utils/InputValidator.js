@@ -1,53 +1,75 @@
+import validator_rules from './ValidatorRules'
 import React from "react"
 
-const validator = {
-    login: {
-        rules: [
-            {
-                test: /^[A-Za-z0-9_]+$/,
-                message: 'Nazwa użytkownika może zawierać tylko liczby i litery!'
-            },
-            {
-                test: (value) => {
-                    return value.length >= 5;
-                },
-                message: "Nazwa użytkownika musi się składać z co najmniej 5 znaków!"
-            },
-        ],
-        errors: [],
-        valid: false,
-        state: '',
-    },
-    email: {
-        rules: [
-            {
-                test: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-                message: "Podany adres email nie jest prawidłowy!"
-            },
-            {
-                test: (value) => {
-                    return value.length >= 3;
-                },
-                message: "Nazwa użytkownika musi się składać z co najmniej 3 znaków!"
-            },
-        ],
-        errors: [],
-        valid: false,
-        state: '',
-    },
-    password: {
-        rules: [
-            {
-                test: (value) => {
-                    return value.length >= 8;
-                },
-                message: "Hasło musi się składać z co najmniej 8 znaków!"
-            },
-        ],
-        errors: [],
-        valid: false,
-        state: '',
+class InputValidator {
+    constructor() {
+        this.validator = validator_rules
+
+        this.resetValidator()
+
+        this.displayValidatorErrors = this.displayValidatorErrors.bind(this);
+        this.updateValidator = this.updateValidator.bind(this);
+        this.resetValidator = this.resetValidator.bind(this);
+        this.getStatus = this.getStatus.bind(this);
+    }
+
+    updateValidator(fieldName, value, compared_value=null) {
+        this.validator[fieldName].errors = []
+        this.validator[fieldName].state = value
+        this.validator[fieldName].valid = true
+        this.validator[fieldName].rules.forEach((rule) => {
+            if(rule.type === 'regex' && rule.test instanceof RegExp) {
+                if(!rule.test.test(value)) {
+                    this.validator[fieldName].errors.push(rule.message)
+                    this.validator[fieldName].valid = false
+                }
+            } else if (rule.type === 'function' && typeof rule.test === 'function') {
+                if(!rule.test(value)) {
+                    this.validator[fieldName].errors.push(rule.message)
+                    this.validator[fieldName].valid = false
+                }
+            } else if (rule.type === 'comparator' && typeof rule.test === 'function') {
+                if(compared_value != null && !rule.test(value, compared_value)) {
+                    this.validator[fieldName].errors.push(rule.message)
+                    this.validator[fieldName].valid = false
+                }
+            }
+        })
+    }
+
+    resetValidator() {
+        Object.keys(this.validator).forEach((fieldName) => {
+            this.validator[fieldName].errors = []
+            this.validator[fieldName].state = ''
+            this.validator[fieldName].valid = false
+        })
+    }
+
+    displayValidatorErrors(fieldName) {
+        const field_validator = this.validator[fieldName]
+        const result = ''
+        if (field_validator && !field_validator.valid) {
+            const errors = field_validator.errors.map((info, index) => {
+                return <span className="error" key={ index }>* { info }<br /></span>
+            })
+
+            return ( <div className="col s12 row">{ errors }</div>)
+        }
+        return result
+    }
+
+    getStatus() {
+        let status = false
+        if(this.validator_rules){
+            status = true
+            Object.keys(this.validator_rules).forEach((field) => {
+                if(!this.validator_rules[field].valid) {
+                    status = false
+                }
+            })
+        }
+        return status
     }
 }
 
-export default validator
+export default InputValidator
