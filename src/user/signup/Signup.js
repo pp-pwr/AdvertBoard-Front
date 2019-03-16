@@ -43,21 +43,25 @@ class SignupForm extends Component {
     handleSubmit(event) {
         event.preventDefault();
         
-        const request_body = {
-            login: this.state.userInfo.login,
-            email: this.state.userInfo.email,
-            password: this.state.userInfo.password
+        if(this.validator.getStatus()) {
+            const request_body = {
+                login: this.state.userInfo.login,
+                email: this.state.userInfo.email,
+                password: this.state.userInfo.password
+            }
+
+            const signUpRequest = Object.assign({}, request_body)
+
+            signup(signUpRequest)
+            .then(response => {
+                Alert.success("Twoje konto zostało pomyślnie założone!. Zostaniesz teraz przekierowany do strony logowania.")
+                this.props.history.push("/login")
+            }).catch(error => {
+                Alert.error((error && error.message) || "Wystąpił nieznany błąd! Skontaktuj się z administratorem!")
+            })
+        } else {
+            Alert.error("Formularz nie został poprawnie wypełniony!")
         }
-
-        const signUpRequest = Object.assign({}, request_body)
-
-        signup(signUpRequest)
-        .then(response => {
-            Alert.success("Twoje konto zostało pomyślnie założone!. Zostaniesz teraz przekierowany do strony logowania.")
-            this.props.history.push("/login")
-        }).catch(error => {
-            Alert.error((error && error.message) || "Wystąpił nieznany błąd! Skontaktuj się z administratorem!")
-        })
     }
 
     render() {
@@ -82,9 +86,9 @@ class SignupForm extends Component {
                     <input type="password" name="password_confirm" className="form-control" placeholder="Powtórz hasło!"
                     value={ this.state.userInfo.password_confirm } onChange={ event => this.handleInputChange(event, 'password_confirm') } required/>
                     { this.validator.displayValidatorErrors('password_confirm')}
-                </div>s
+                </div>
                 <div className="form-item">
-                <button type="submit" className={`btn btn-block btn-primary ${ this.validator.getStatus() ? ' ' : 'disabled'}`}>Zarejestruj się!</button>
+                <button type="submit" className={`btn btn-block btn-primary`} onClick={ this.handleSubmit }>Zarejestruj się!</button>
                 </div>
             </form>
         );
@@ -97,11 +101,9 @@ class SocialSignup extends Component {
             <div className="social-signup">
                 <a className="btn btn-block social-btn google" href={GOOGLE_AUTH_URL}>
                     <img src={googleLogo} alt="Google" />
-                    Konto Google
                 </a>
                 <a className="btn btn-block social-btn facebook" href={FACEBOOK_AUTH_URL}>
                     <img src={facebookLogo} alt="Facebook" />
-                    Konto Facebook
                 </a>
             </div>
         )
@@ -127,7 +129,9 @@ class Signup extends Component {
                     <div className="or-separator">
                         <span className="or-text">lub skorzystaj z logowania przez:</span>
                     </div>
+                    <div className="social-buttons">
                         <SocialSignup/>
+                    </div>
                 </div>
             </div>
         );

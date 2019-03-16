@@ -40,7 +40,7 @@ const validator_rules = {
     password: {
         rules: [
             {
-                type: 'regex',
+                type: 'function',
                 test: (value) => {
                     return value.length >= 8;
                 },
