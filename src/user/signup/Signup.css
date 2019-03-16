@@ -16,29 +16,25 @@
 }
 
 .social-btn {
-    margin-bottom: 15px;
     font-weight: 400;
     font-size: 16px;
 }
 
 .social-btn img {
-    height: 24px;
+    height: 36px;
     float: center;
-    margin-top: 10px;
 }
 
 .social-btn.google {
     margin-top: 7px;
+    margin-bottom: 0px;
 }
 
 .social-btn.facebook img {
-    height: 24px;
+    margin-top: -15px;
+    height: 34px;
     margin-left: 3px;
-}
-
-.social-btn.github img {
-    height: 24px;
-    margin-left: 3px;
+    margin-bottom: 15px;
 }
 
 .login-link {

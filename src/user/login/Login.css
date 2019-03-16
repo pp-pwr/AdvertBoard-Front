@@ -34,16 +34,24 @@
     font-size: 16px;
 }
 
+.social-btn {
+    font-weight: 400;
+    font-size: 16px;
+}
+
 .social-btn img {
-    height: 32px;
-    margin-top: 10px;
+    height: 36px;
+    float: center;
 }
 
 .social-btn.google {
     margin-top: 7px;
+    margin-bottom: 0px;
 }
 
 .social-btn.facebook img {
-    height: 24px;
+    margin-top: -15px;
+    height: 34px;
     margin-left: 3px;
+    margin-bottom: 15px;
 }

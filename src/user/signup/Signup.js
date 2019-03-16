@@ -2,7 +2,7 @@ import React, { Component } from "react"
 import { Link, Redirect } from "react-router-dom"
 import Alert from "react-s-alert"
 
-import { GOOGLE_AUTH_URL, FACEBOOK_AUTH_URL, ACCESS_TOKEN } from "../../constants"
+import { GOOGLE_AUTH_URL, FACEBOOK_AUTH_URL } from "../../constants"
 import { signup } from "../../utils/APIUtils"
 import InputValidator from "../../utils/InputValidator"
 

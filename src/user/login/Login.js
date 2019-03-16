@@ -8,7 +8,6 @@ import googleLogo from "../../assets/images/google-logo.png"
 
 import { GOOGLE_AUTH_URL, FACEBOOK_AUTH_URL, ACCESS_TOKEN } from "../../constants"
 import { login } from "../../utils/APIUtils"
-import { SSL_OP_DONT_INSERT_EMPTY_FRAGMENTS } from "constants";
 
 class LoginForm extends Component {
     constructor(props) {
