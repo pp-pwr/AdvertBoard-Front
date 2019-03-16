@@ -38,8 +38,6 @@ class LoginForm extends Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        
-        console.log(this.state.userInfo)
 
         if(this.state.userInfo.email.length > 0 && this.state.userInfo.password.length > 0){
             const loginRequest = Object.assign({}, this.state.userInfo)
@@ -48,7 +46,11 @@ class LoginForm extends Component {
             .then(response => {
                 localStorage.setItem(ACCESS_TOKEN, response.accessToken)
                 Alert.success("Zostałeś zalogowany!")
-                this.props.history.push("/")
+                this.props.loadUser()
+                this.props.history.push({
+                    pathname: "/",
+                    state: { authenticated: true, from: this.props.location }
+                })
             }).catch(error => {
                 Alert.error((error && error.message) || "Coś poszło nie tak! Spróbuj ponownie lub skontaktuj się z administratorem!")
             })
@@ -93,8 +95,6 @@ class SocialLogin extends Component {
 
 class Login extends Component {
     componentDidMount() {
-        //Działa tylko w przypadku przekierowania do /login spowodowanego
-        //niepoprawnym logowaniem OAuth2
         if(this.props.location.state && this.props.state.error) {
             setTimeout(() => {
                 Alert.error(this.props.location.state.error, {
@@ -109,7 +109,6 @@ class Login extends Component {
     }
 
     render() {
-        //Jeśli użytkownik jest już zalogowany to jest przekierowany na stronę główną
         if(this.props.authenticated) {
             return (
                 <Redirect to= {{

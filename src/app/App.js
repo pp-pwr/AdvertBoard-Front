@@ -37,7 +37,7 @@ class App extends Component {
   loadCurrentlyLoggedInUser() {
     this.setState({
       loading: true
-    });
+    })
 
     getCurrentUser()
       .then(response => {
@@ -45,32 +45,38 @@ class App extends Component {
           authenticated: true,
           user: response,
           loading: false
-        });
+        })
       }).catch(error => {
         this.setState({
           loading: false
-        });
-      });
+        })
+      })
+
+      return this.state.authenticated
   }
 
   handleLogout() {
-    localStorage.removeItem(ACCESS_TOKEN);
+    localStorage.removeItem(ACCESS_TOKEN)
     this.setState({
       authenticated: false,
       user: null
     });
-    Alert.success("Zostałeś wylogowany!");
+    Alert.success("Zostałeś wylogowany!")
   }
 
   componentDidMount() {
-    this.loadCurrentlyLoggedInUser();
+    this.loadCurrentlyLoggedInUser()
   }
 
   render() {
+    const childProps = {
+      loadUser: this.loadCurrentlyLoggedInUser
+    }
+
     if(this.state.loading) {
       return <LoadingIndicator />
     }
-
+    
     return (
       <div className="app">
         <div className="app-top-box">
@@ -80,8 +86,8 @@ class App extends Component {
           <Switch>
             <Route exact path="/" component={ MainPage }></Route>
               
-            <Route path="/login"
-              render={ (props) => <Login authenticated={ this.state.authenticated} {...props}/>}></Route>
+            <Route path="/login" 
+              render={ (props) => <Login authenticated={ this.state.authenticated} {...props} {...childProps}/>}></Route>
 
             <Route path="/signup"
               render={ (props) => <Signup authenticated={ this.state.authenticated} {...props}/>}></Route>
