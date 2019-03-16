@@ -60,10 +60,10 @@ class InputValidator {
 
     getStatus() {
         let status = false
-        if(this.validator_rules){
+        if(this.validator != null){
             status = true
-            Object.keys(this.validator_rules).forEach((field) => {
-                if(!this.validator_rules[field].valid) {
+            Object.keys(this.validator).forEach((field) => {
+                if(!this.validator[field].valid) {
                     status = false
                 }
             })
