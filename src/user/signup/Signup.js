@@ -33,7 +33,17 @@ class SignupForm extends Component {
     }
 
     handleSubmit(event) {
+        event.preventDefault();
 
+        const signUpRequest = Object.assign({}, this.state);
+
+        signup(signUpRequest)
+        .then(response => {
+            Alert.success("Twoje konto zostało pomyślnie założone!. Zostaniesz teraz przekierowany do strony logowania.")
+            this.props.history.push("/login")
+        }).catch(error => {
+            Alert.error((error && error.message) || "Wystąpił nieznany błąd! Skontaktuj się z administratorem!")
+        })
     }
 
     render() {
