@@ -45,7 +45,7 @@ class SignupForm extends Component {
         
         if(this.validator.getStatus()) {
             const request_body = {
-                login: this.state.userInfo.login,
+                name: this.state.userInfo.login,
                 email: this.state.userInfo.email,
                 password: this.state.userInfo.password
             }
