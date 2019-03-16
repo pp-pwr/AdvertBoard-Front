@@ -12,6 +12,7 @@ import PrivateRoute from "../common/PrivateRoute"
 import NavigationBar from "../common/NavigationBar"
 import MainPage from "../main-page/MainPage"
 import Login from "../user/login/Login"
+import Signup from "../user/signup/Signup"
 
 
 import { ACCESS_TOKEN } from "../constants"
@@ -80,7 +81,10 @@ class App extends Component {
               
             <Route path="/login"
               render={ (props) => <Login authenticated={ this.state.authenticated} {...props}/>}></Route>
-          
+
+            <Route path="/signup"
+              render={ (props) => <Signup authenticated={ this.state.authenticated} {...props}/>}></Route>
+
             <Route component={ NotFound }></Route>
           </Switch>
         </div>
