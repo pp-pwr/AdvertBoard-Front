@@ -6,17 +6,17 @@ import "./NavigationBar.css"
 class NavigationBar extends Component {
     render() {
         return (
-            <header className="app-header">
+            <header className="app-navigation-bar">
                 <div className="container">
                     <div className="app-main-page">
                         <Link to="/" className="app-title">AdvertBoard</Link>
                     </div>
-                    <div className="app-header-elements">
-                        <nav className="app-header-navigation">
+                    <div className="app-navigation-elements">
+                        <nav className="app-navigation-buttons">
                             { this.props.authenticated ? (
                                 <ul>
                                     <li><NavLink to="/profile">Mój profil</NavLink></li>
-                                    <li><button onClick={ this.props.onLogout }></button></li>
+                                    <li><button onClick={ this.props.onLogout }>Wyloguj się</button></li>
                                 </ul>
                             ) : (
                                 <ul>
