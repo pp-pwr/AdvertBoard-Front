@@ -69,6 +69,12 @@ class App extends Component {
     if(this.state.loading) {
       return <LoadingIndicator />
     }
+
+    return (
+      <div>
+        <p>Main</p>
+      </div>
+      );
   }
 }
 
