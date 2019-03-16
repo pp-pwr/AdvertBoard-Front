@@ -9,6 +9,17 @@ import googleLogo from "../../assets/images/google-logo.png"
 import { GOOGLE_AUTH_URL, FACEBOOK_AUTH_URL, ACCESS_TOKEN } from "../../constants"
 import { login } from "../../utils/APIUtils"
 
+class LoginForm extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            email: '',
+            password: ''
+        };
+        this.handleInputChange = this.handleInputChange()
+    }
+}
+
 class Login extends Component {
     componentDidMount() {
         //Działa tylko w przypadku przekierowania do /login spowodowanego
@@ -54,3 +65,5 @@ class Login extends Component {
         );
     }
 }
+
+export default Login
