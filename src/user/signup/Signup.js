@@ -121,7 +121,7 @@ class Signup extends Component {
         return (
             <div className="signup-container">
                 <div className="signup-content">
-                    <h1 className="signup-title">Zarejestruj się, aby w pełni korzystać z naszego serwisu!</h1>
+                    <h1 className="signup-title">Zarejestruj się!</h1>
                     <SignupForm {...this.props}/>
                     <span className="signup-link">Masz już konto?
                         <Link to="/login">Zaloguj się!</Link>

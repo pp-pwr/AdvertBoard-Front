@@ -2,12 +2,16 @@
     text-align: center;
 }
 
+@media screen and (min-width: 720px) {
+    .login-content {
+        width: 500px;
+    }
+}
 
 .login-content {
     background: #fff;
     box-shadow: 0 1px 11px rgba(0, 0, 0, 0.27);
     border-radius: 2px;
-    width: 500px;
     display: inline-block;
     margin-top: 30px;
     vertical-align: middle;

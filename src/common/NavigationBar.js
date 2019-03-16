@@ -7,10 +7,14 @@ class NavigationBar extends Component {
             <Navbar bg="light" expand="lg">
                 <Navbar.Brand href="/">AdvertBoard</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                { this.props.authenticated ? (
-                    <Navbar.Text>Zalogowany jako { this.props.user.name }</Navbar.Text>
-                ) : (<p></p>)}
-                
+                {/* Tutaj będzie można wstawić jakiś avatar usera czy cos */}
+                <Navbar.Collapse className="justify-content-start" id="basic-navbar-nav">
+                    { this.props.authenticated ? (
+                        <Nav>
+                          <Navbar.Text className="justify-content-start">Zalogowany jako { this.props.user.name }</Navbar.Text>
+                        </Nav>
+                        ) : (<p></p>)}
+                </Navbar.Collapse>
                 <Navbar.Collapse className="justify-content-end" id="basic-navbar-nav">
                     { this.props.authenticated ? (
                         <Nav>
