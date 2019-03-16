@@ -18,12 +18,18 @@ class SignupForm extends Component {
             password: ''
         }
 
-        this.handleInputChange = this.handleInputChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleInputChange = this.handleInputChange.bind(this)
+        this.handleSubmit = this.handleSubmit.bind(this)
     }
 
     handleInputChange(event) {
+        const target = event.target
+        const inputName = target.name
+        const inputValue = target.value
 
+        this.setState({
+            [inputName]: inputValue
+        })
     }
 
     handleSubmit(event) {
