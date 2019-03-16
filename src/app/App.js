@@ -72,7 +72,7 @@ class App extends Component {
     return (
       <div className="app">
         <div className="app-top-box">
-          <NavigationBar authenticated={ !this.state.authenticated } onLogout={ this.handleLogout } />
+          <NavigationBar authenticated={ this.state.authenticated } onLogout={ this.handleLogout } />
         </div>
         <div className="app-body">
           <Switch>
