@@ -1,34 +1,29 @@
 import React, { Component } from "react"
 import { Link, NavLink } from "react-router-dom"
-
-import "./NavigationBar.css"
-
+import Navbar from 'react-bootstrap/Navbar'
+import Nav from 'react-bootstrap/Nav'
 class NavigationBar extends Component {
     render() {
         return (
-            <header className="app-navigation-bar">
-                <div className="container">
-                    <div className="app-main-page">
-                        <Link to="/" className="app-title">AdvertBoard</Link>
-                    </div>
-                    <div className="app-navigation-elements">
-                        <nav className="app-navigation-buttons">
-                            { this.props.authenticated ? (
-                                <ul>
-                                    <li><NavLink to="/profile">Mój profil</NavLink></li>
-                                    <li><button onClick={ this.props.onLogout }>Wyloguj się</button></li>
-                                </ul>
+            <Navbar bg="light" expand="lg">
+                <Navbar.Brand href="/">AdvertBoard</Navbar.Brand>
+                <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                <Navbar.Collapse id="basic-navbar-nav">
+                    <Nav className="mr-auto">
+                    { this.props.authenticated ? (
+                            <div>
+                                <Nav.Link href="/profile">Mój profil</Nav.Link>
+                                <button onClick={ this.props.onLogout } value="Wyloguj się!">Wyloguj się</button>
+                            </div>
                             ) : (
-                                <ul>
-                                    <li><NavLink to="/login">Logowanie</NavLink></li>
-                                    <li><NavLink to="/signup">Rejestracja</NavLink></li>
-                                </ul>
+                            <div>
+                                <Nav.Link href="/login">Logowanie</Nav.Link>
+                                <Nav.Link href="/signup">Rejestracja</Nav.Link>                            </div>
                             )}
-                        </nav>
-                    </div>
-                </div>
-            </header>
-        );
+                    </Nav>
+                </Navbar.Collapse>
+            </Navbar>
+        )
     }
 }
 
