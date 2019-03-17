@@ -33,7 +33,7 @@ class App extends Component {
     this.handleLogout = this.handleLogout.bind(this);
   }
 
-  loadCurrentlyLoggedInUser() {
+  loadCurrentlyLoggedInUser(showAlert=false) {
     this.setState({
       loading: true
     })
@@ -45,6 +45,8 @@ class App extends Component {
           user: response,
           loading: false
         })
+        if(showAlert)
+          Alert.success("Zostałeś zalogowany!")
       }).catch(error => {
         this.setState({
           loading: false

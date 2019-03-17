@@ -45,12 +45,8 @@ class LoginForm extends Component {
             login(loginRequest)
             .then(response => {
                 localStorage.setItem(ACCESS_TOKEN, response.accessToken)
-                Alert.success("Zostałeś zalogowany!")
-                this.props.loadUser()
-                this.props.history.push({
-                    pathname: "/",
-                    state: { authenticated: true, from: this.props.location }
-                })
+                this.props.loadUser(true)
+                this.props.history.push("/")
             }).catch(error => {
                 Alert.error((error && error.message) || "Coś poszło nie tak! Spróbuj ponownie lub skontaktuj się z administratorem!")
             })

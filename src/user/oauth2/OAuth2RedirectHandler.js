@@ -1,6 +1,7 @@
 import React, { Component } from "react"
 import { Redirect } from "react-router-dom"
 import { ACCESS_TOKEN } from "../../constants";
+import Alert from "react-s-alert"
 
 class OAuth2RedirectHandler extends Component {
     getUrlParameter(name) {
