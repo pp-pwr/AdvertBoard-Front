@@ -1,0 +1,22 @@
+.advert-tile-info { 
+    width: 300px;
+    background: #fff;
+    box-shadow: 0px 0px 11px rgba(0, 0, 0, 0.27);
+    overflow: auto;
+}
+
+.advert-details {
+    float: left;
+    padding-left: 5px;
+}
+
+.advert-details-2 {
+    float: right;
+    text-align: right;
+    padding-right: 5px;
+}
+
+.advert-photo {
+    width: 300px;
+    height: 300px;
+}
