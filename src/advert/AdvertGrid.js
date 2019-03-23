@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import Pagination from '../utils/Pagination'
+
 import './Advert.css'
 
 import bike from '../assets/images/bike.jpg'
@@ -37,20 +39,50 @@ class AdvertTile extends Component {
 class AdvertGrid extends Component {
     constructor() {
         super()
-        this.advert = {
-            name: "Test",
-            category: "Other",
-            subcategory: "Other",
-            price: "111",
-            date: "12/12/2010"
+        
+        let advert = this.createList()
+        console.log(advert)
+        this.state = {
+            items: advert,
+            pageOfItems: []
         }
+
+        this.onPageChange = this.onPageChange.bind(this)
+        this.createList = this.createList.bind(this)
+    }
+
+    createList() {
+        const advert = []
+        for(let i = 0; i < 43; i++) {
+            advert.push(
+                {
+                    name: "Test_" + i,
+                    category: "Other",
+                    subcategory: "Other",
+                    price: "111",
+                    date: "12/12/2010"
+                    }
+            )
+        }
+        return advert
+    }
+
+    onPageChange(pageOfItems) {
+        this.setState({
+            pageOfItems: pageOfItems
+        })
     }
 
     render() {
         return (
             <div>
-                <br/><br/><br/>
-            <AdvertTile advert={ this.advert } />
+            <div className="advert-content-box">
+                { this.state.pageOfItems.map(item =>
+                    <AdvertTile key={ item.name } advert={ item } />
+                )}
+            </div>
+            <Pagination items={ this.state.items } onChangePage={ this.onPageChange } />
+                
             </div>
         )
     }
