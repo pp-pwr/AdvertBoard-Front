@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
-import { getCategories, getAdverts, getAdvertsByCategory, getAdvertsBySubcategory } from '../utils/APIUtils'
+import { getCategories } from '../utils/APIUtils'
 import LoadingIndicator from '../common/LoadingIndicator'
 import ListGroup from 'react-bootstrap/ListGroup'
 import { updateContent } from './AdvertGrid';
-import Alert from 'react-s-alert'
 
 import './Advert.css'
 

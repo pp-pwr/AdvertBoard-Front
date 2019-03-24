@@ -134,7 +134,7 @@ class AdvertGrid extends Component {
             <div className="advert-content-box">
                 <div className="advert-flexbox">
                     {this.state.items.map(item =>
-                        <AdvertTile className="advert-flexbox-item" key={ item.name } advert={ item } />)}
+                        <AdvertTile key={ "tile_ " + item.id } className="advert-flexbox-item" advert={ item } />)}
                 </div>
                 <Pagination pages={ this.state.pageCount } />
             </div>
@@ -173,7 +173,7 @@ class Pagination extends React.Component {
 
         for(let i = 0; i < this.props.pages; i++) {
             buttons.push(
-                <li className='page-numbers'>
+                <li key={ "page_" + i } className='page-numbers'>
                     <button onClick={() => this.setPage(i)}>{ i + 1}</button>
                 </li>
             );
@@ -186,11 +186,11 @@ class Pagination extends React.Component {
             <div>
                 { this.props.pages > 0 ? (
                     <ul className="pagination">
-                        <li className='left page-numbers'>
+                        <li key={ "page_prev" } className='left page-numbers'>
                             <button onClick={() => this.setPage(this.state.currentPage - 1)}>Poprzednia</button>
                         </li>
                         { this.createButtons() }
-                        <li className='right page-numbers'>
+                        <li key={ "page_next" } className='right page-numbers'>
                             <button onClick={() => this.setPage(this.state.currentPage + 1)}>Następna</button>
                         </li>
                     </ul>
