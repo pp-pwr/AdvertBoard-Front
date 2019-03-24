@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import Pagination from '../utils/Pagination'
+import CategoryList from './CategoryList'
 
 import './Advert.css'
 
