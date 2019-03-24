@@ -82,3 +82,29 @@
     -ms-flex-align: start;
     align-items: flex-start;
 }
+
+.add-advert-container {
+    text-align: center;
+}
+
+@media screen and (min-width: 720px) {
+    .add-advert-content {
+        width: 500px;
+    }
+}
+
+.add-advert-content {
+    background: #fff;
+    box-shadow: 0 1px 11px rgba(0, 0, 0, 0.27);
+    border-radius: 2px;
+    display: inline-block;
+    margin-top: 30px;
+    vertical-align: middle;
+    position: relative;    
+    padding: 35px;
+}
+
+.add-advert-item {
+    width: 100%;
+    margin-bottom: 5px;
+}

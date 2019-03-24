@@ -173,8 +173,8 @@ class Pagination extends React.Component {
 
         for(let i = 0; i < this.props.pages; i++) {
             buttons.push(
-                <li key={ "page_" + i } className='page-numbers'>
-                    <button onClick={() => this.setPage(i)}>{ i + 1}</button>
+                <li key={ "page_" + i } onClick={() => this.setPage(i)} active={this.state.currentPage === i} className='page-numbers'>
+                    <button>{ i + 1}</button>
                 </li>
             );
         }
@@ -186,12 +186,12 @@ class Pagination extends React.Component {
             <div>
                 { this.props.pages > 0 ? (
                     <ul className="pagination">
-                        <li key={ "page_prev" } className='left page-numbers'>
-                            <button onClick={() => this.setPage(this.state.currentPage - 1)}>Poprzednia</button>
+                        <li key={ "page_prev" } onClick={() => this.setPage(this.state.currentPage - 1)} className='left page-numbers'>
+                            <button>Poprzednia</button>
                         </li>
                         { this.createButtons() }
-                        <li key={ "page_next" } className='right page-numbers'>
-                            <button onClick={() => this.setPage(this.state.currentPage + 1)}>Następna</button>
+                        <li key={ "page_next" } onClick={() => this.setPage(this.state.currentPage + 1)} className='right page-numbers'>
+                            <button>Następna</button>
                         </li>
                     </ul>
                 ) : (

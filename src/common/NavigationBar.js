@@ -18,6 +18,7 @@ class NavigationBar extends Component {
                 <Navbar.Collapse className="justify-content-end" id="basic-navbar-nav">
                     { this.props.authenticated ? (
                         <Nav>
+                            <Nav.Link href="/add">Dodaj ogłoszenie</Nav.Link>
                             <Nav.Link href="/profile">Mój profil</Nav.Link>
                             <Nav.Link title="logout" onClick={ this.props.onLogout }>Wyloguj się</Nav.Link>
                         </Nav>

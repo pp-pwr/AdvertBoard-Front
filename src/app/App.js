@@ -13,6 +13,7 @@ import AdvertPanel from "../advert/AdvertPanel"
 import Login from "../user/login/Login"
 import Signup from "../user/signup/Signup"
 import OAuth2RedirectHandler from "../user/oauth2/OAuth2RedirectHandler"
+import PrivateRoute from "../common/PrivateRoute"
 
 
 import {ACCESS_TOKEN} from "../constants"
@@ -78,7 +79,7 @@ class App extends Component {
         if (this.state.loading) {
             return <LoadingIndicator/>
         }
-
+        
         return (
             <div className="app">
                 <div className="app-top-box">
@@ -87,7 +88,6 @@ class App extends Component {
                 </div>
                 <div className="app-body">
                     <Switch>
-                        <Route exact path="/" component={AdvertPanel}></Route>
                         <Route path="/login"
                                render={(props) => <Login
                                    authenticated={this.state.authenticated} {...props} {...childProps}/>}></Route>
@@ -95,8 +95,13 @@ class App extends Component {
                         <Route path="/signup"
                                render={(props) => <Signup
                                    authenticated={this.state.authenticated} {...props}/>}></Route>
-                        <Route path="/add" component={AdvertForm}/>
+
+                        <PrivateRoute path="/add" 
+                            component={AdvertForm} user={this.state.user}></PrivateRoute>
+
                         <Route path="/oauth2/redirect" component={OAuth2RedirectHandler}></Route>
+
+                        <Route exact path="/" component={AdvertPanel}></Route>
 
                         <Route component={NotFound}></Route>
                     </Switch>

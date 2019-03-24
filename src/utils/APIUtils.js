@@ -88,3 +88,11 @@ export function getAdverts(advertsRequest) {
         method: 'GET'
     })
 }
+
+export function addAdvert(advertRequest) {
+    return request({
+        url: API_BASE_URL + "/advert/add/",
+        method: 'POST',
+        body: JSON.stringify(advertRequest)
+    })
+}
