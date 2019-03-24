@@ -21,14 +21,8 @@ class Pagination extends React.Component {
     }
 
     componentWillMount() {
-        if (this.props.items && this.props.items.length) {
-            this.setPage(this.props.initialPage);
-        }
-    }
-
-    componentDidUpdate(prevProps, prevState) {
-        if (this.props.items !== prevProps.items) {
-            this.setPage(this.props.initialPage);
+        if (this.props.pages > 0) {
+            this.setPage(0);
         }
     }
 
@@ -101,9 +95,6 @@ class Pagination extends React.Component {
         return (
             <ul className="pagination">
                 <li className='left page-numbers'>
-                    <button onClick={() => this.setPage(1)}>Pierwsza</button>
-                </li>
-                <li className='left page-numbers'>
                     <button onClick={() => this.setPage(pager.currentPage - 1)}>Poprzednia</button>
                 </li>
                 {pager.pages.map((page, index) =>
@@ -113,9 +104,6 @@ class Pagination extends React.Component {
                 )}
                 <li className='right page-numbers'>
                     <button onClick={() => this.setPage(pager.currentPage + 1)}>Następna</button>
-                </li>
-                <li className='right page-numbers'>
-                    <button onClick={() => this.setPage(pager.totalPages)}>Ostatnia</button>
                 </li>
             </ul>
         );
