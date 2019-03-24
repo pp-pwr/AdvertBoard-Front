@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
-import { getCategories } from '../utils/APIUtils'
+import { getCategories, getAdverts, getAdvertsByCategory, getAdvertsBySubcategory } from '../utils/APIUtils'
 import LoadingIndicator from '../common/LoadingIndicator'
 import ListGroup from 'react-bootstrap/ListGroup'
+import { updateContent } from './AdvertGrid';
+import Alert from 'react-s-alert'
 
 import './Advert.css'
 
@@ -56,7 +58,7 @@ class CategoryList extends Component {
         let categoryList = [];
 
         categoryList.push(
-            <ListGroup.Item action
+            <ListGroup.Item width="100%" action
                 onClick={ () => this.filterResults(null, null) }
                 key="all">
                 Wszystkie
@@ -69,7 +71,7 @@ class CategoryList extends Component {
             let subcategoryList = []
             
             subcategoryList.push(
-                <ListGroup.Item action
+                <ListGroup.Item width="100%" action
                         onClick={() => this.filterResults(category['categoryName'], null)}
                         key= {i + '_all'}>
                     Wszystkie
@@ -79,7 +81,7 @@ class CategoryList extends Component {
             for (let j = 0; j < currentSubcategories.length; j++) {
                 let subcategory = currentSubcategories[j]
                 subcategoryList.push(
-                <ListGroup.Item action 
+                <ListGroup.Item action width="100%"
                         onClick={() => this.filterResults(category['categoryName'], subcategory['subcategoryName'])}
                         key={ i + "_" + j}> 
                     { subcategory['subcategoryName'] }    
@@ -87,7 +89,7 @@ class CategoryList extends Component {
             }
           
             categoryList.push(
-                <p key={ i }>
+                <p width="100%" key={ i }>
                     {category['categoryName']}
                     {subcategoryList}
                 </p>
@@ -102,9 +104,9 @@ class CategoryList extends Component {
                 currentCategory: category,
                 currentSubcategory: subcategory
             })
-        }
 
-        console.log(category + " " + subcategory)
+            updateContent(category, subcategory, 0)
+        }
     }
 
     render() {
