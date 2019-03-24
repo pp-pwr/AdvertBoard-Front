@@ -53,7 +53,7 @@ class AdvertGrid extends Component {
 
     createList() {
         const advert = []
-        for(let i = 0; i < 43; i++) {
+        for(let i = 0; i < 323; i++) {
             advert.push(
                 {
                     name: "Test_" + i,
@@ -75,14 +75,15 @@ class AdvertGrid extends Component {
 
     render() {
         return (
-            <div>
             <div className="advert-content-box">
-                { this.state.pageOfItems.map(item =>
-                    <AdvertTile key={ item.name } advert={ item } />
-                )}
-            </div>
-            <Pagination items={ this.state.items } onChangePage={ this.onPageChange } />
-                
+                <div className="advert-flexbox">
+                    { this.state.pageOfItems.map(item =>
+                        <AdvertTile className="advert-flexbox-item" key={ item.name } advert={ item } />
+                    )}
+                </div>
+                <div className="footer">
+                    <Pagination items={ this.state.items } onChangePage={ this.onPageChange } />
+                </div>
             </div>
         )
     }
