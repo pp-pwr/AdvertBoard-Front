@@ -7,9 +7,9 @@ class AdvertForm extends Component {
         super(props);
         this.state = {
             title: '',
-            tags: {},
+            tags: '',
             description: '',
-            imgUrls: {},
+            imgUrls: '',
             categoryTree: [],
             categoryList: [],
             subcategoryList: [],
@@ -33,13 +33,13 @@ class AdvertForm extends Component {
 
     }
 
-    handleInputChange(event) {
+    handleInputChange = (event) => {
         const target = event.target;
         const inputName = target.name;
         const inputValue = target.value;
 
         this.setState({[inputName]: inputValue})
-    }
+    };
 
     handleCatChange = (selectedCat) => {
         this.setState({selectedCat});
@@ -69,26 +69,40 @@ class AdvertForm extends Component {
         const {selectedCat} = this.state;
         const {selectedSubcat} = this.state;
         const {mounted} = this.state;
+        const {title} = this.state;
+        const {description} = this.state;
+        const {tags} = this.state;
+        const {imgUrls} = this.state;
 
         var catList = (mounted ?
             <Select options={this.state.categoryList} name="currentCategory" value={selectedCat}
                     placeholder="Kategoria"
-                    onChange={this.handleCatChange}/> : <a/>);
+                    onChange={this.handleCatChange} required/> : <a/>);
 
         var subcatList = (mounted ?
             <Select options={this.state.subcategoryList} name="currentSubcategory" value={selectedSubcat}
                     placeholder="Podkategoria"
-                    onChange={this.handleSubcatChange}/> : <a/>);
+                    onChange={this.handleSubcatChange} required/> : <a/>);
 
         return (
             <form onSubmit={this.handleSubmit}>
-                <input type="text" name="title" placeholder="Tytuł"
-                       value={this.state.title} onChange={this.handleInputChange} required/>
-
-                <textarea name="description" placeholder="Opis"
-                          value={this.state.description} onChange={this.handleInputChange} required/>
+                <h3>Dodaj ogłoszenie</h3>
+                <div>
+                    <input type="text" name="title" placeholder="Tytuł"
+                           value={title} onChange={this.handleInputChange} required/>
+                    <br/>
+                    <textarea rows={5} cols={50} name="description" placeholder="Opis"
+                              value={description} onChange={this.handleInputChange} required/>
+                    <br/>
+                    <input type="text" name="tags" placeholder="Tagi"
+                           value={tags} onChange={this.handleInputChange}/>
+                    <br/>
+                    <input type="text" name="imgUrls" placeholder="Linki do zdjęć"
+                           value={imgUrls} onChange={this.handleInputChange}/>
+                </div>
                 {catList}
                 {subcatList}
+                <input type="submit" disabled={selectedSubcat == null}/>
             </form>
         );
     }
