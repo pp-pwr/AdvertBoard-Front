@@ -129,10 +129,6 @@ class AdvertGrid extends Component {
         }, 10000)
     }
 
-    componentDidUpdate() {
-        console.log(this.state.items)
-    }
-
     render() {
         return (
             <div className="advert-content-box">
