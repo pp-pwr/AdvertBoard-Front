@@ -5,13 +5,36 @@ import AdvertGrid from './AdvertGrid'
 import './Advert.css'
 
 class AdvertPanel extends Component {
+
+    constructor() {
+        super()
+
+        this.state = {
+            mounted: false
+        }
+    }
+
+    componentDidMount() {
+        this.setState({
+            mounted: true
+        })
+    }
+
+    componentWillUnmount() {
+        this.setState({
+            mounted: false
+        })
+    }
+
     render() {
+        if(!this.state.mounted) {
+            return null
+        }
+        
         return (
-            <table>
-                <td className="advert-panel">
-                    <td width="25%"><CategoryList /></td>
-                    <td width="75%"><AdvertGrid /></td>
-                </td>
+            <table className="advert-panel">
+                <td width="25%"><CategoryList height="100%" top="0" /></td>
+                <td width="75%"><AdvertGrid /></td>
             </table>
         )
     }
