@@ -17,8 +17,6 @@ class AdvertForm extends Component {
             selectedSubcat: null,
             mounted: false
         };
-        this.handleInputChange = this.handleInputChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     componentDidMount() {
@@ -28,7 +26,6 @@ class AdvertForm extends Component {
                     this.state.categoryList.push({label: this.state.categoryTree[i].categoryName, value: i});
                 }
                 this.setState({mounted: true});
-                this.setState(this.state);
             }
         ).catch(error => {
             console.log("error: " + error);
@@ -71,13 +68,14 @@ class AdvertForm extends Component {
     render() {
         const {selectedCat} = this.state;
         const {selectedSubcat} = this.state;
+        const {mounted} = this.state;
 
-        var catList = (this.state.mounted ?
+        var catList = (mounted ?
             <Select options={this.state.categoryList} name="currentCategory" value={selectedCat}
                     placeholder="Kategoria"
                     onChange={this.handleCatChange}/> : <a/>);
 
-        var subcatList = (this.state.mounted ?
+        var subcatList = (mounted ?
             <Select options={this.state.subcategoryList} name="currentSubcategory" value={selectedSubcat}
                     placeholder="Podkategoria"
                     onChange={this.handleSubcatChange}/> : <a/>);
