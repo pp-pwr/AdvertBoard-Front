@@ -48,8 +48,6 @@ class AdvertForm extends Component {
                 ...this.state.advertInfo,
                 [inputName]: inputValue
             }})
-
-        console.log(this.state.advertInfo)
     };
 
     handleCatChange = (selectedCat) => {
@@ -89,9 +87,12 @@ class AdvertForm extends Component {
             const advertRequest = {
                 "title": this.state.advertInfo.title,
                 "description": this.state.advertInfo.description,
-                "tags": this.state.advertInfo.tags.split("\\s+"),
+                "tags": this.state.advertInfo.tags.split(/(\s+)/).filter( e => e.trim().length > 0),
+                "imgUrls": [],
                 "subcategory": this.state.advertInfo.selectedSubcat.label
             }
+
+            console.log(advertRequest)
 
             addAdvert(advertRequest)
                 .then(response => {
