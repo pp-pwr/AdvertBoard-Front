@@ -9,13 +9,21 @@ class AdvertForm extends Component {
             tags: {},
             description: '',
             imgUrls: {},
-            subcategory: ''
-        }
-        this.handleInputChange = this.handleInputChange.bind(this)
-        this.handleSubmit = this.handleSubmit.bind(this)
+            category: [],
+            subcategory: [],
+            subcatList: ''
+        };
+        this.handleInputChange = this.handleInputChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     componentDidMount() {
+        getCategories().then(response => {
+            this.setState({category: response});
+
+        }).catch(error => {
+            console.log("error: " + error);
+        });
 
     }
 
@@ -28,7 +36,6 @@ class AdvertForm extends Component {
     }
 
     handleSubmit(event) {
-        event.preventDefault();
 
     }
 
@@ -37,9 +44,10 @@ class AdvertForm extends Component {
             <form onSubmit={this.handleSubmit}>
                 <input type="text" name="title" placeholder="Tytuł"
                        value={this.state.title} onChange={this.handleInputChange} required/>
-                <br/>
+
                 <textarea name="description" placeholder="Opis"
                           value={this.state.description} onChange={this.handleInputChange} required/>
+                {this.subcatList}
             </form>
 
         )
