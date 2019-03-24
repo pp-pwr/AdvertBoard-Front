@@ -11,7 +11,7 @@ class AdvertForm extends Component {
                 title: '',
                 tags: '',
                 description: '',
-                imgUrls: [],
+                image: null,
                 selectedCat: null,
                 selectedSubcat: null
             },
@@ -83,12 +83,13 @@ class AdvertForm extends Component {
     handleSubmit(event) {
         event.preventDefault();
 
-        if(this.state.advertInfo.title.length > 0 && this.state.advertInfo.description.length > 0 && this.state.advertInfo.selectedSubcat) {
+        if(this.state.advertInfo.title.length > 0 && this.state.advertInfo.description.length > 0 
+            && this.state.advertInfo.selectedSubcat && this.state.advertInfo.image) {
             const advertRequest = {
                 "title": this.state.advertInfo.title,
                 "description": this.state.advertInfo.description,
                 "tags": this.state.advertInfo.tags.split(/(\s+)/).filter( e => e.trim().length > 0),
-                "imgUrls": [],
+                "image": this.state.advertInfo.image,
                 "subcategory": this.state.advertInfo.selectedSubcat.label
             }
 
@@ -134,6 +135,9 @@ class AdvertForm extends Component {
                         <br/>
                         <input className="add-advert-item" type="text" name="tags" placeholder="Tagi"
                             value={this.state.advertInfo.tags} onChange={this.handleInputChange} />
+                        <br/>
+                        <input className="add-advert-item" type="file" name="image" size="50"
+                            value={this.state.advertInfo.image ? this.state.advertInfo.image : ""} onChange={this.handleInputChange} required/>
                         <br/>
                     </div>
                     {catList}
