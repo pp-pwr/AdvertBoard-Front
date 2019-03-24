@@ -6,17 +6,21 @@ class AdvertForm extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            title: '',
-            tags: '',
-            description: '',
-            imgUrls: '',
+            advertInfo: {
+                title: '',
+                tags: '',
+                description: '',
+                imgUrls: '',
+                selectedCat: null,
+                selectedSubcat: null
+            },
             categoryTree: [],
             categoryList: [],
             subcategoryList: [],
-            selectedCat: null,
-            selectedSubcat: null,
             mounted: false
-        };
+        }
+
+        this.handleSubmit = this.handleSubmit.bind(this)
     }
 
     componentDidMount() {
@@ -38,11 +42,17 @@ class AdvertForm extends Component {
         const inputName = target.name;
         const inputValue = target.value;
 
-        this.setState({[inputName]: inputValue})
+        this.setState({ 
+            advertInfo:{
+                [inputName]: inputValue
+            }})
     };
 
     handleCatChange = (selectedCat) => {
-        this.setState({selectedCat});
+        this.setState({
+            advertInfo: {
+                selectedCat: selectedCat
+            }});
         for (let i = 0; i < this.state.categoryTree.length; i++) {
             if (this.state.categoryTree[i].categoryName === selectedCat.label) {
                 const list = [];
@@ -52,37 +62,67 @@ class AdvertForm extends Component {
                         value: j
                     });
                 }
-                this.setState({subcategoryList: list, selectedSubcat: list[0]});
+                this.setState({
+                    subcategoryList: list,
+                    advertInfo: {
+                        selectedSubcat: list[0]
+                    }});
                 break;
             }
         }
     }
     handleSubcatChange = (selectedSubcat) => {
-        this.setState({selectedSubcat});
+        this.setState({
+            advertInfo: {
+                selectedSubcat: selectedSubcat
+            }})
     }
 
     handleSubmit(event) {
+        event.preventDefault();
 
+        if(this.state.advertInfo.title.length > 0 && this.state.advertInfo.description.length > 0) {
+            const advertRequest = Object.assign({}, this.state.advertInfo)
+        }
     }
 
+    // handleSubmit(event) {
+    //     event.preventDefault();
+
+    //     if(this.state.userInfo.email.length > 0 && this.state.userInfo.password.length > 0){
+    //         const loginRequest = Object.assign({}, this.state.userInfo)
+            
+    //         login(loginRequest)
+    //         .then(response => {
+    //             localStorage.setItem(ACCESS_TOKEN, response.accessToken)
+    //             this.props.loadUser(true)
+    //             this.props.history.push("/")
+    //         }).catch(error => {
+    //             Alert.error((error && error.message) || "Coś poszło nie tak! Spróbuj ponownie lub skontaktuj się z administratorem!")
+    //         })
+    //     } else {
+    //         Alert.error("Żadne z pól nie może być puste!")
+    //     }
+    // }
+
     render() {
-        const {selectedCat} = this.state;
-        const {selectedSubcat} = this.state;
+        const {selectedCat} = this.state.advertInfo;
+        const {selectedSubcat} = this.state.advertInfo;
         const {mounted} = this.state;
-        const {title} = this.state;
-        const {description} = this.state;
-        const {tags} = this.state;
-        const {imgUrls} = this.state;
+        const {title} = this.state.advertInfo;
+        const {description} = this.state.advertInfo;
+        const {tags} = this.state.advertInfo;
+        const {imgUrls} = this.state.advertInfo;
 
         var catList = (mounted ?
             <Select options={this.state.categoryList} name="currentCategory" value={selectedCat}
                     placeholder="Kategoria"
-                    onChange={this.handleCatChange} required/> : <a/>);
+                    onChange={this.handleCatChange} required/> : <br/>);
 
         var subcatList = (mounted ?
             <Select options={this.state.subcategoryList} name="currentSubcategory" value={selectedSubcat}
                     placeholder="Podkategoria"
-                    onChange={this.handleSubcatChange} required/> : <a/>);
+                    onChange={this.handleSubcatChange} required/> : <br/>);
 
         return (
             <form onSubmit={this.handleSubmit}>
@@ -102,7 +142,10 @@ class AdvertForm extends Component {
                 </div>
                 {catList}
                 {subcatList}
-                <input type="submit" disabled={selectedSubcat == null}/>
+                <button type="submit" 
+                    disabled={selectedSubcat == null } 
+                    className={`btn btn-block btn-primary`} 
+                    onClick={ this.handleSubmit }>Dodaj ogłoszenie</button>
             </form>
         );
     }
