@@ -58,7 +58,7 @@ export function updateContent(category, subcategory, page) {
         })
     } else if (subcategory === null & category !== null) {
         const advertsByCategoryRequest = {
-            "categoryName": category,
+            "name": category,
             "page": page,
             "limit": 16
         }
