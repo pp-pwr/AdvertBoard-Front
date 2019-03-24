@@ -49,3 +49,11 @@ export function signup(signupRequest) {
         body: JSON.stringify(signupRequest)
     });
 }
+
+export function getCategories(categoryRequest) {
+    return request({
+        url: API_BASE_URL + "/category/all",
+        method: 'GET',
+        body: JSON.stringify(categoryRequest)
+    });
+}

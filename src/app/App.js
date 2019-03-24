@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import {Route, Switch} from 'react-router-dom'
 import Alert from 'react-s-alert'
 
@@ -9,107 +9,100 @@ import './App.css'
 import NotFound from "../common/NotFound"
 import LoadingIndicator from "../common/LoadingIndicator"
 import NavigationBar from "../common/NavigationBar"
-import MainPage from "../main-page/MainPage"
+import AdvertPanel from "../advert/AdvertPanel"
 import Login from "../user/login/Login"
 import Signup from "../user/signup/Signup"
-import AdvertForm from "../advert/AdvertForm"
 import OAuth2RedirectHandler from "../user/oauth2/OAuth2RedirectHandler"
 
 
-import {ACCESS_TOKEN} from "../constants"
-import {getCurrentUser} from "../utils/APIUtils"
+import { ACCESS_TOKEN } from "../constants"
+import { getCurrentUser } from "../utils/APIUtils"
 
 class App extends Component {
 
-    constructor(props) {
-        super(props);
+  constructor(props) {
+    super(props);
 
-        this.state = {
-            authenticated: false,
-            user: null,
-            loading: false
-        }
-
-        this.loadCurrentlyLoggedInUser = this.loadCurrentlyLoggedInUser.bind(this);
-        this.handleLogout = this.handleLogout.bind(this);
+    this.state = {
+      authenticated: false,
+      user: null,
+      loading: false
     }
 
-    loadCurrentlyLoggedInUser(showAlert = false) {
+    this.loadCurrentlyLoggedInUser = this.loadCurrentlyLoggedInUser.bind(this);
+    this.handleLogout = this.handleLogout.bind(this);
+  }
+
+  loadCurrentlyLoggedInUser(showAlert=false) {
+    this.setState({
+      loading: true
+    })
+
+    getCurrentUser()
+      .then(response => {
         this.setState({
-            loading: true
+          authenticated: true,
+          user: response,
+          loading: false
         })
-
-        getCurrentUser()
-            .then(response => {
-                this.setState({
-                    authenticated: true,
-                    user: response,
-                    loading: false
-                })
-                if (showAlert)
-                    Alert.success("Zostałeś zalogowany!")
-            }).catch(error => {
-            this.setState({
-                loading: false
-            })
-        })
-
-        return this.state.authenticated
-    }
-
-    handleLogout() {
-        localStorage.removeItem(ACCESS_TOKEN)
+        if(showAlert)
+          Alert.success("Zostałeś zalogowany!")
+      }).catch(error => {
         this.setState({
-            authenticated: false,
-            user: null
-        });
-        Alert.success("Zostałeś wylogowany!")
+          loading: false
+        })
+      })
+
+      return this.state.authenticated
+  }
+
+  handleLogout() {
+    localStorage.removeItem(ACCESS_TOKEN)
+    this.setState({
+      authenticated: false,
+      user: null
+    });
+    Alert.success("Zostałeś wylogowany!")
+  }
+
+  componentDidMount() {
+    this.loadCurrentlyLoggedInUser()
+  }
+
+  render() {
+    const childProps = {
+      loadUser: this.loadCurrentlyLoggedInUser
     }
 
-    componentDidMount() {
-        this.loadCurrentlyLoggedInUser()
+    if(this.state.loading) {
+      return <LoadingIndicator />
     }
+    
+    return (
+      <div className="app">
+          <div className="app-top-box">
+            <NavigationBar authenticated={ this.state.authenticated } user={ this.state.user } onLogout={ this.handleLogout } />
+          </div>
+          <div className="app-body">
+            <Switch>
+              <Route exact path="/" component={ AdvertPanel }></Route>                    
+                <Route path="/login" 
+                  render={ (props) => <Login authenticated={ this.state.authenticated} {...props} {...childProps}/>}></Route>
 
-    render() {
-        const childProps = {
-            loadUser: this.loadCurrentlyLoggedInUser
-        }
+                <Route path="/signup"
+                  render={ (props) => <Signup authenticated={ this.state.authenticated} {...props}/>}></Route>
 
-        if (this.state.loading) {
-            return <LoadingIndicator/>
-        }
-
-        return (
-            <div className="app">
-                <div className="app-top-box">
-                    <NavigationBar authenticated={this.state.authenticated} user={this.state.user}
-                                   onLogout={this.handleLogout}/>
-                </div>
-                <div className="app-body">
-                    <Switch>
-                        <Route exact path="/" component={MainPage}></Route>
-                        <Route path="/login"
-                               render={(props) => <Login
-                                   authenticated={this.state.authenticated} {...props} {...childProps}/>}></Route>
-
-                        <Route path="/signup"
-                               render={(props) => <Signup
-                                   authenticated={this.state.authenticated} {...props}/>}></Route>
-
-                        <Route path="/add" component={AdvertForm}></Route>
-
-                        <Route path="/oauth2/redirect" component={OAuth2RedirectHandler}></Route>}
-
-                        <Route component={NotFound}></Route>
-                    </Switch>
-                </div>
-                <Alert stack={{limit: 3}}
-                       timeout={3000}
-                       position='top-right' effect='slide' offset={65}/>
-            </div>
-        )
-            ;
-    }
+                <Route path="/oauth2/redirect" component={OAuth2RedirectHandler}></Route>}
+                  
+                <Route component={ NotFound }></Route>
+              </Switch>
+          </div>
+          <Alert stack={{ limit: 3 }}
+            timeout = { 3000 }
+            position='top-right' effect='slide' offset={ 65 } />
+      </div>
+      );
+  }
 }
 
 export default App;

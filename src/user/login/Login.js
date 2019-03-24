@@ -91,7 +91,7 @@ class SocialLogin extends Component {
 
 class Login extends Component {
     componentDidMount() {
-        if(this.props.location.state && this.props.state.error) {
+        if(this.props.location.state && this.props.location.state.error) {
             setTimeout(() => {
                 Alert.error(this.props.location.state.error, {
                     timeout: 5000
