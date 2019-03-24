@@ -39,7 +39,6 @@ class AdvertTile extends Component {
 }
 
 export function updateContent(category, subcategory, page) {
-    console.log(category + ' ' + subcategory + ' ' + page)
     if(category === null && subcategory === null) {
         const advertsRequest = {
             "page": page,
@@ -124,7 +123,10 @@ class AdvertGrid extends Component {
     }
 
     componentDidMount() {
-        updateContent(null, null, this.state.currentPage)
+        updateContent(this.state.currentCategory, this.state.currentSubcategory, this.state.currentPage)
+        setInterval(() => {
+            updateContent(this.state.currentCategory, this.state.currentSubcategory, this.state.currentPage)
+        }, 10000)
     }
 
     componentDidUpdate() {
