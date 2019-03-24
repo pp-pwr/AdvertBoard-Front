@@ -1,6 +1,7 @@
 import React, {Component} from "react"
-import {getCategories} from "../utils/APIUtils"
+import {getCategories, addAdvert } from "../utils/APIUtils"
 import Select from 'react-select';
+import Alert from 'react-s-alert'
 
 class AdvertForm extends Component {
     constructor(props) {
@@ -10,7 +11,7 @@ class AdvertForm extends Component {
                 title: '',
                 tags: '',
                 description: '',
-                imgUrls: '',
+                imgUrls: [],
                 selectedCat: null,
                 selectedSubcat: null
             },
@@ -43,16 +44,15 @@ class AdvertForm extends Component {
         const inputValue = target.value;
 
         this.setState({ 
-            advertInfo:{
+            advertInfo: {
+                ...this.state.advertInfo,
                 [inputName]: inputValue
             }})
+
+        console.log(this.state.advertInfo)
     };
 
     handleCatChange = (selectedCat) => {
-        this.setState({
-            advertInfo: {
-                selectedCat: selectedCat
-            }});
         for (let i = 0; i < this.state.categoryTree.length; i++) {
             if (this.state.categoryTree[i].categoryName === selectedCat.label) {
                 const list = [];
@@ -65,15 +65,19 @@ class AdvertForm extends Component {
                 this.setState({
                     subcategoryList: list,
                     advertInfo: {
-                        selectedSubcat: list[0]
+                        ...this.state.advertInfo,
+                        selectedSubcat: list[0],
+                        selectedCat: selectedCat
                     }});
                 break;
             }
         }
     }
+    
     handleSubcatChange = (selectedSubcat) => {
         this.setState({
             advertInfo: {
+                ...this.state.advertInfo,
                 selectedSubcat: selectedSubcat
             }})
     }
@@ -81,72 +85,66 @@ class AdvertForm extends Component {
     handleSubmit(event) {
         event.preventDefault();
 
-        if(this.state.advertInfo.title.length > 0 && this.state.advertInfo.description.length > 0) {
-            const advertRequest = Object.assign({}, this.state.advertInfo)
+        if(this.state.advertInfo.title.length > 0 && this.state.advertInfo.description.length > 0 && this.state.advertInfo.selectedSubcat) {
+            const advertRequest = {
+                "title": this.state.advertInfo.title,
+                "description": this.state.advertInfo.description,
+                "tags": this.state.advertInfo.tags.split("\\s+"),
+                "subcategory": this.state.advertInfo.selectedSubcat.label
+            }
+
+            addAdvert(advertRequest)
+                .then(response => {
+                    Alert.success("Pomyślnie dodano ogłoszenie!")
+                    this.props.history.push("/")
+                }).catch(error => {
+                Alert.error((error && error.message) || "Coś poszło nie tak! Spróbuj ponownie lub skontaktuj się z administratorem!")
+            })
+        } else {
+            Alert.error("Musisz podać nazwę, opis oraz podkategorię!")
         }
     }
-
-    // handleSubmit(event) {
-    //     event.preventDefault();
-
-    //     if(this.state.userInfo.email.length > 0 && this.state.userInfo.password.length > 0){
-    //         const loginRequest = Object.assign({}, this.state.userInfo)
-            
-    //         login(loginRequest)
-    //         .then(response => {
-    //             localStorage.setItem(ACCESS_TOKEN, response.accessToken)
-    //             this.props.loadUser(true)
-    //             this.props.history.push("/")
-    //         }).catch(error => {
-    //             Alert.error((error && error.message) || "Coś poszło nie tak! Spróbuj ponownie lub skontaktuj się z administratorem!")
-    //         })
-    //     } else {
-    //         Alert.error("Żadne z pól nie może być puste!")
-    //     }
-    // }
 
     render() {
         const {selectedCat} = this.state.advertInfo;
         const {selectedSubcat} = this.state.advertInfo;
         const {mounted} = this.state;
-        const {title} = this.state.advertInfo;
-        const {description} = this.state.advertInfo;
-        const {tags} = this.state.advertInfo;
-        const {imgUrls} = this.state.advertInfo;
 
         var catList = (mounted ?
-            <Select options={this.state.categoryList} name="currentCategory" value={selectedCat}
+            <Select className="add-advert-item" options={this.state.categoryList} name="currentCategory" value={selectedCat}
                     placeholder="Kategoria"
                     onChange={this.handleCatChange} required/> : <br/>);
 
         var subcatList = (mounted ?
-            <Select options={this.state.subcategoryList} name="currentSubcategory" value={selectedSubcat}
+            <Select className="add-advert-item" options={this.state.subcategoryList} name="currentSubcategory" value={selectedSubcat}
                     placeholder="Podkategoria"
                     onChange={this.handleSubcatChange} required/> : <br/>);
 
         return (
-            <form onSubmit={this.handleSubmit}>
-                <h3>Dodaj ogłoszenie</h3>
-                <div>
-                    <input type="text" name="title" placeholder="Tytuł"
-                           value={title} onChange={this.handleInputChange} required/>
-                    <br/>
-                    <textarea rows={5} cols={50} name="description" placeholder="Opis"
-                              value={description} onChange={this.handleInputChange} required/>
-                    <br/>
-                    <input type="text" name="tags" placeholder="Tagi"
-                           value={tags} onChange={this.handleInputChange}/>
-                    <br/>
-                    <input type="text" name="imgUrls" placeholder="Linki do zdjęć"
-                           value={imgUrls} onChange={this.handleInputChange}/>
-                </div>
-                {catList}
-                {subcatList}
-                <button type="submit" 
-                    disabled={selectedSubcat == null } 
-                    className={`btn btn-block btn-primary`} 
-                    onClick={ this.handleSubmit }>Dodaj ogłoszenie</button>
-            </form>
+            <div className="add-advert-container">
+                <form className="add-advert-content" onSubmit={this.handleSubmit}>
+                    <h3>Dodaj ogłoszenie</h3>
+                    <div>
+                        <input className="add-advert-item" type="text" name="title" placeholder="Tytuł"
+                            value={this.state.advertInfo.title} onChange={this.handleInputChange} required/>
+                        <br/>
+                        <textarea className="add-advert-item" rows={5} name="description" placeholder="Opis"
+                                value={this.state.advertInfo.description} onChange={this.handleInputChange} required/>
+                        <br/>
+                        <input className="add-advert-item" type="text" name="tags" placeholder="Tagi"
+                            value={this.state.advertInfo.tags} onChange={this.handleInputChange} />
+                        <br/>
+                    </div>
+                    {catList}
+                    {subcatList}
+                    <div className="add-advert-item">
+                        <button type="submit" 
+                            disabled={selectedSubcat == null } 
+                            className={`btn btn-block btn-primary`} 
+                            onClick={ this.handleSubmit }>Dodaj ogłoszenie</button>
+                    </div>
+                </form>
+            </div>
         );
     }
 }
