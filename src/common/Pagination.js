@@ -21,14 +21,8 @@ class Pagination extends React.Component {
     }
 
     componentWillMount() {
-        if (this.props.items && this.props.items.length) {
-            this.setPage(this.props.initialPage);
-        }
-    }
-
-    componentDidUpdate(prevProps, prevState) {
-        if (this.props.items !== prevProps.items) {
-            this.setPage(this.props.initialPage);
+        if (this.props.pages > 0) {
+            this.setPage(0);
         }
     }
 

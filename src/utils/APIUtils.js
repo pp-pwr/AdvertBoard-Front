@@ -57,3 +57,34 @@ export function getCategories(categoryRequest) {
         body: JSON.stringify(categoryRequest)
     });
 }
+
+export function getAdvertsBySubcategory(subcategoryRequest) {
+    const subcategoryName = subcategoryRequest['name']
+    const page = subcategoryRequest['page']
+    const limit = subcategoryRequest['limit']
+
+    return request({
+        url: API_BASE_URL + "/subcategory/get?subcategoryName=" + subcategoryName + "&page=" + page + "&limit=" + limit,
+        method: 'GET'
+    })
+}
+
+export function getAdvertsByCategory(categoryRequest) {
+    const categoryName = categoryRequest['name']
+    const page = categoryRequest['page']
+    const limit = categoryRequest['limit']
+
+    return request({
+        url: API_BASE_URL + "/category/get?categoryName=" + categoryName + "&page=" + page + "&limit=" + limit,
+        method: 'GET'
+    })
+}
+
+export function getAdverts(advertsRequest) {
+    const page = advertsRequest['page']
+    const limit = advertsRequest['limit']
+    return request({
+        url: API_BASE_URL + "/advert/all?page=" + page + "&limit=" + limit,
+        method: 'GET'
+    })
+}

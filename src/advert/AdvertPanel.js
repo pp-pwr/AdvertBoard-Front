@@ -33,8 +33,10 @@ class AdvertPanel extends Component {
         
         return (
             <table className="advert-panel">
-                <td width="25%"><CategoryList height="100%" top="0" /></td>
-                <td width="75%"><AdvertGrid /></td>
+                <tbody>
+                    <td width="10%"><CategoryList height="100%" top="0" /></td>
+                    <td width="50%"><AdvertGrid /></td>
+                </tbody>
             </table>
         )
     }
