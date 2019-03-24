@@ -9,7 +9,7 @@ import './App.css'
 import NotFound from "../common/NotFound"
 import LoadingIndicator from "../common/LoadingIndicator"
 import NavigationBar from "../common/NavigationBar"
-import MainPage from "../main-page/MainPage"
+import AdvertGrid from "../advert/AdvertGrid"
 import Login from "../user/login/Login"
 import Signup from "../user/signup/Signup"
 import OAuth2RedirectHandler from "../user/oauth2/OAuth2RedirectHandler"
@@ -85,7 +85,7 @@ class App extends Component {
           </div>
           <div className="app-body">
             <Switch>
-              <Route exact path="/" component={ MainPage }></Route>                    
+              <Route exact path="/" component={ AdvertGrid }></Route>                    
                 <Route path="/login" 
                   render={ (props) => <Login authenticated={ this.state.authenticated} {...props} {...childProps}/>}></Route>
 
