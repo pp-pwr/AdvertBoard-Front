@@ -11,6 +11,7 @@ class AdvertForm extends Component {
                 title: '',
                 tags: '',
                 description: '',
+                fileName: '',
                 image: null,
                 selectedCat: null,
                 selectedSubcat: null
@@ -50,6 +51,20 @@ class AdvertForm extends Component {
             }})
     };
 
+    handleFileChange = (event) => {
+        const target = event.target
+        const inputName = target.name
+        const inputValue = target.files[0]
+
+        this.setState({
+            advertInfo: {
+                ...this.state.advertInfo,
+                [inputName]: inputValue,
+                fileName: target.value
+            }
+        })
+    }
+
     handleCatChange = (selectedCat) => {
         for (let i = 0; i < this.state.categoryTree.length; i++) {
             if (this.state.categoryTree[i].categoryName === selectedCat.label) {
@@ -85,17 +100,22 @@ class AdvertForm extends Component {
 
         if(this.state.advertInfo.title.length > 0 && this.state.advertInfo.description.length > 0 
             && this.state.advertInfo.selectedSubcat && this.state.advertInfo.image) {
-            const advertRequest = {
+            
+            let advertData = {
                 "title": this.state.advertInfo.title,
                 "description": this.state.advertInfo.description,
                 "tags": this.state.advertInfo.tags.split(/(\s+)/).filter( e => e.trim().length > 0),
-                "image": this.state.advertInfo.image,
                 "subcategory": this.state.advertInfo.selectedSubcat.label
             }
+            
+            var formData = new FormData()
 
-            console.log(advertRequest)
+            formData.append('image', this.state.advertInfo.image)
+            formData.append('advertInfo', JSON.stringify(advertData))
 
-            addAdvert(advertRequest)
+            console.log(Array.from(formData))
+
+            addAdvert(formData)
                 .then(response => {
                     Alert.success("Pomyślnie dodano ogłoszenie!")
                     this.props.history.push("/")
@@ -137,7 +157,7 @@ class AdvertForm extends Component {
                             value={this.state.advertInfo.tags} onChange={this.handleInputChange} />
                         <br/>
                         <input className="add-advert-item" type="file" name="image" size="50"
-                            value={this.state.advertInfo.image ? this.state.advertInfo.image : ""} onChange={this.handleInputChange} required/>
+                            value={this.state.advertInfo.fileName ? this.state.advertInfo.fileName : ""} onChange={this.handleFileChange} required/>
                         <br/>
                     </div>
                     {catList}
