@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 import { getAdverts, getAdvertsByCategory, getAdvertsBySubcategory } from '../utils/APIUtils'
 import Alert from 'react-s-alert'
 
@@ -8,10 +9,6 @@ import '../common/Pagination.scss'
 import bike from '../assets/images/bike.jpg'
 
 class AdvertTile extends Component {
-    constructor(props) {
-        super()
-    }
-
     handleAdvertClick = () => {
         this.props.history.push({
             pathname: '/advert',
@@ -21,9 +18,10 @@ class AdvertTile extends Component {
 
     render() {
         this.advert = this.props.advert
+        console.log(this.props)
         return (
             <div className="advert-tile-info">
-                <div className="advert-tile-body" onClick={this.handleAdvertClick}>
+                <div className="advert-tile-body">
                     { this.advert.base64 ? (
                         <img src={ 'data:image/png;base64,' + this.advert.base64.substring(22)} alt="Ad" className="advert-photo"></img>
                     ) : (
@@ -42,6 +40,10 @@ class AdvertTile extends Component {
                             <div></div>
                         )}
                         <p className="advert-date"> { this.advert.date } </p>
+                        <Link className="" to={{
+                            pathname: '/advert',
+                            state: { details: this.props.advert}
+                        }}> Szczegóły ogłoszenia </Link>
                     </div>
                 </div>
             </div>
@@ -184,7 +186,7 @@ class Pagination extends React.Component {
 
         for(let i = 0; i < this.props.pages; i++) {
             buttons.push(
-                <li key={ "page_" + i } onClick={() => this.setPage(i)} active={this.state.currentPage === i} className='page-numbers'>
+                <li key={ "page_" + i } onClick={() => this.setPage(i)} className='page-numbers'>
                     <button>{ i + 1}</button>
                 </li>
             );
