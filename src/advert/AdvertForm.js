@@ -121,7 +121,7 @@ class AdvertForm extends Component {
         event.preventDefault();
 
         if(this.state.advertInfo.title.length > 0 && this.state.advertInfo.description.length > 0 
-            && this.state.advertInfo.selectedSubcat) {
+            && this.state.advertInfo.selectedSubcat && this.state.advertInfo.image.length > 0) {
 
             const advertInfo = {
                 "title": this.state.advertInfo.title,
