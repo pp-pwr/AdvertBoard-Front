@@ -17,7 +17,11 @@ class AdvertTile extends Component {
         return (
             <div className="advert-tile-info">
                 <div className="advert-tile-body">
-                    <img src={bike} alt="Ad" className="advert-photo"></img>
+                    { this.advert.base64 ? (
+                        <img src={this.advert.base64} alt="Ad" className="advert-photo"></img>
+                    ) : (
+                        <img src={bike} alt="Ad" className="advert-photo"></img>
+                    )}
                 </div>
                 <div className="advert-tile-body">
                     <div className="advert-details">

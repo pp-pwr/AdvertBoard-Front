@@ -2,6 +2,8 @@ import React, {Component} from "react"
 import {getCategories, addAdvert } from "../utils/APIUtils"
 import Select from 'react-select';
 import Alert from 'react-s-alert'
+import FileBase64 from 'react-file-base64'
+import image2base64 from 'image-to-base64'
 
 class AdvertForm extends Component {
     constructor(props) {
@@ -11,8 +13,8 @@ class AdvertForm extends Component {
                 title: '',
                 tags: '',
                 description: '',
+                image: '',
                 fileName: '',
-                image: null,
                 selectedCat: null,
                 selectedSubcat: null
             },
@@ -51,19 +53,39 @@ class AdvertForm extends Component {
             }})
     };
 
-    handleFileChange = (event) => {
-        const target = event.target
-        const inputName = target.name
-        const inputValue = target.files[0]
-
+    loadFiles(file) {
+        let base64_string = JSON.stringify(file.base64).substring(23)
         this.setState({
             advertInfo: {
                 ...this.state.advertInfo,
-                [inputName]: inputValue,
-                fileName: target.value
+                image: {
+                    name: file.name,
+                    size: file.size,
+                    type: file.type,
+                    base64: base64_string
+                }
             }
         })
     }
+
+    // handleFileChange = (event) => {
+    //     const target = event.target
+    //     const file = target.files[0]
+
+    //     image2base64(file)
+    //         .then((response) => {
+    //             this.setState({
+    //                 advertInfo: {
+    //                     ...this.state.advertInfo,
+    //                     image: response,
+    //                     fileName: target.value
+    //                 }
+    //             })
+    //         })
+    //         .catch((error) => {
+    //             console.log(error)
+    //         })
+    // }
 
     handleCatChange = (selectedCat) => {
         for (let i = 0; i < this.state.categoryTree.length; i++) {
@@ -99,29 +121,23 @@ class AdvertForm extends Component {
         event.preventDefault();
 
         if(this.state.advertInfo.title.length > 0 && this.state.advertInfo.description.length > 0 
-            && this.state.advertInfo.selectedSubcat && this.state.advertInfo.image) {
-            
-            let advertData = {
+            && this.state.advertInfo.selectedSubcat) {
+
+            const advertInfo = {
                 "title": this.state.advertInfo.title,
                 "description": this.state.advertInfo.description,
                 "tags": this.state.advertInfo.tags.split(/(\s+)/).filter( e => e.trim().length > 0),
-                "subcategory": this.state.advertInfo.selectedSubcat.label
+                "subcategory": this.state.advertInfo.selectedSubcat.label,
+                "image": this.state.advertInfo.image
             }
-            
-            var formData = new FormData()
 
-            formData.append('image', this.state.advertInfo.image)
-            formData.append('advertInfo', JSON.stringify(advertData))
-
-            console.log(Array.from(formData))
-
-            addAdvert(formData)
+            addAdvert(advertInfo)
                 .then(response => {
                     Alert.success("Pomyślnie dodano ogłoszenie!")
                     this.props.history.push("/")
                 }).catch(error => {
                 Alert.error((error && error.message) || "Coś poszło nie tak! Spróbuj ponownie lub skontaktuj się z administratorem!")
-            })
+                })
         } else {
             Alert.error("Musisz podać nazwę, opis oraz podkategorię!")
         }
@@ -144,7 +160,7 @@ class AdvertForm extends Component {
 
         return (
             <div className="add-advert-container">
-                <form className="add-advert-content" onSubmit={this.handleSubmit}>
+                <form className="add-advert-content" enctype="multipart/form-data" onSubmit={this.handleSubmit}>
                     <h3>Dodaj ogłoszenie</h3>
                     <div>
                         <input className="add-advert-item" type="text" name="title" placeholder="Tytuł"
@@ -156,8 +172,9 @@ class AdvertForm extends Component {
                         <input className="add-advert-item" type="text" name="tags" placeholder="Tagi"
                             value={this.state.advertInfo.tags} onChange={this.handleInputChange} />
                         <br/>
-                        <input className="add-advert-item" type="file" name="image" size="50"
-                            value={this.state.advertInfo.fileName ? this.state.advertInfo.fileName : ""} onChange={this.handleFileChange} required/>
+                        {/* <input className="add-advert-item" type="file" name="image" size="50"
+                            value={this.state.advertInfo.fileName ? this.state.advertInfo.fileName : ""} onChange={this.handleFileChange}/> */}
+                        <FileBase64 className="add-advert-item" multiple={false} onDone={this.loadFiles.bind(this)} />
                         <br/>
                     </div>
                     {catList}
