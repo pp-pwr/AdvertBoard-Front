@@ -10,13 +10,20 @@ import bike from '../assets/images/bike.jpg'
 class AdvertTile extends Component {
     constructor(props) {
         super()
-        this.advert = props.advert
+    }
+
+    handleAdvertClick = () => {
+        this.props.history.push({
+            pathname: '/advert',
+            state: { detail: this.props.advert }
+        })
     }
 
     render() {
+        this.advert = this.props.advert
         return (
             <div className="advert-tile-info">
-                <div className="advert-tile-body">
+                <div className="advert-tile-body" onClick={this.handleAdvertClick}>
                     { this.advert.base64 ? (
                         <img src={ 'data:image/png;base64,' + this.advert.base64.substring(22)} alt="Ad" className="advert-photo"></img>
                     ) : (
