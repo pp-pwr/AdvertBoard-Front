@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 import { getAdverts, getAdvertsByCategory, getAdvertsBySubcategory } from '../utils/APIUtils'
 import Alert from 'react-s-alert'
 
@@ -8,16 +9,24 @@ import '../common/Pagination.scss'
 import bike from '../assets/images/bike.jpg'
 
 class AdvertTile extends Component {
-    constructor(props) {
-        super()
-        this.advert = props.advert
+    handleAdvertClick = () => {
+        this.props.history.push({
+            pathname: '/advert',
+            state: { detail: this.props.advert }
+        })
     }
 
     render() {
+        this.advert = this.props.advert
+        console.log(this.props)
         return (
             <div className="advert-tile-info">
                 <div className="advert-tile-body">
-                    <img src={bike} alt="Ad" className="advert-photo"></img>
+                    { this.advert.base64 ? (
+                        <img src={ 'data:image/png;base64,' + this.advert.base64.substring(22)} alt="Ad" className="advert-photo"></img>
+                    ) : (
+                        <img src={bike} alt="Ad" className="advert-photo"></img>
+                    )}
                 </div>
                 <div className="advert-tile-body">
                     <div className="advert-details">
@@ -31,6 +40,10 @@ class AdvertTile extends Component {
                             <div></div>
                         )}
                         <p className="advert-date"> { this.advert.date } </p>
+                        <Link className="" to={{
+                            pathname: '/advert',
+                            state: { details: this.props.advert}
+                        }}> Szczegóły ogłoszenia </Link>
                     </div>
                 </div>
             </div>
@@ -173,7 +186,7 @@ class Pagination extends React.Component {
 
         for(let i = 0; i < this.props.pages; i++) {
             buttons.push(
-                <li key={ "page_" + i } onClick={() => this.setPage(i)} active={this.state.currentPage === i} className='page-numbers'>
+                <li key={ "page_" + i } onClick={() => this.setPage(i)} className='page-numbers'>
                     <button>{ i + 1}</button>
                 </li>
             );

@@ -89,10 +89,10 @@ export function getAdverts(advertsRequest) {
     })
 }
 
-export function addAdvert(advertRequest) {
+export function addAdvert(advertForm) {
     return request({
-        url: API_BASE_URL + "/advert/add/",
+        url: API_BASE_URL + "/advert/add",
         method: 'POST',
-        body: JSON.stringify(advertRequest)
-    })
+        body: JSON.stringify(advertForm)
+    });
 }
