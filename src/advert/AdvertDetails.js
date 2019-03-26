@@ -11,3 +11,5 @@ class AdvertDetails extends Component {
         )
     }
 }
+
+export default AdvertDetails
