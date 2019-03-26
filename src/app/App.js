@@ -14,6 +14,7 @@ import Login from "../user/login/Login"
 import Signup from "../user/signup/Signup"
 import OAuth2RedirectHandler from "../user/oauth2/OAuth2RedirectHandler"
 import PrivateRoute from "../common/PrivateRoute"
+import AdvertDetails from "../advert/AdvertDetails"
 
 
 import {ACCESS_TOKEN} from "../constants"
@@ -100,6 +101,8 @@ class App extends Component {
                             component={AdvertForm} user={this.state.user}></PrivateRoute>
 
                         <Route path="/oauth2/redirect" component={OAuth2RedirectHandler}></Route>
+
+                        <Route path="/advert" component={AdvertDetails}></Route>
 
                         <Route exact path="/" component={AdvertPanel}></Route>
 
