@@ -68,25 +68,6 @@ class AdvertForm extends Component {
         })
     }
 
-    // handleFileChange = (event) => {
-    //     const target = event.target
-    //     const file = target.files[0]
-
-    //     image2base64(file)
-    //         .then((response) => {
-    //             this.setState({
-    //                 advertInfo: {
-    //                     ...this.state.advertInfo,
-    //                     image: response,
-    //                     fileName: target.value
-    //                 }
-    //             })
-    //         })
-    //         .catch((error) => {
-    //             console.log(error)
-    //         })
-    // }
-
     handleCatChange = (selectedCat) => {
         for (let i = 0; i < this.state.categoryTree.length; i++) {
             if (this.state.categoryTree[i].categoryName === selectedCat.label) {
@@ -121,7 +102,7 @@ class AdvertForm extends Component {
         event.preventDefault();
 
         if(this.state.advertInfo.title.length > 0 && this.state.advertInfo.description.length > 0 
-            && this.state.advertInfo.selectedSubcat && this.state.advertInfo.image.length > 0) {
+            && this.state.advertInfo.selectedSubcat) {
 
             const advertInfo = {
                 "title": this.state.advertInfo.title,
@@ -160,7 +141,7 @@ class AdvertForm extends Component {
 
         return (
             <div className="add-advert-container">
-                <form className="add-advert-content" enctype="multipart/form-data" onSubmit={this.handleSubmit}>
+                <form className="add-advert-content" onSubmit={this.handleSubmit}>
                     <h3>Dodaj ogłoszenie</h3>
                     <div>
                         <input className="add-advert-item" type="text" name="title" placeholder="Tytuł"
