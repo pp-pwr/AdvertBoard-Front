@@ -3,30 +3,44 @@ import ListGroup from 'react-bootstrap/ListGroup'
 import { updateContent } from './AdvertGrid'
 
 class CategoryDropList extends Component {
-    constructor() {
-        super()
+    constructor(props) {
+        super(props)
         this.state = {
             categoryList: [],
             selected: -1,
             selectedId: -1,
             level: 0
         }
+
+        this.prev_state = {
+            selected: -1,
+            selectedId: -1
+        }
+
+        this.selectedCategory = this.props.selected
     }
 
     setCategory = (index, id) => {
-        let newIndex = -1
-        let newId = -1
-        if(this.state.selected !== index && this.state.selectedId !== id) {
-            newIndex = index
-            newId = id
-
-            updateContent(id)
+        this.prev_state = {
+            selected: this.state.selected,
+            selectedId: this.state.selectedId
         }
 
-        this.setState({
-            selected: newIndex,
-            selectedId: newId
-        })
+        if(this.state.selected !== index && this.state.selectedId !== id) {
+            this.setState({
+                selected: index,
+                selectedId: id
+            })
+            this.selectedCategory = true
+            updateContent(id)
+        } else {
+            this.setState({
+                selected: this.prev_state.selected,
+                selectedId: this.state.selectedId
+            })
+            this.selectedCategory = false
+            updateContent(this.prev_state.selectedId)
+        }
     }
 
     componentDidMount() {
@@ -52,9 +66,6 @@ class CategoryDropList extends Component {
         for(let i = 0; i < this.state.categoryList.length; i++) {
             let category = this.state.categoryList[i]
             let state = "categoryInactive"
-            if(i === this.state.selected) {
-                state = "categoryActive"
-            }
 
             categories.push(
                 <ListGroup.Item className={state} action width="100%"
@@ -68,7 +79,7 @@ class CategoryDropList extends Component {
                 categories.push(
                     <CategoryDropList key={category['name']} 
                     categories={this.state.categoryList[this.state.selected]['subcategories']}
-                    next_level={this.state.level + 1} />
+                    next_level={this.state.level + 1} selectedCategory={false}/>
                 )
             }
         }
