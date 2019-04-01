@@ -46,6 +46,7 @@
 }
 
 .advert-flexbox {
+    margin-left: 50px;
     display: -ms-inline-flexbox;
     display: -webkit-inline-flex;
     display: inline-flex;
@@ -128,4 +129,18 @@
 
 .categoryInctive {
     font-weight: normal;
+}
+
+.sort-box {
+    display: flex
+}
+
+.search-box-field {
+    margin-right: 20px;
+    width: 500px;
+    margin-bottom: 50px;
+}
+
+.button-search {
+    background-color: blue;
 }

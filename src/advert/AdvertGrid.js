@@ -6,22 +6,31 @@ import AdvertTile from './AdvertTile'
 import './Advert.css'
 import '../common/Pagination.scss'
 
-export function updateContent(category, currentTitleFilter="", page=0) {
+export function updateContent(category, currentTitleFilter=this.state.currentTitleFilter, page=this.state.currentTitleFilter, sorting=this.state.sorting) {
     if(category !== null) {
+        let sortingCriteria = ""
+        for(let i = 0; i < sorting.length; i++) {
+            sortingCriteria += sorting[i]
+
+            if(i < sorting.length - 1)
+                sortingCriteria += "&"
+        }
+
         const advertsRequest = {
             "categoryId": category,
             "titleContains": currentTitleFilter,
             "page": page,
-            "limit": 10
+            "limit": 10,
+            "sorting": sortingCriteria
         }
         getAdvertsByCategory(advertsRequest)
         .then(response => {
-            console.log(response['content'])
             this.setState({
                 items: response['content'],
                 pageCount: response['totalPages'],
                 currentCategory: category,
-                currentPage: page
+                currentPage: page,
+                sorting: sorting
             })
         }).catch(error => {
             Alert.error((error && error.message) || "Coś poszło nie tak! Spróbuj ponownie lub skontaktuj się z administratorem!")
@@ -43,10 +52,12 @@ class AdvertGrid extends Component {
         this.state = {
             loading: false,
             items: [],
-            currentCategory: null,
+            currentCategory: 0,
             currentPage: 0,
             pageCount: 0,
-            currentTitleFilter: ""
+            currentTitleFilter: "",
+            mounted: false,
+            sorting: []
         }
 
         // eslint-disable-next-line no-func-assign
@@ -57,15 +68,87 @@ class AdvertGrid extends Component {
     }
 
     componentDidMount() {
-        updateContent(this.state.currentCategory, this.state.currentTitleFilter, this.state.currentPage)
+        this.setState({
+            mounted: true
+        })
+        updateContent(this.state.currentCategory, this.state.currentTitleFilter, this.state.currentPage, this.state.sorting)
         setInterval(() => {
-            updateContent(this.state.currentCategory, this.state.currentTitleFilter, this.state.currentPage)
+            updateContent(this.state.currentCategory, this.state.currentTitleFilter, this.state.currentPage, this.state.sorting)
         }, 10000)
+    }
+
+    componentWillUnmount() {
+        this.setState({
+            mounted: false
+        })
+    }
+
+    handleInputChange = (event) => {
+        const target = event.target;
+        const inputName = target.name;
+        const inputValue = target.value;
+
+        this.setState({ 
+            [inputName]: inputValue
+            })
+    }
+
+    filterData = () => {
+        updateContent(this.state.currentCategory, this.state.currentTitleFilter, this.state.currentPage)
+    }
+
+    sortData = (event) => {
+        const target = event.target;
+        const name = target.name;
+
+        let sortList = this.state.sorting
+
+        console.log(name)
+        if(name.includes("title")) {
+            sortList = sortList.filter((value) => {
+                return value.includes('date')
+            })
+            if(name.includes("asc")) {
+                sortList.push("title,asc")
+            } else if (name.includes("desc")) {
+                sortList.push("title,desc")
+            }
+        } else if (name.includes("date")) {
+            sortList = sortList.filter((value) => {
+                return value.includes('title')
+            })
+            if(name.includes("asc")) {
+                sortList.push("date,asc")
+            } else if (name.includes("desc")) {
+                sortList.push("date,desc")
+            }
+        } else {
+            sortList = []
+        }
+
+        this.setState({
+            sorting: sortList
+        })
+
+        updateContent(this.state.currentCategory, this.state.currentTitleFilter, this.state.currentPage, sortList)
     }
 
     render() {
         return (
             <div className="advert-content-box">
+                <div className="sort-box" width="30px">
+                    <button className="btn btn-block" name="title_desc" onClick={this.sortData}>Nazwa malejąco</button>
+                    <button className="btn btn-block" name="title_asc" onClick={this.sortData}>Nazwa rosnąco</button>
+                    <button className="btn btn-block" name="date_desc" onClick={this.sortData}>Data malejąco</button>
+                    <button className="btn btn-block" name="date_asc" onClick={this.sortData}>Data rosnąco</button>
+                    <button className="btn btn-block" name="reset" onClick={this.sortData}>Resetuj</button>
+                </div>
+                <div className="search-box" width="30px">
+                    <input className="search-box-field" type="text" name="currentTitleFilter"
+                                onChange={this.handleInputChange}/>
+                    <button className="btn btn-primary" onClick={this.filterData}>Filtruj</button>
+                </div>
+
                 <div className="advert-flexbox">
                     {this.state.items.map(item =>
                         <AdvertTile key={ "tile_ " + item.id } className="advert-flexbox-item" advert={ item } />)}

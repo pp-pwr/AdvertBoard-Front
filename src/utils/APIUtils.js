@@ -74,9 +74,21 @@ export function getAdvertsByCategory(categoryRequest) {
     const page = categoryRequest['page']
     const limit = categoryRequest['limit']
     const contains = categoryRequest['titleContains']
+    const sorting = categoryRequest['sorting']
+
+    let containsString = ""
+    let sortString = "&sort=id,desc"
+
+    if(contains.length > 0) {
+        containsString = "&titleContains=" + containsString
+    }
+
+    if(sorting.length > 0) {
+        sortString = "&sort=" + sorting
+    }
 
     return request({
-        url: API_BASE_URL + "/category/get?categoryId=" + categoryId + "&page=" + page + "&limit=" + limit + "&titleContains=" + contains,
+        url: API_BASE_URL + "/category/get?categoryId=" + categoryId + "&page=" + page + "&limit=" + limit + containsString + sortString,
         method: 'GET'
     })
 }
@@ -86,6 +98,14 @@ export function getAdverts(advertsRequest) {
     const limit = advertsRequest['limit']
     return request({
         url: API_BASE_URL + "/advert/all?page=" + page + "&limit=" + limit,
+        method: 'GET'
+    })
+}
+
+export function getAdvertById(advertRequest) {
+    const advert_id = advertRequest['id']
+    return request({
+        url: API_BASE_URL + "/advert/get?id=" + advert_id,
         method: 'GET'
     })
 }

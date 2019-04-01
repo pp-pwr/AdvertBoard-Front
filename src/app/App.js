@@ -98,7 +98,7 @@ class App extends Component {
                                    authenticated={this.state.authenticated} {...props}/>}></Route>
 
                         <PrivateRoute path="/add" 
-                            component={AdvertForm} user={this.state.user}></PrivateRoute>
+                            component={AdvertForm} user={this.state.user} advert_id={null}></PrivateRoute>
 
                         <Route path="/oauth2/redirect" component={OAuth2RedirectHandler}></Route>
 

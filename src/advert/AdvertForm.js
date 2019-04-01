@@ -11,7 +11,8 @@ export function setCategory(categoryId) {
         advertInfo: {
             ...this.state.advertInfo,
             selectedCat: categoryId
-        }
+        },
+        advert_id: null
     })
 }
 
@@ -26,14 +27,14 @@ class AdvertForm extends Component {
                 description: '',
                 image: '',
                 fileName: '',
-                selectedCat: null
+                selectedCat: props.advert_id
             },
-            categoryList: [{key: "0", value: "Wszystko"}],
+            categoryList: [],
             mounted: false
         }
 
         this.categories = []
-
+        console.log(this.state.advertInfo.selectedCat)
         this.handleSubmit = this.handleSubmit.bind(this)
     }
 
@@ -119,7 +120,7 @@ class AdvertForm extends Component {
                 "category": this.state.advertInfo.selectedCat,
                 "image": this.state.advertInfo.image
             }
-
+            if(!this.state.advert_id) {
             addAdvert(advertInfo)
                 .then(response => {
                     Alert.success("Pomyślnie dodano ogłoszenie!")
@@ -127,6 +128,10 @@ class AdvertForm extends Component {
                 }).catch(error => {
                 Alert.error((error && error.message) || "Coś poszło nie tak! Spróbuj ponownie lub skontaktuj się z administratorem!")
                 })
+            } else {
+                advertInfo.push({ "id": this.state.advert_id })
+
+            }
         } else {
             Alert.error("Musisz podać nazwę, opis oraz podkategorię!")
         }
