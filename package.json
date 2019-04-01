@@ -19,6 +19,7 @@
     "react-router-dom": "^4.3.1",
     "react-s-alert": "^1.4.1",
     "react-scripts": "^2.1.8",
+    "react-search-box": "^2.0.1",
     "react-select": "^2.4.2",
     "react-sidenav": "^3.1.9",
     "styled-components": "^4.2.0"
