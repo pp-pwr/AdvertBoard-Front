@@ -73,9 +73,10 @@ export function getAdvertsByCategory(categoryRequest) {
     const categoryId = categoryRequest['categoryId']
     const page = categoryRequest['page']
     const limit = categoryRequest['limit']
+    const contains = categoryRequest['titleContains']
 
     return request({
-        url: API_BASE_URL + "/category/get?categoryId=" + categoryId + "&page=" + page + "&limit=" + limit,
+        url: API_BASE_URL + "/category/get?categoryId=" + categoryId + "&page=" + page + "&limit=" + limit + "&titleContains=" + contains,
         method: 'GET'
     })
 }
