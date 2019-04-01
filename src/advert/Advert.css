@@ -125,3 +125,7 @@
 .categoryActive {
     font-weight: bold;
 }
+
+.categoryInctive {
+    font-weight: normal;
+}

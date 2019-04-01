@@ -1,60 +1,25 @@
 import React, { Component } from 'react'
-import { getAdverts, getAdvertsByCategory, getAdvertsBySubcategory } from '../utils/APIUtils'
+import { getAdvertsByCategory } from '../utils/APIUtils'
 import Alert from 'react-s-alert'
 import AdvertTile from './AdvertTile'
 
 import './Advert.css'
 import '../common/Pagination.scss'
 
-export function updateContent(category, subcategory, page) {
-    if(category === null && subcategory === null) {
+export function updateContent(category, page=0) {
+    if(category !== null) {
         const advertsRequest = {
+            "categoryId": category,
             "page": page,
             "limit": 10
         }
-        getAdverts(advertsRequest)
+        getAdvertsByCategory(advertsRequest)
         .then(response => {
+            console.log(response['content'])
             this.setState({
                 items: response['content'],
                 pageCount: response['totalPages'],
                 currentCategory: category,
-                currentSubcategory: subcategory,
-                currentPage: page
-            })
-        }).catch(error => {
-            Alert.error((error && error.message) || "Coś poszło nie tak! Spróbuj ponownie lub skontaktuj się z administratorem!")
-        })
-    } else if (subcategory === null & category !== null) {
-        const advertsByCategoryRequest = {
-            "name": category,
-            "page": page,
-            "limit": 10
-        }
-        getAdvertsByCategory(advertsByCategoryRequest)
-        .then(response => {
-            this.setState({
-                items: response['content'],
-                pageCount: response['totalPages'],
-                currentCategory: category,
-                currentSubcategory: subcategory,
-                currentPage: page
-            })
-        }).catch(error => {
-            Alert.error((error && error.message) || "Coś poszło nie tak! Spróbuj ponownie lub skontaktuj się z administratorem!")
-        })
-    } else {
-        const advertsBySubcategoryRequest = {
-            "name": subcategory,
-            "page": page,
-            "limit": 10
-        }
-        getAdvertsBySubcategory(advertsBySubcategoryRequest)
-        .then(response => {
-            this.setState({
-                items: response['content'],
-                pageCount: response['totalPages'],
-                currentCategory: category,
-                currentSubcategory: subcategory,
                 currentPage: page
             })
         }).catch(error => {
@@ -67,7 +32,7 @@ export function updatePage(page) {
     this.setState({
         items: []
     })
-    updateContent(this.state.currentCategory, this.state.currentSubcategory, page)
+    updateContent(this.state.currentCategory, page)
 }
 
 class AdvertGrid extends Component {
@@ -78,7 +43,6 @@ class AdvertGrid extends Component {
             loading: false,
             items: [],
             currentCategory: null,
-            currentSubcategory: null,
             currentPage: 0,
             pageCount: 0
         }
@@ -91,9 +55,9 @@ class AdvertGrid extends Component {
     }
 
     componentDidMount() {
-        updateContent(this.state.currentCategory, this.state.currentSubcategory, this.state.currentPage)
+        updateContent(this.state.currentCategory, this.state.currentPage)
         setInterval(() => {
-            updateContent(this.state.currentCategory, this.state.currentSubcategory, this.state.currentPage)
+            updateContent(this.state.currentCategory, this.state.currentPage)
         }, 10000)
     }
 

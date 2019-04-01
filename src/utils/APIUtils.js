@@ -70,12 +70,12 @@ export function getAdvertsBySubcategory(subcategoryRequest) {
 }
 
 export function getAdvertsByCategory(categoryRequest) {
-    const categoryName = categoryRequest['name']
+    const categoryId = categoryRequest['categoryId']
     const page = categoryRequest['page']
     const limit = categoryRequest['limit']
 
     return request({
-        url: API_BASE_URL + "/category/get?categoryName=" + categoryName + "&page=" + page + "&limit=" + limit,
+        url: API_BASE_URL + "/category/get?categoryId=" + categoryId + "&page=" + page + "&limit=" + limit,
         method: 'GET'
     })
 }

@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import ListGroup from 'react-bootstrap/ListGroup'
+import { updateContent } from './AdvertGrid'
 
 class CategoryDropList extends Component {
     constructor() {
@@ -14,9 +15,16 @@ class CategoryDropList extends Component {
 
     setCategory = (index, id) => {
         this.setState({
+            selected: -1,
+            selectedId: -1
+        })
+
+        this.setState({
             selected: index,
             selectedId: id
         })
+
+        updateContent(id)
     }
 
     componentDidMount() {
@@ -37,24 +45,19 @@ class CategoryDropList extends Component {
         let categories = []
         for(let i = 0; i < this.state.categoryList.length; i++) {
             let category = this.state.categoryList[i]
+            let state = "categoryInactive"
+            if(i === this.state.selected) {
+                state = "categoryActive"
+            }
+
             categories.push(
-                <div>
-                    { this.state.selected === i ? (
-                    <ListGroup.Item className="categoryActive" action width="100%"
-                        onClick={() => this.setCategory(i, category['id'])}
-                        key={ category['name'] + category['id']}> 
-                    { (this.state.level + 1) + ". " + category['name'] }  
-                    </ListGroup.Item>
-                ) : (
-                    <ListGroup.Item action width="100%"
+                <ListGroup.Item className={state} action width="100%"
                             onClick={() => this.setCategory(i, category['id'])}
                             key={ category['name'] + category['id']}> 
                         { (this.state.level + 1) + ". " + category['name'] }  
-                    </ListGroup.Item>
-                )}
-                </div>
+                </ListGroup.Item>
             )
-
+                
             if (i === this.state.selected && category['subcategories'].length > 0) {
                 categories.push(
                     <CategoryDropList key={category['name']} 
