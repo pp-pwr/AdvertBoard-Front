@@ -1,6 +1,6 @@
 .advert-tile-info { 
-    width: 20%;
-    height: 100%;
+    width: 320px;
+    height: 320px;
     background: #fff;
     box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.27);
     overflow: auto;
@@ -31,8 +31,8 @@
 }
 
 .advert-photo {
-    width: 100%;
-    height: 100%;
+    width: 300px;
+    height: 200px;
 }
 
 .advert-content-box {
@@ -68,7 +68,6 @@
 }
 
 .category-list {
-    height: 100%;
     position: fixed; 
     z-index: 1;
     left: 0;
@@ -120,6 +119,7 @@
 
 .add-advert-item {
     width: 100%;
+    height: 100%;
     margin-bottom: 5px;
 }
 

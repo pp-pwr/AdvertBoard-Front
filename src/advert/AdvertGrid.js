@@ -42,7 +42,7 @@ export function updatePage(page) {
     this.setState({
         items: []
     })
-    updateContent(this.state.currentCategory, this.state.currentTitleFilter, page)
+    updateContent(this.state.currentCategory, this.state.currentTitleFilter, page, this.state.sorting)
 }
 
 class AdvertGrid extends Component {
@@ -59,6 +59,8 @@ class AdvertGrid extends Component {
             mounted: false,
             sorting: []
         }
+
+        this.filter = ""
 
         // eslint-disable-next-line no-func-assign
         updateContent = updateContent.bind(this)
@@ -85,16 +87,16 @@ class AdvertGrid extends Component {
 
     handleInputChange = (event) => {
         const target = event.target;
-        const inputName = target.name;
         const inputValue = target.value;
 
-        this.setState({ 
-            [inputName]: inputValue
-            })
+        this.filter = inputValue
     }
 
     filterData = () => {
-        updateContent(this.state.currentCategory, this.state.currentTitleFilter, this.state.currentPage)
+        this.setState({
+            currentTitleFilter: this.filter
+        })
+        updateContent(this.state.currentCategory, this.filter, this.state.currentPage, this.state.sorting)
     }
 
     sortData = (event) => {
@@ -129,7 +131,6 @@ class AdvertGrid extends Component {
         this.setState({
             sorting: sortList
         })
-
         updateContent(this.state.currentCategory, this.state.currentTitleFilter, this.state.currentPage, sortList)
     }
 

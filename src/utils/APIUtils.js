@@ -80,7 +80,7 @@ export function getAdvertsByCategory(categoryRequest) {
     let sortString = "&sort=id,desc"
 
     if(contains.length > 0) {
-        containsString = "&titleContains=" + containsString
+        containsString = "&titleContains=" + contains
     }
 
     if(sorting.length > 0) {
