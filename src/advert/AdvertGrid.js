@@ -6,10 +6,11 @@ import AdvertTile from './AdvertTile'
 import './Advert.css'
 import '../common/Pagination.scss'
 
-export function updateContent(category, page=0) {
+export function updateContent(category, currentTitleFilter="", page=0) {
     if(category !== null) {
         const advertsRequest = {
             "categoryId": category,
+            "titleContains": currentTitleFilter,
             "page": page,
             "limit": 10
         }
@@ -32,7 +33,7 @@ export function updatePage(page) {
     this.setState({
         items: []
     })
-    updateContent(this.state.currentCategory, page)
+    updateContent(this.state.currentCategory, this.state.currentTitleFilter, page)
 }
 
 class AdvertGrid extends Component {
@@ -44,7 +45,8 @@ class AdvertGrid extends Component {
             items: [],
             currentCategory: null,
             currentPage: 0,
-            pageCount: 0
+            pageCount: 0,
+            currentTitleFilter: ""
         }
 
         // eslint-disable-next-line no-func-assign
@@ -55,9 +57,9 @@ class AdvertGrid extends Component {
     }
 
     componentDidMount() {
-        updateContent(this.state.currentCategory, this.state.currentPage)
+        updateContent(this.state.currentCategory, this.state.currentTitleFilter, this.state.currentPage)
         setInterval(() => {
-            updateContent(this.state.currentCategory, this.state.currentPage)
+            updateContent(this.state.currentCategory, this.state.currentTitleFilter, this.state.currentPage)
         }, 10000)
     }
 

@@ -3,9 +3,20 @@ import {getCategories, addAdvert } from "../utils/APIUtils"
 import Select from 'react-select';
 import Alert from 'react-s-alert'
 import FileBase64 from 'react-file-base64'
-import image2base64 from 'image-to-base64'
+import ReactSearchBox from 'react-search-box'
+import LoadingIndicator from "../common/LoadingIndicator";
+
+export function setCategory(categoryId) {
+    this.setState({
+        advertInfo: {
+            ...this.state.advertInfo,
+            selectedCat: categoryId
+        }
+    })
+}
 
 class AdvertForm extends Component {
+
     constructor(props) {
         super(props);
         this.state = {
@@ -15,25 +26,41 @@ class AdvertForm extends Component {
                 description: '',
                 image: '',
                 fileName: '',
-                selectedCat: null,
-                selectedSubcat: null
+                selectedCat: null
             },
-            categoryTree: [],
-            categoryList: [],
-            subcategoryList: [],
+            categoryList: [{key: "0", value: "Wszystko"}],
             mounted: false
         }
+
+        this.categories = []
 
         this.handleSubmit = this.handleSubmit.bind(this)
     }
 
+    addChilds(categoryList) {
+        if (!categoryList || categoryList.length < 1)
+            return
+
+        for(let i = 0; i < categoryList.length; i++) {
+            let category = categoryList[i]
+            this.categories.push({
+                key: category['id'],
+                value: category['name']
+            })
+            this.addChilds(category['subcategories'])
+        }
+    }
+
     componentDidMount() {
         getCategories().then(response => {
-                this.setState({categoryTree: response});
-                for (let i = 0; i < this.state.categoryTree.length; i++) {
-                    this.state.categoryList.push({label: this.state.categoryTree[i].categoryName, value: i});
-                }
-                this.setState({mounted: true});
+                const categoryTree = response
+                this.categories = []
+                this.addChilds(categoryTree['subcategories'])
+
+                this.setState({
+                    categoryList: this.categories,
+                    mounted: true
+                });
             }
         ).catch(error => {
             console.log("error: " + error);
@@ -68,47 +95,28 @@ class AdvertForm extends Component {
         })
     }
 
-    handleCatChange = (selectedCat) => {
-        for (let i = 0; i < this.state.categoryTree.length; i++) {
-            if (this.state.categoryTree[i].categoryName === selectedCat.label) {
-                const list = [];
-                for (let j = 0; j < this.state.categoryTree[i].subCategories.length; j++) {
-                    list.push({
-                        label: this.state.categoryTree[i].subCategories[j].subcategoryName,
-                        value: j
-                    });
-                }
-                this.setState({
-                    subcategoryList: list,
-                    advertInfo: {
-                        ...this.state.advertInfo,
-                        selectedSubcat: list[0],
-                        selectedCat: selectedCat
-                    }});
-                break;
-            }
-        }
-    }
-    
-    handleSubcatChange = (selectedSubcat) => {
+    handleCatChange(selectedCatId) {
         this.setState({
             advertInfo: {
                 ...this.state.advertInfo,
-                selectedSubcat: selectedSubcat
-            }})
+                selectedCat: selectedCatId
+            }
+        })
     }
 
     handleSubmit(event) {
         event.preventDefault();
 
+        console.log("state")
+        console.log(this.state)
         if(this.state.advertInfo.title.length > 0 && this.state.advertInfo.description.length > 0 
-            && this.state.advertInfo.selectedSubcat) {
+            && this.state.advertInfo.selectedCat) {
 
             const advertInfo = {
                 "title": this.state.advertInfo.title,
                 "description": this.state.advertInfo.description,
                 "tags": this.state.advertInfo.tags.split(/(\s+)/).filter( e => e.trim().length > 0),
-                "subcategory": this.state.advertInfo.selectedSubcat.label,
+                "category": this.state.advertInfo.selectedCat,
                 "image": this.state.advertInfo.image
             }
 
@@ -125,19 +133,8 @@ class AdvertForm extends Component {
     }
 
     render() {
-        const {selectedCat} = this.state.advertInfo;
-        const {selectedSubcat} = this.state.advertInfo;
-        const {mounted} = this.state;
-
-        var catList = (mounted ?
-            <Select className="add-advert-item" options={this.state.categoryList} name="currentCategory" value={selectedCat}
-                    placeholder="Kategoria"
-                    onChange={this.handleCatChange} required/> : <br/>);
-
-        var subcatList = (mounted ?
-            <Select className="add-advert-item" options={this.state.subcategoryList} name="currentSubcategory" value={selectedSubcat}
-                    placeholder="Podkategoria"
-                    onChange={this.handleSubcatChange} required/> : <br/>);
+        if(!this.state.mounted)
+            return <LoadingIndicator/>
 
         return (
             <div className="add-advert-container">
@@ -158,11 +155,12 @@ class AdvertForm extends Component {
                         <FileBase64 className="add-advert-item" multiple={false} onDone={this.loadFiles.bind(this)} />
                         <br/>
                     </div>
-                    {catList}
-                    {subcatList}
+                    
+                    <ReactSearchBox data={this.state.categoryList} onSelect={record => this.handleCatChange(record['key'])}/>
+
                     <div className="add-advert-item">
                         <button type="submit" 
-                            disabled={selectedSubcat == null } 
+                            disabled={this.state.advertInfo.selectedCat == null } 
                             className={`btn btn-block btn-primary`} 
                             onClick={ this.handleSubmit }>Dodaj ogłoszenie</button>
                     </div>

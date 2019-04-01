@@ -34,7 +34,7 @@ class AdvertPanel extends Component {
         return (
             <div className="advert-panel">
                 <CategoryList width="25%"/>
-                {/* <AdvertGrid /> */}
+                <AdvertGrid />
             </div>
         )
     }
