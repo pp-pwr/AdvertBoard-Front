@@ -12,7 +12,7 @@ class AdvertDetails extends Component {
                 <p>{'Opis: ' + advert.description}</p>
                 <p>{'Data: ' + advert.date}</p>
                 <p>Obrazek: 
-                <img className="crop-image" src={ 'data:image/png;base64,' + advert.base64.substring(22)} alt="Ad"></img>
+                <img className="crop-image" src={ 'data:image/png;base64,' + advert.pic.substring(22)} alt="Ad"></img>
                 </p>
             </div>
         )
