@@ -14,17 +14,19 @@ class CategoryDropList extends Component {
     }
 
     setCategory = (index, id) => {
-        this.setState({
-            selected: -1,
-            selectedId: -1
-        })
+        let newIndex = -1
+        let newId = -1
+        if(this.state.selected !== index && this.state.selectedId !== id) {
+            newIndex = index
+            newId = id
+
+            updateContent(id)
+        }
 
         this.setState({
-            selected: index,
-            selectedId: id
+            selected: newIndex,
+            selectedId: newId
         })
-
-        updateContent(id)
     }
 
     componentDidMount() {
@@ -43,6 +45,10 @@ class CategoryDropList extends Component {
 
     createList = () => {
         let categories = []
+
+        if(!this.state.categoryList)
+            return
+
         for(let i = 0; i < this.state.categoryList.length; i++) {
             let category = this.state.categoryList[i]
             let state = "categoryInactive"
