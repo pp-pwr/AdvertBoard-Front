@@ -90,6 +90,15 @@ class CategoryDropList extends Component {
     render() {
         return (
             <div>
+                { this.state.level === 0 ? (
+                    <ListGroup.Item className="categoryInactive" action width="100%"
+                            onClick={() => this.setCategory(-1, 0)}
+                            key="all"> 
+                        Wszystkie  
+                    </ListGroup.Item>
+                ) : (
+                    <div></div>
+                )}
                 <ListGroup>
                     { this.createList() }
                 </ListGroup>

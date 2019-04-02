@@ -10,10 +10,7 @@ export function updateContent(category, currentTitleFilter=this.state.currentTit
     if(category !== null) {
         let sortingCriteria = ""
         for(let i = 0; i < sorting.length; i++) {
-            sortingCriteria += sorting[i]
-
-            if(i < sorting.length - 1)
-                sortingCriteria += "&"
+            sortingCriteria += ("&sort=" + sorting[i])
         }
 
         const advertsRequest = {
@@ -74,9 +71,9 @@ class AdvertGrid extends Component {
             mounted: true
         })
         updateContent(this.state.currentCategory, this.state.currentTitleFilter, this.state.currentPage, this.state.sorting)
-        setInterval(() => {
-            updateContent(this.state.currentCategory, this.state.currentTitleFilter, this.state.currentPage, this.state.sorting)
-        }, 10000)
+        // setInterval(() => {
+        //     updateContent(this.state.currentCategory, this.state.currentTitleFilter, this.state.currentPage, this.state.sorting)
+        // }, 10000)
     }
 
     componentWillUnmount() {

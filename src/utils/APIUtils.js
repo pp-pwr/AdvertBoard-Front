@@ -84,7 +84,7 @@ export function getAdvertsByCategory(categoryRequest) {
     }
 
     if(sorting.length > 0) {
-        sortString = "&sort=" + sorting
+        sortString = sorting
     }
 
     return request({
