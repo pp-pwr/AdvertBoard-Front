@@ -38,8 +38,7 @@ class AdvertTile extends Component {
                         )}
                         <p className="advert-date"> { this.advert.date } </p>
                         <Link className="" to={{
-                            pathname: '/advert',
-                            state: { details: this.props.advert}
+                            pathname: '/advert/' + this.advert.id,
                         }}> Szczegóły ogłoszenia </Link>
                     </div>
                 </div>

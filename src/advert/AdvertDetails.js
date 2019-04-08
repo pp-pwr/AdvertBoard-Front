@@ -4,6 +4,7 @@ import { getCurrentUser, getAdvertById } from '../utils/APIUtils'
 import Alert from 'react-s-alert'
 import LoadingIndicator from '../common/LoadingIndicator';
 import { Link } from 'react-router-dom'
+import bike from '../assets/images/bike.jpg'
 
 class AdvertDetails extends Component {
 
@@ -27,7 +28,7 @@ class AdvertDetails extends Component {
 
     componentDidMount() {
         this.checkUserAdverts()
-        this.getAdvert(this.props.history.location.state.details.id)
+        this.getAdvert(this.props.match.params.advert_id)
     }
 
     checkUserAdverts() {

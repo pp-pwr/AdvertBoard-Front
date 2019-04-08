@@ -104,7 +104,7 @@ class App extends Component {
 
                         <Route path="/oauth2/redirect" component={OAuth2RedirectHandler}></Route>
 
-                        <Route path="/advert" component={AdvertDetails}></Route>
+                        <Route path="/advert/:advert_id" component={AdvertDetails}></Route>
 
                         <Route path="/profile/user/:user_id" user={this.state.user} component={Profile}></Route>
 
