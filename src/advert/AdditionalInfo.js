@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import LoadingIndicator from "../common/LoadingIndicator";
 
+import './Advert.css'
+
 class AdditionalInfo extends Component {
     constructor(props) {
         super(props);
@@ -28,14 +30,13 @@ class AdditionalInfo extends Component {
         let controls = [];
         const info_arr = infos['infos']
 
-        console.log('props')
-        console.log(this.props)
         for(let i = 0; i < info_arr.length; i++) {
             let info = info_arr[i]
             controls.push(
                 <div key={info.id} className="category-info-control">
-                    <label htmlFor={info.id}>{info.name}</label> 
+                    <p className="add-advert-additional-info-element">{info.name}:<br/>
                     <input id={info.id} name={info.id} type={this.fieldType(info.type)} onChange={this.props.infoChangeHandler} />
+                    </p> 
                 </div>
             )
         }

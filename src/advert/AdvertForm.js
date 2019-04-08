@@ -5,6 +5,8 @@ import FileBase64 from 'react-file-base64'
 import ReactSearchBox from 'react-search-box'
 import LoadingIndicator from "../common/LoadingIndicator";
 import AdditionalInfo from './AdditionalInfo'
+import { Table } from 'react-bootstrap'
+
 
 export function setCategory(categoryId) {
     if(this !== undefined) {
@@ -178,36 +180,38 @@ class AdvertForm extends Component {
 
         return (
             <div className="add-advert-container">
-                <form className="add-advert-content" onSubmit={this.handleSubmit}>
-                    <h3>Dodaj ogłoszenie</h3>
-                    <div>
-                        <input className="add-advert-item" type="text" name="title" placeholder="Tytuł"
-                            value={this.state.advertInfo.title} onChange={this.handleInputChange} required/>
-                        <br/>
-                        <textarea className="add-advert-item" rows={5} name="description" placeholder="Opis"
-                                value={this.state.advertInfo.description} onChange={this.handleInputChange} required/>
-                        <br/>
-                        <input className="add-advert-item" type="text" name="tags" placeholder="Tagi"
-                            value={this.state.advertInfo.tags} onChange={this.handleInputChange} />
-                        <br/>
-                        {/* <input className="add-advert-item" type="file" name="image" size="50"
-                            value={this.state.advertInfo.fileName ? this.state.advertInfo.fileName : ""} onChange={this.handleFileChange}/> */}
-                        <FileBase64 className="add-advert-item" multiple={false} onDone={this.loadFiles.bind(this)} />
-                        <br/>
-                    </div>
-                    
-                    <ReactSearchBox data={this.categories} onSelect={record => this.handleCatChange(record['key'])}/>
+                <div className="add-advert-content-whole">
+                    <form className="add-advert-content" onSubmit={this.handleSubmit}>
+                        <h3>Dodaj ogłoszenie</h3>
+                        <div>
+                            <input className="add-advert-item" type="text" name="title" placeholder="Tytuł"
+                                value={this.state.advertInfo.title} onChange={this.handleInputChange} required/>
+                            <br/>
+                            <textarea className="add-advert-item" rows={5} name="description" placeholder="Opis"
+                                    value={this.state.advertInfo.description} onChange={this.handleInputChange} required/>
+                            <br/>
+                            <input className="add-advert-item" type="text" name="tags" placeholder="Tagi"
+                                value={this.state.advertInfo.tags} onChange={this.handleInputChange} />
+                            <br/>
+                            {/* <input className="add-advert-item" type="file" name="image" size="50"
+                                value={this.state.advertInfo.fileName ? this.state.advertInfo.fileName : ""} onChange={this.handleFileChange}/> */}
+                            <FileBase64 className="add-advert-item" multiple={false} onDone={this.loadFiles.bind(this)} />
+                            <br/>
+                        </div>
+                        
+                        <ReactSearchBox data={this.categories} onSelect={record => this.handleCatChange(record['key'])}/>
 
-                    <div className="add-advert-item">
-                        <button type="submit" 
-                            disabled={this.state.advertInfo.selectedCat == null } 
-                            className={`btn btn-block btn-primary`} 
-                            onClick={ this.handleSubmit }>Dodaj ogłoszenie</button>
-                    </div>
-                </form>
+                        <div className="add-advert-item">
+                            <button type="submit" 
+                                disabled={this.state.advertInfo.selectedCat == null } 
+                                className={`btn btn-block btn-primary`} 
+                                onClick={ this.handleSubmit }>Dodaj ogłoszenie</button>
+                        </div>
 
-                <div>
-                    <AdditionalInfo infos={ this.state.currentCategory } infoChangeHandler={this.handleInfoChange}/>
+                    </form>
+                    <div className="add-advert-additional-info">
+                        <AdditionalInfo infos={ this.state.currentCategory } infoChangeHandler={this.handleInfoChange}/>
+                    </div>
                 </div>
             </div>
         );

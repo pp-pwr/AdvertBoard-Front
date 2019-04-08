@@ -107,15 +107,30 @@
 }
 
 .add-advert-content {
-    background: #fff;
-    box-shadow: 0 1px 11px rgba(0, 0, 0, 0.27);
-    border-radius: 2px;
     display: inline-block;
     margin-top: 30px;
     vertical-align: middle;
     position: relative;    
     padding: 35px;
 }
+
+.add-advert-content-whole {
+    background: #fff;
+    box-shadow: 0 1px 11px rgba(0, 0, 0, 0.27);
+    border-radius: 2px;
+    display: inline-flex;
+    margin-top: 30px;
+}
+
+.add-advert-additional-info {
+    vertical-align: middle;
+    position: relative;
+}
+
+.add-advert-additional-info-element {
+    margin-right: 30px;
+    text-align: left;
+}  
 
 .add-advert-item {
     width: 100%;
