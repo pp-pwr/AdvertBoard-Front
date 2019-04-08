@@ -18,6 +18,7 @@ import AdvertDetails from "../advert/AdvertDetails"
 import Profile from "../user/profile/Profile"
 import ProfileForm from "../user/profile/ProfileForm"
 import NoProfile from "../user/profile/NoProfile"
+import ProfileList from "../user/profile/ProfileList"
 
 import {ACCESS_TOKEN} from "../constants"
 import {getCurrentUser} from "../utils/APIUtils"
@@ -111,6 +112,8 @@ class App extends Component {
                         <PrivateRoute path="/profile/me" user={this.state.user} component={Profile}></PrivateRoute>
 
                         <PrivateRoute path="/profile/edit" user={this.state.user} component={ProfileForm}></PrivateRoute>
+
+                        <PrivateRoute path="/profile/search" component={ProfileList}></PrivateRoute>
 
                         <Route path="/error/noprofile" component={NoProfile}></Route>
 
