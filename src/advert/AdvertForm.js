@@ -4,91 +4,17 @@ import Alert from 'react-s-alert'
 import FileBase64 from 'react-file-base64'
 import ReactSearchBox from 'react-search-box'
 import LoadingIndicator from "../common/LoadingIndicator";
+import AdditionalInfo from './AdditionalInfo'
 
 export function setCategory(categoryId) {
-    this.setState({
-        advertInfo: {
-            ...this.state.advertInfo,
-            selectedCat: categoryId
-        },
-        advert_id: null
-    })
-}
-
-class AdditionalInfo extends Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            mounted: false
-        }
-
-        this.infos = null
-    }
-
-    componentDidMount() {
+    if(this !== undefined) {
         this.setState({
-            mounted: true
+            advertInfo: {
+                ...this.state.advertInfo,
+                selectedCat: categoryId
+            },
+            advert_id: null
         })
-    }
-
-    componentWillUnmount() {
-        this.setState({
-            mounted: false
-        })
-    }
-
-    createFields(infos) {
-        let controls = [];
-        const info_arr = infos['infos']
-        for(let i = 0; i < info_arr.length; i++) {
-            let info = info_arr[i]
-            controls.push(
-                <div class="category-info-control">
-                    <label for={info.name}>{info.name}</label> 
-                    <input id={info.name} type={this.fieldType(info.type)}/>
-                </div>
-            )
-        }
-
-        return controls
-    }
-
-    fieldType(infoType) {
-        let result = ""
-        switch(infoType) {
-            case "intNum":
-                result = "number"
-                break;
-            case "floatNum":
-                result = "number"
-                break;
-            case "money":
-                result = "number"
-                break;    
-            default:
-                result = "text"
-
-        }
-
-        return result;
-    }
-
-    render() {
-        if(!this.state.mounted)
-            return <LoadingIndicator />
-        
-        this.infos = this.props.infos
-        console.log(this.infos)
-        return (
-            <div>
-                { this.infos ? (
-                    this.createFields(this.infos)
-                ) : (
-                    <div></div>
-                )}
-            </div>
-        );
     }
 }
 
@@ -103,6 +29,7 @@ class AdvertForm extends Component {
                 description: '',
                 image: '',
                 fileName: '',
+                infos: {},
                 selectedCat: props.advert_id
             },
             categoryList: [],
@@ -174,6 +101,22 @@ class AdvertForm extends Component {
         })
     }
 
+    handleInfoChange = (event) => {
+        const target = event.target;
+        const inputName = "" + target.name
+        const inputValue = target.value;    
+
+        this.setState({
+            advertInfo: {
+                ...this.state.advertInfo,
+                infos: {
+                    ...this.state.advertInfo.infos,
+                    [inputName]: inputValue
+                }
+            }
+        })
+    }
+
     handleCatChange(selectedCatId) {
         let category = null
         let curr_cat = null
@@ -206,8 +149,12 @@ class AdvertForm extends Component {
                 "description": this.state.advertInfo.description,
                 "tags": this.state.advertInfo.tags.split(/(\s+)/).filter( e => e.trim().length > 0),
                 "category": this.state.advertInfo.selectedCat,
-                "image": this.state.advertInfo.image
+                "image": this.state.advertInfo.image,
+                "additionalInfo": this.state.advertInfo.infos
             }
+
+            console.log("This is what we send")
+            console.log(advertInfo)
             if(!this.state.advert_id) {
             addAdvert(advertInfo)
                 .then(response => {
@@ -260,7 +207,7 @@ class AdvertForm extends Component {
                 </form>
 
                 <div>
-                    <AdditionalInfo infos={ this.state.currentCategory }/>
+                    <AdditionalInfo infos={ this.state.currentCategory } infoChangeHandler={this.handleInfoChange}/>
                 </div>
             </div>
         );
