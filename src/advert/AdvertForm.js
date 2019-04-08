@@ -1,6 +1,5 @@
 import React, {Component} from "react"
 import {getCategories, addAdvert } from "../utils/APIUtils"
-import Select from 'react-select';
 import Alert from 'react-s-alert'
 import FileBase64 from 'react-file-base64'
 import ReactSearchBox from 'react-search-box'
@@ -14,6 +13,83 @@ export function setCategory(categoryId) {
         },
         advert_id: null
     })
+}
+
+class AdditionalInfo extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            mounted: false
+        }
+
+        this.infos = null
+    }
+
+    componentDidMount() {
+        this.setState({
+            mounted: true
+        })
+    }
+
+    componentWillUnmount() {
+        this.setState({
+            mounted: false
+        })
+    }
+
+    createFields(infos) {
+        let controls = [];
+        const info_arr = infos['infos']
+        for(let i = 0; i < info_arr.length; i++) {
+            let info = info_arr[i]
+            controls.push(
+                <div class="category-info-control">
+                    <label for={info.name}>{info.name}</label> 
+                    <input id={info.name} type={this.fieldType(info.type)}/>
+                </div>
+            )
+        }
+
+        return controls
+    }
+
+    fieldType(infoType) {
+        let result = ""
+        switch(infoType) {
+            case "intNum":
+                result = "number"
+                break;
+            case "floatNum":
+                result = "number"
+                break;
+            case "money":
+                result = "number"
+                break;    
+            default:
+                result = "text"
+
+        }
+
+        return result;
+    }
+
+    render() {
+        if(!this.state.mounted)
+            return <LoadingIndicator />
+        
+        this.infos = this.props.infos
+        console.log(this.infos)
+        return (
+            <div>
+                { this.infos ? (
+                    this.createFields(this.infos)
+                ) : (
+                    <div></div>
+                )}
+            </div>
+        );
+    }
 }
 
 class AdvertForm extends Component {
@@ -30,6 +106,7 @@ class AdvertForm extends Component {
                 selectedCat: props.advert_id
             },
             categoryList: [],
+            currentCategory: null,
             mounted: false
         }
 
@@ -46,7 +123,8 @@ class AdvertForm extends Component {
             let category = categoryList[i]
             this.categories.push({
                 key: category['id'],
-                value: category['name']
+                value: category['name'],
+                infos: category['infoList']
             })
             this.addChilds(category['subcategories'])
         }
@@ -97,11 +175,21 @@ class AdvertForm extends Component {
     }
 
     handleCatChange(selectedCatId) {
+        let category = null
+        let curr_cat = null
+        for(let i = 0; i < this.categories.length; i++) {
+            curr_cat = this.categories[i]
+            if(curr_cat.key === selectedCatId) {
+                category = curr_cat
+            }
+        }
+
         this.setState({
             advertInfo: {
                 ...this.state.advertInfo,
                 selectedCat: selectedCatId
-            }
+            },
+            currentCategory: category
         })
     }
 
@@ -161,7 +249,7 @@ class AdvertForm extends Component {
                         <br/>
                     </div>
                     
-                    <ReactSearchBox data={this.state.categoryList} onSelect={record => this.handleCatChange(record['key'])}/>
+                    <ReactSearchBox data={this.categories} onSelect={record => this.handleCatChange(record['key'])}/>
 
                     <div className="add-advert-item">
                         <button type="submit" 
@@ -170,6 +258,10 @@ class AdvertForm extends Component {
                             onClick={ this.handleSubmit }>Dodaj ogłoszenie</button>
                     </div>
                 </form>
+
+                <div>
+                    <AdditionalInfo infos={ this.state.currentCategory }/>
+                </div>
             </div>
         );
     }
