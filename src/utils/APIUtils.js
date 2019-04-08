@@ -34,6 +34,25 @@ export function getCurrentUser() {
     });
 }
 
+export function updateProfile(profileRequest) {
+    if(!localStorage.getItem(ACCESS_TOKEN)) {
+        return Promise.reject("No access token set.")
+    }
+
+    return request({
+        url: API_BASE_URL + "/user/me",
+        method: 'POST',
+        body: JSON.stringify(profileRequest)
+    })
+}
+
+export function getUserById(userRequest) {
+    return request({
+        url: API_BASE_URL + "/user/get?profileId=" + userRequest['profileId'],
+        method: 'GET'
+    });
+}
+
 export function login(loginRequest) {
     return request({
         url: API_BASE_URL + "/auth/login",
