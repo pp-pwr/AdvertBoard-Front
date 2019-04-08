@@ -5,8 +5,6 @@ import FileBase64 from 'react-file-base64'
 import ReactSearchBox from 'react-search-box'
 import LoadingIndicator from "../common/LoadingIndicator";
 import AdditionalInfo from './AdditionalInfo'
-import { Table } from 'react-bootstrap'
-
 
 export function setCategory(categoryId) {
     if(this !== undefined) {
@@ -177,6 +175,7 @@ class AdvertForm extends Component {
     render() {
         if(!this.state.mounted)
             return <LoadingIndicator/>
+
 
         return (
             <div className="add-advert-container">

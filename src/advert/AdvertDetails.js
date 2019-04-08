@@ -63,7 +63,8 @@ class AdvertDetails extends Component {
                         tags: response['tags'],
                         image: response['pic'],
                         date: response['date'],
-                        id: response['id']
+                        id: response['id'],
+                        infos: response['additionalInfo']
                     }
                 })
                 this.setState({
@@ -72,6 +73,22 @@ class AdvertDetails extends Component {
             }).catch(error => {
                 Alert.error(error)
             });
+    }
+
+    getAdditionalInfo(infos) {
+        let infos_arr = []
+        for (var key in infos) {
+            let item = infos[key]
+            infos_arr.push(
+                <div className="details-additional-info" key={item.name}>
+                    <label htmlFor={key}><b>{key}</b>:  
+                    <p id={key}>{item}</p><br/><br/>
+                    </label>
+                </div>
+            )
+        }
+
+        return infos_arr
     }
 
     render() {
@@ -83,7 +100,7 @@ class AdvertDetails extends Component {
                 <p>{'Tytuł: ' + this.state.advertInfo.title}</p>
                 <p>{'Opis: ' + this.state.advertInfo.description}</p>
                 <p>{'Data: ' + this.state.advertInfo.date}</p>
-                <p>Obrazek: 
+                <p>Obrazek: </p><br/>
                 <img className="crop-image" src={ 'data:image/png;base64,' + this.state.advertInfo.image.substring(22)} alt="Ad"></img>
                 <br/>
                 {/* { this.state.user_adverts.includes(this.state.advertInfo.id) ? (
@@ -105,7 +122,10 @@ class AdvertDetails extends Component {
                 ) : (
                     <div></div>
                 )} */}
-                </p>
+                <p>Dodatkowe informacje: </p>
+                <div className="additional-info-holder">
+                    { this.getAdditionalInfo(this.state.advertInfo.infos) }
+                </div>
             </div>
         )
     }

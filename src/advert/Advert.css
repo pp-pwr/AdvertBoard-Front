@@ -114,6 +114,17 @@
     padding: 35px;
 }
 
+.details-additional-info {
+    display: inline-flex;
+    vertical-align: left;
+    width: 10%;
+}
+
+.additional-info-holder {
+    display: inline-flexbox;
+    vertical-align: left;
+}
+
 .add-advert-content-whole {
     background: #fff;
     box-shadow: 0 1px 11px rgba(0, 0, 0, 0.27);
