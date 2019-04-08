@@ -1,5 +1,5 @@
 import React, {Component} from "react"
-import {getCategories, addAdvert } from "../utils/APIUtils"
+import {getCategories, addAdvert, updateAdvert } from "../utils/APIUtils"
 import Alert from 'react-s-alert'
 import FileBase64 from 'react-file-base64'
 import ReactSearchBox from 'react-search-box'
@@ -38,7 +38,7 @@ class AdvertForm extends Component {
         }
 
         this.categories = []
-        console.log(this.state.advertInfo.selectedCat)
+        this.update = false
         this.handleSubmit = this.handleSubmit.bind(this)
     }
 
@@ -57,7 +57,35 @@ class AdvertForm extends Component {
         }
     }
 
+    preloadAdvertData() {
+        const advert = this.props.location.advert
+        console.log(advert)
+        let tags = []
+        
+        for(let i = 0; i < advert.tags.length; i++) {
+            tags += advert.tags[i]
+            if(i < advert.tags.length - 1) {
+                tags += " "
+            }
+        }
+
+        this.setState({
+            advertInfo: {
+                ...this.state.advertInfo,
+                title: advert.title,
+                description: advert.description,
+                tags: tags,
+                infos: advert.infos
+            }
+        })
+    }
+
     componentDidMount() {
+        if (this.props.location.advert) {
+            this.update = true
+            this.preloadAdvertData();
+        }
+
         getCategories().then(response => {
                 const categoryTree = response
                 this.categories = []
@@ -144,7 +172,7 @@ class AdvertForm extends Component {
         if(this.state.advertInfo.title.length > 0 && this.state.advertInfo.description.length > 0 
             && this.state.advertInfo.selectedCat) {
 
-            const advertInfo = {
+            let advertInfo = {
                 "title": this.state.advertInfo.title,
                 "description": this.state.advertInfo.description,
                 "tags": this.state.advertInfo.tags.split(/(\s+)/).filter( e => e.trim().length > 0),
@@ -153,19 +181,31 @@ class AdvertForm extends Component {
                 "additionalInfo": this.state.advertInfo.infos
             }
 
-            console.log("This is what we send")
-            console.log(advertInfo)
             if(!this.state.advert_id) {
-            addAdvert(advertInfo)
-                .then(response => {
-                    Alert.success("Pomyślnie dodano ogłoszenie!")
-                    this.props.history.push("/")
-                }).catch(error => {
-                Alert.error((error && error.message) || "Coś poszło nie tak! Spróbuj ponownie lub skontaktuj się z administratorem!")
+                if(!this.update) {
+                    addAdvert(advertInfo).then(response => {
+                        Alert.success("Pomyślnie dodano ogłoszenie!")
+                         this.props.history.push("/")
+                    }).catch(error => {
+                        Alert.error((error && error.message) || "Coś poszło nie tak! Spróbuj ponownie lub skontaktuj się z administratorem!")
                 })
+                } else {
+                    advertInfo = {
+                        "title": this.state.advertInfo.title,
+                        "description": this.state.advertInfo.description,
+                        "tags": this.state.advertInfo.tags.split(/(\s+)/).filter( e => e.trim().length > 0),
+                        "id": this.props.location.advert.id,
+                        "image": this.state.advertInfo.image
+                    }
+                    updateAdvert(advertInfo).then(response => {
+                        Alert.success("Pomyślnie zaktualizowano")
+                         this.props.history.push("/")
+                    }).catch(error => {
+                        Alert.error((error && error.message) || "Coś poszło nie tak! Spróbuj ponownie lub skontaktuj się z administratorem!")                        
+                    })
+                }
             } else {
                 advertInfo.push({ "id": this.state.advert_id })
-
             }
         } else {
             Alert.error("Musisz podać nazwę, opis oraz podkategorię!")

@@ -108,25 +108,14 @@ class AdvertDetails extends Component {
                     <img src={bike} alt="Ad" className="crop-image"></img>
                 )}
                 <br/>
-                {/* { this.state.user_adverts.includes(this.state.advertInfo.id) ? (
+                { this.state.user_adverts.includes(this.state.advertInfo.id) ? (
                     <Link className="" to={{
                         pathname: '/add',
-                        advert_id: this.state.advertInfo.id,
-                        state: { 
-                            advertInfo: {
-                                advert_id: this.state.advertInfo.id,
-                                title: this.state.advertInfo.title,
-                                tags: this.state.advertInfo.tags,
-                                description: this.state.advertInfo.description,
-                                image:this.state.advertInfo.image
-                            },
-                            categoryList: [],
-                            mounted: false
-                        }
+                        advert: this.state.advertInfo
                     }}> Edytuj ogłoszenie </Link>
                 ) : (
                     <div></div>
-                )} */}
+                )}
                 <p>Dodatkowe informacje: </p>
                 <div className="additional-info-holder">
                     { this.getAdditionalInfo(this.state.advertInfo.infos) }

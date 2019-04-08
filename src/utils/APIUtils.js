@@ -147,3 +147,11 @@ export function addAdvert(advertForm) {
         body: JSON.stringify(advertForm)
     });
 }
+
+export function updateAdvert(advertForm) {
+    return request({
+        url: API_BASE_URL + "/advert/edit",
+        method: 'POST',
+        body: JSON.stringify(advertForm)
+    });
+}
