@@ -16,7 +16,8 @@ import OAuth2RedirectHandler from "../user/oauth2/OAuth2RedirectHandler"
 import PrivateRoute from "../common/PrivateRoute"
 import AdvertDetails from "../advert/AdvertDetails"
 import Profile from "../user/profile/Profile"
-
+import ProfileForm from "../user/profile/ProfileForm"
+import NoProfile from "../user/profile/NoProfile"
 
 import {ACCESS_TOKEN} from "../constants"
 import {getCurrentUser} from "../utils/APIUtils"
@@ -81,7 +82,7 @@ class App extends Component {
         if (this.state.loading) {
             return <LoadingIndicator/>
         }
-        
+
         return (
             <div className="app">
                 <div className="app-top-box">
@@ -103,9 +104,15 @@ class App extends Component {
 
                         <Route path="/oauth2/redirect" component={OAuth2RedirectHandler}></Route>
 
-                        <Route path="/advert" comgponent={AdvertDetails}></Route>
+                        <Route path="/advert" component={AdvertDetails}></Route>
 
-                        <Route path="/profile/:id" component={Profile}></Route>
+                        <Route path="/profile/user/:user_id" user={this.state.user} component={Profile}></Route>
+
+                        <PrivateRoute path="/profile/me" user={this.state.user} component={Profile}></PrivateRoute>
+
+                        <PrivateRoute path="/profile/edit" user={this.state.user} component={ProfileForm}></PrivateRoute>
+
+                        <Route path="/error/noprofile" component={NoProfile}></Route>
 
                         <Route exact path="/" component={AdvertPanel}></Route>
 
