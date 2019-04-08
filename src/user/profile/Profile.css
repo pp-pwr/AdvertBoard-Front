@@ -1,0 +1,55 @@
+.profile-set-container {
+    text-align: center;
+}
+
+
+@media screen and (min-width: 720px) {
+    .signup-content {
+        width: 500px;
+    }
+}
+
+.profile-set-content {
+    background: #fff;
+    box-shadow: 0 1px 11px rgba(0, 0, 0, 0.27);
+    border-radius: 2px;
+    display: inline-block;
+    margin-top: 30px;
+    vertical-align: middle;
+    position: relative;    
+    padding: 35px;
+}
+
+.profile-not-found {
+    max-width: 500px;
+    margin: 0 auto;
+    margin-top: 50px;
+    padding: 40px;
+    border: 1px solid #c8c8c8; 
+    text-align: center;   
+}
+
+.profile-not-found .title {
+    font-size: 50px;
+    letter-spacing: 10px;
+    margin-bottom: 10px;
+}
+
+.profile-not-found .desc {
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+.go-back-btn {
+    min-width: 160px;
+}
+
+input {
+    border-radius: 5px;
+    border-style: outset;
+    padding: 10px;
+}
+
+.form-item {
+    padding-bottom: 4px;
+}
