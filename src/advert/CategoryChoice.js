@@ -68,7 +68,7 @@ class CategoryDropList extends Component {
             let state = "categoryInactive"
 
             categories.push(
-                <ListGroup.Item className={state} action width="100%"
+                <ListGroup.Item className="category-list-item" action width="100%"
                             onClick={() => this.setCategory(i, category['id'])}
                             key={ category['name'] + category['id']}> 
                         { (this.state.level + 1) + ". " + category['name'] }  
@@ -89,7 +89,7 @@ class CategoryDropList extends Component {
 
     render() {
         return (
-            <div>
+            <div className="category-listgroup">
                 { this.state.level === 0 ? (
                     <ListGroup.Item className="categoryInactive" action width="100%"
                             onClick={() => this.setCategory(-1, 0)}

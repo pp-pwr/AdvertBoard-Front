@@ -28,7 +28,7 @@ class Profile extends Component {
 
     setUser(userData) {
         let advertPath = 'advertSummaryViews'
-        if (this.current_user) {
+        if (!this.user_id) {
             advertPath = 'adverts'
         }
         this.setState({

@@ -73,6 +73,17 @@
     left: 0;
     overflow-x: hidden;
     padding-top: 20px;
+    margin-right: 5px;
+}
+
+.category-listgroup {
+    margin-left: 0px;
+    margin-right: 5px;
+    width: 200px;
+}
+
+.category-list-item {
+    width: 100%;
 }
 
 .advert-panel {
@@ -165,6 +176,7 @@
     margin-right: 20px;
     width: 500px;
     margin-bottom: 50px;
+    margin-top: 15px;
 }
 
 .button-search {

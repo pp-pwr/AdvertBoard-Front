@@ -87,6 +87,7 @@ class AdvertGrid extends Component {
         const inputValue = target.value;
 
         this.filter = inputValue
+        this.filterData()
     }
 
     filterData = () => {
