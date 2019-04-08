@@ -19,7 +19,7 @@ class NavigationBar extends Component {
                     { this.props.authenticated ? (
                         <Nav>
                             <Nav.Link href="/add" advert_id={null}>Dodaj ogłoszenie</Nav.Link>
-                            <Nav.Link href="/profile">Mój profil</Nav.Link>
+                            <Nav.Link href="/profile/me">Mój profil</Nav.Link>
                             <Nav.Link title="logout" onClick={ this.props.onLogout }>Wyloguj się</Nav.Link>
                         </Nav>
                         ) : (
