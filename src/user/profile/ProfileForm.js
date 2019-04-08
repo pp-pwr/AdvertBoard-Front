@@ -63,6 +63,7 @@ class ProfileForm extends Component {
 
         updateProfile(loginRequest).then(response => {
             Alert.success("Witaj, " + this.state.user.firstName + " " + this.state.user.lastName + ". Twoje nowe dane są teraz widoczne dla wszystkich użytkowników serwisu!")
+            this.props.history.push('/profile/me')
         }).catch(error => {
             Alert.error((error && error.message) || "Wystąpił nieznany błąd! Skontaktuj się z administratorem!")
         })

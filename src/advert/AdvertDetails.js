@@ -105,7 +105,7 @@ class AdvertDetails extends Component {
                 { this.state.advertInfo.image ? (
                     <img className="crop-image" src={ 'data:image/png;base64,' + this.state.advertInfo.image.substring(22)} alt="Ad"></img>
                 ) : (
-                    <img src={bike} alt="Ad" className="advert-photo"></img>
+                    <img src={bike} alt="Ad" className="crop-image"></img>
                 )}
                 <br/>
                 {/* { this.state.user_adverts.includes(this.state.advertInfo.id) ? (

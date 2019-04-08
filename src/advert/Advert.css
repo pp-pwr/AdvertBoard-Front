@@ -115,13 +115,13 @@
 }
 
 .details-additional-info {
-    display: inline-flex;
+    display: flex;
     vertical-align: left;
     width: 10%;
 }
 
 .additional-info-holder {
-    display: inline-flexbox;
+    display: flex;
     vertical-align: left;
 }
 

@@ -53,3 +53,45 @@ input {
 .form-item {
     padding-bottom: 4px;
 }
+
+.advert-list-element-image {
+    width: 100px;
+    height: 100px;
+}
+
+.advert-list-element {
+    display: inline-flex;
+    width: 25%;
+    background: #fff;
+    box-shadow: 0 1px 11px rgba(0, 0, 0, 0.27);
+    border-radius: 2px;
+    margin-bottom: 20px;
+    margin-left: 30px;
+    margin-right: 30px;
+    position: relative;
+}
+
+.advert-list-element:hover {
+    box-shadow: 0 1px 48px rgba(0, 140, 196, 0.7);
+}
+
+.advert-list-element:hover > img {
+    opacity: 1
+}
+
+.advert-list-element-title {
+    font-size: 18px;
+    margin-left: 15px;
+    margin-right: 15px;
+    font-display: bold;
+}
+
+.advert-list-element-date {
+    position: absolute;
+    bottom: 0px;
+    right: 5px;
+}
+
+.profile-info {
+    margin-left: 20px;
+}
