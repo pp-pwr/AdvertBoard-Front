@@ -3,7 +3,7 @@ import { getCurrentUser, getUserById } from '../../utils/APIUtils'
 import Alert from 'react-s-alert'
 import LoadingIndicator from '../../common/LoadingIndicator';
 import { Redirect, Link } from 'react-router-dom'
-import bike from '../assets/images/bike.jpg'
+import bike from '../../assets/images/bike.jpg'
 
 class Profile extends Component {
     constructor(props) {
@@ -81,7 +81,11 @@ class Profile extends Component {
             console.log(advert)
             user_adverts.push(
                 <div className="advert-list-element">
-                    <img className="crop-image" src={ 'data:image/png;base64,' + advert.pic.substring(22)} alt="Ad"></img>
+                    { advert.pic ? (
+                    <img className="advert-list-element-image" src={ 'data:image/png;base64,' + advert.pic.substring(22)} alt="Ad"></img>
+                ) : (
+                    <img src={bike} alt="Ad" className="advert-photo"></img>
+                )}
                     <Link to={"/advert/" + advert.id}>{advert.title}</Link>
                 </div>
             )

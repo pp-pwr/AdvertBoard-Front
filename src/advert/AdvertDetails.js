@@ -102,7 +102,11 @@ class AdvertDetails extends Component {
                 <p>{'Opis: ' + this.state.advertInfo.description}</p>
                 <p>{'Data: ' + this.state.advertInfo.date}</p>
                 <p>Obrazek: </p><br/>
-                <img className="crop-image" src={ 'data:image/png;base64,' + this.state.advertInfo.image.substring(22)} alt="Ad"></img>
+                { this.state.advertInfo.image ? (
+                    <img className="crop-image" src={ 'data:image/png;base64,' + this.state.advertInfo.image.substring(22)} alt="Ad"></img>
+                ) : (
+                    <img src={bike} alt="Ad" className="advert-photo"></img>
+                )}
                 <br/>
                 {/* { this.state.user_adverts.includes(this.state.advertInfo.id) ? (
                     <Link className="" to={{
