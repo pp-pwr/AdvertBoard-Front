@@ -2,16 +2,18 @@ import React, { Component } from 'react'
 import LoadingIndicator from '../../common/LoadingIndicator';
 import { getUsers } from '../../utils/APIUtils'
 import Alert from 'react-s-alert'
+import bike from '../../assets/images/bike.jpg'
+
+import './ProfileList.css'
 
 class ProfileCell extends Component {
-    constructor() {
-        super()
+    constructor(props) {
+        super(props)
 
         this.state = {
             user: {
                 visibleName: "",
-                firstName: "",
-                lastName: ""
+                id: null
             }
         }
 
@@ -21,14 +23,18 @@ class ProfileCell extends Component {
     componentDidMount() {
         this.mounted = true;
         const profile = this.props.profile
+        console.log(profile)
         this.setState({
             user: {
                 ...this.state.user,
                 visibleName: profile.visibleName,
-                firstName: profile.firstName,
-                lastName: profile.lastName
+                id: profile.id
             }
         })
+    }
+
+    redirectToPage = () => {
+        this.props.history.push('/profile/user/' + this.state.user.id)
     }
 
     componentWillUnmount() {
@@ -41,14 +47,19 @@ class ProfileCell extends Component {
         }
 
         return (
-            <div>{this.state.user.visibleName}</div>
+            <div className="userlist-element" onClick={this.redirectToPage}>
+            <img src={bike} alt="ProfileImage" className="profile-image"></img>
+            <div className="userlist-element-info">
+                <p id="displayName"><b>{this.state.user.visibleName}</b></p>
+            </div>
+            </div>
         )
     }
 }
 
 class ProfileList extends Component {
-    constructor() {
-        super()
+    constructor(props) {
+        super(props)
 
         this.state = {
             filter: "",
@@ -72,9 +83,11 @@ class ProfileList extends Component {
             containsString: this.state.filter
         }
         getUsers(userRequest).then(response => {
-            this.setState({
-                userList: response['content']
-            })
+            if(this.mounted) {
+                this.setState({
+                    userList: response['content']
+                })
+            }
         }).catch(error => {
             Alert.error((error && error.message) || "Ups! Coś poszło nie tak!")
         })
@@ -97,7 +110,7 @@ class ProfileList extends Component {
                 let user_profile = this.state.userList[i]
 
                 user_cells.push(
-                    <ProfileCell key={user_profile.id} profile={user_profile}/>
+                    <ProfileCell key={user_profile.id} profile={user_profile} history={this.props.history}/>
                 )
             }
         }
