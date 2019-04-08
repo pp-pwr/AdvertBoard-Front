@@ -89,7 +89,7 @@ export function getAdvertsBySubcategory(subcategoryRequest) {
 }
 
 export function getUsers(userRequest) {
-    const containsString = userRequest('containsString')
+    const containsString = userRequest['containsString']
     // const page = userRequest['page']
     // const limit = userRequest['limit']
 
