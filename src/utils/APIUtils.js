@@ -88,6 +88,17 @@ export function getAdvertsBySubcategory(subcategoryRequest) {
     })
 }
 
+export function getUsers(userRequest) {
+    const containsString = userRequest('containsString')
+    const page = userRequest['page']
+    const limit = userRequest['limit']
+
+    return request({
+        url: API_BASE_URL + "/user/all?nameContains=" + containsString + "&page=" + page + "&limit=" + limit,
+        method: 'GET'
+    })
+}
+
 export function getAdvertsByCategory(categoryRequest) {
     const categoryId = categoryRequest['categoryId']
     const page = categoryRequest['page']
