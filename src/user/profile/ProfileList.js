@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import LoadingIndicator from '../../common/LoadingIndicator';
-import getUsers from '../../utils/APIUtils'
+import { getUsers } from '../../utils/APIUtils'
 import Alert from 'react-s-alert'
 
 class ProfileCell extends Component {
@@ -41,7 +41,7 @@ class ProfileCell extends Component {
         }
 
         return (
-            <div>{this.state.visibleName}</div>
+            <div>{this.state.user.visibleName}</div>
         )
     }
 }
@@ -89,6 +89,22 @@ class ProfileList extends Component {
         }) 
     }
 
+    renderUserCells() {
+        const user_cells = []
+
+        if(this.state.userList) {
+            for(let i = 0; i < this.state.userList.length; i++) {
+                let user_profile = this.state.userList[i]
+
+                user_cells.push(
+                    <ProfileCell key={user_profile.id} profile={user_profile}/>
+                )
+            }
+        }
+
+        return user_cells
+    }
+
     render() {
         if(!this.mounted) {
             return <LoadingIndicator />
@@ -102,7 +118,7 @@ class ProfileList extends Component {
                 <button className="btn btn-primary" onClick={this.updateUserList}>Filtruj</button>
             </div>
             <div className="userlist-content">
-            
+                { this.renderUserCells() }
             </div>
             </div>
         )
