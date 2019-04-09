@@ -66,4 +66,19 @@ describe('Input test set', () => {
         validator.updateValidator(field.name, field.content.password, field.content.confirm_password)
         expect(validator.getFieldStatus(field.name)).toBe(true)
     })
+
+    test('All correct data', () => {
+        let form_data = {
+            login: "testtesttest",
+            email: "test@gmail.com",
+            password: "passwordtest",
+            confirm_password: "passwordtest"
+        }
+        validator.updateValidator('login', form_data.login)
+        validator.updateValidator('email', form_data.email)
+        validator.updateValidator('password', form_data.password)
+        validator.updateValidator('password_confirm', form_data.password, form_data.confirm_password)
+
+        expect(validator.getStatus()).toBe(true)
+    })
 })
