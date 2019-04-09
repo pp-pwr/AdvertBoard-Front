@@ -46,8 +46,10 @@ class Profile extends Component {
 
     loadCurrentUser() {
         getCurrentUser().then(response => {
+            console.log('aajjjj')
+            console.log(response.profileView)
             if(this.mounted) {
-                this.setUser(response)
+                this.setUser(response.profileView)
             }
         }).catch(error => {
             Alert.error(error)
