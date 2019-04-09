@@ -6,6 +6,10 @@ cache:
   - node_modules
 script:
   - npm test
-
-    
-  
+deploy:
+  provider: heroku
+  app: pwr-advert-board-frontend
+  api_key: "8e1c45af-bde1-4afd-b555-3e1674ef422a"
+  skip_cleanup: true
+  on:
+    branch: heroku
