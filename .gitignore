@@ -31,6 +31,4 @@ HELP.md
 
 
 ### Visual Studio Code ###
-
-### Server Config ####
-/constants/index.js
+/src/constants/index.js
