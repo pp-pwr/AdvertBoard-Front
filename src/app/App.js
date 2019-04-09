@@ -113,7 +113,7 @@ class App extends Component {
 
                         <PrivateRoute path="/profile/edit" user={this.state.user} component={ProfileForm}></PrivateRoute>
 
-                        <PrivateRoute path="/profile/search" component={ProfileList} history={this.props.history}></PrivateRoute>
+                        <Route path="/profile/search" component={ProfileList} history={this.props.history}></Route>
 
                         <Route path="/error/noprofile" component={NoProfile}></Route>
 
