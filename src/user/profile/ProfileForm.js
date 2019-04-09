@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import LoadingIndicator from '../../common/LoadingIndicator';
-import { updateProfile } from "../../utils/APIUtils"
+import { updateProfile, getCurrentUser } from "../../utils/APIUtils"
 import Alert from 'react-s-alert'
 
 import './Profile.css'
@@ -27,6 +27,7 @@ class ProfileForm extends Component {
 
     componentDidMount() {
         this.mounted = true
+
         if (this.props.user && this.props.user.profileView) {
             const profile = this.props.user.profileView
             this.setState({
@@ -38,6 +39,8 @@ class ProfileForm extends Component {
                     "contactMail": profile['contactMail']   
                 }
             })
+        } else {
+            this.forceUpdate()
         }
     }
 
@@ -70,6 +73,7 @@ class ProfileForm extends Component {
     }
 
     render() {
+        console.log("MOunted? " + this.mounted)
         if (!this.mounted) {
             return <LoadingIndicator />
         }

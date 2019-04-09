@@ -1,3 +1,6 @@
+### For Heroku ###
+/src/constants/index.js
+
 HELP.md
 /target/
 !.mvn/wrapper/maven-wrapper.jar
@@ -28,7 +31,3 @@ HELP.md
 
 ### Linux Files ###
 .attach_pid*
-
-
-### Visual Studio Code ###
-/src/constants/index.js
