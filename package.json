@@ -25,6 +25,7 @@
     "react-select": "^2.4.2",
     "react-sidenav": "^3.1.9",
     "react-simple-scroll-container": "^1.2.1",
+    "react-test-renderer": "^16.8.6",
     "styled-components": "^4.2.0"
   },
   "scripts": {

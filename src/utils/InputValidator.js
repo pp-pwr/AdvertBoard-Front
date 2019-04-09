@@ -64,6 +64,7 @@ class InputValidator {
             status = true
             Object.keys(this.validator).forEach((field) => {
                 if(!this.validator[field].valid) {
+                    console.log(field + " errors - " + this.validator[field].errors)
                     status = false
                 }
             })

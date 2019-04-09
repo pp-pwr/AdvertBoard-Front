@@ -15,7 +15,7 @@ const validator_rules = {
             },
         ],
         errors: [],
-        valid: false,
+        valid: true,
         state: '',
     },
     email: {
@@ -34,7 +34,7 @@ const validator_rules = {
             },
         ],
         errors: [],
-        valid: false,
+        valid: true,
         state: '',
     },
     password: {
@@ -48,7 +48,7 @@ const validator_rules = {
             },
         ],
         errors: [],
-        valid: false,
+        valid: true,
         state: '',
     },
     password_confirm: {
@@ -62,7 +62,7 @@ const validator_rules = {
             }
         ],
         errors: [],
-        valid: false,
+        valid: true,
         state: '',
     }
 }
