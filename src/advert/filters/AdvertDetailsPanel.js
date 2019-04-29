@@ -2,10 +2,16 @@ import React, { Component } from 'react'
 import styled from 'styled-components';
 
 const AdvertDetail = styled.div`
-
+    text-align: center;
+    margin-top: 5vw;
 `;
 
 const DetailsPanel = styled.div`
+    display-flex;
+    items-align: flex-start;
+
+    text-align: center;
+    margin-top: 5vh;
 `;
 
 const RangeInput = styled.div`
@@ -52,7 +58,7 @@ class AdvertDetailsPanel extends Component {
 
             details.push(
                 <AdvertDetail key={detailField['id']}> 
-                    {detailField['name']}
+                    <div>{detailField['name']}</div>
                     { this.fieldType(detailField['type']) === "number" ? (
                         <RangeInput>
                             <input id={detailField['id'] + "_lower"} type="number" />
