@@ -1,4 +1,10 @@
 import React, { Component } from 'react'
+import styled from 'styled-components'
+
+const SearchBox = styled.div`
+    items-align: flex-start;
+    text-align: center;
+`;
 
 class SearchBoxPanel extends Component {
     constructor() {
@@ -20,11 +26,11 @@ class SearchBoxPanel extends Component {
 
     render() {
         return (
-            <div className="search-box" width="30px">
+            <SearchBox>
                     <input className="search-box-field" type="text" name="currentTitleFilter"
                                 onChange={this.handleInputChange}/>
                     <button className="btn btn-primary" onClick={this.notifyParent}>Filtruj</button>
-            </div>
+            </SearchBox>
         )
     }
 }
