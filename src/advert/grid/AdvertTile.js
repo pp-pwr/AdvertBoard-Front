@@ -2,8 +2,17 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 
 import '../Advert.css'
-
 import bike from '../../assets/images/bike.jpg'
+
+import styled from 'styled-components';
+
+const Tile = styled.div`
+    flex-grow: 1;
+    background: #fff;
+    box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.27);
+    overflow: auto;
+    border-radius:3px;
+`;
 
 class AdvertTile extends Component {
     handleAdvertClick = () => {
@@ -17,7 +26,7 @@ class AdvertTile extends Component {
         this.advert = this.props.advert
 
         return (
-            <div className="advert-tile-info">
+            <Tile>
                 <div className="advert-tile-body">
                     { this.advert.pic ? (
                         <img src={ 'data:image/png;base64,' + this.advert.pic.substring(22)} alt="Ad" className="advert-photo"></img>
@@ -42,7 +51,7 @@ class AdvertTile extends Component {
                         }}> Szczegóły ogłoszenia </Link>
                     </div>
                 </div>
-            </div>
+            </Tile>
         )
     }
 }
