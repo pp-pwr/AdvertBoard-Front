@@ -13,16 +13,21 @@ import {SortPanel, SearchBoxPanel, PageSelectionPanel, AdvertDetailsPanel} from 
 import './Advert.css'
 
 const Panel = styled.div`
-    display: flex-inline;
-    align-items: center;
+    display: flex;
+    align-items: flex-start;
+    flex-grow: 1;
+    flex: 1;
 `;
 
 const Details = styled.div`
-    display: block;
+    display: flex-inline;
+    text-align: center;
+    margin-right: 0px;
+    flex: 1;
 `;
 
 const Adverts = styled.div`
-    border: solid;
+    width: 70vw;
 `;
 
 const ContentGrid = styled.div`
@@ -188,12 +193,12 @@ class AdvertPanel extends Component {
                 </Adverts>
                 <Details>
                     <SortPanel changeHandler={this.sortChange} sortingState={this.state.advertGrid.sorting} />
-                    { this.state.advertGrid.currentCategory !== null 
+                    {/* { this.state.advertGrid.currentCategory !== null 
                     && typeof this.state.advertGrid.currentCategory.infoList !== "undefined" ? (
                         <AdvertDetailsPanel changeHandler={this.detailsChange} details={this.state.advertGrid.currentCategory.infoList} />
                     ) : (
                         <div></div>
-                    )}
+                    )} */}
                 </Details>
             </Panel>
         )
