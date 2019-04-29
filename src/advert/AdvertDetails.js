@@ -93,7 +93,7 @@ class AdvertDetails extends Component {
     }
 
     render() {
-        if(this.state.loadingUser || this.state.loadingAdvert)
+        if(this.state.loadingAdvert)
             return <LoadingIndicator />
 
         return (
@@ -108,7 +108,7 @@ class AdvertDetails extends Component {
                     <img src={bike} alt="Ad" className="crop-image"></img>
                 )}
                 <br/>
-                { this.state.user_adverts.includes(this.state.advertInfo.id) ? (
+                { !this.state.loadingUser && this.state.user_adverts.includes(this.state.advertInfo.id) ? (
                     <Link className="" to={{
                         pathname: '/add',
                         advert: this.state.advertInfo

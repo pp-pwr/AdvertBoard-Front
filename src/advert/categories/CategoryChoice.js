@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import ListGroup from 'react-bootstrap/ListGroup'
-import { updateContent } from './AdvertGrid'
+import { updateContent } from '../grid/AdvertGrid'
 
 class CategoryDropList extends Component {
     constructor(props) {

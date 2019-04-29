@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 
-import './Advert.css'
+import '../Advert.css'
 
-import bike from '../assets/images/bike.jpg'
+import bike from '../../assets/images/bike.jpg'
 
 class AdvertTile extends Component {
     handleAdvertClick = () => {
@@ -15,7 +15,7 @@ class AdvertTile extends Component {
 
     render() {
         this.advert = this.props.advert
-        console.log(this.props)
+
         return (
             <div className="advert-tile-info">
                 <div className="advert-tile-body">

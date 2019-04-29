@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
-import { getCategories } from '../utils/APIUtils'
-import LoadingIndicator from '../common/LoadingIndicator'
+import { getCategories } from '../../utils/APIUtils'
+import LoadingIndicator from '../../common/LoadingIndicator'
 import CategoryDropList from './CategoryChoice'
-import ListGroup from 'react-bootstrap/ListGroup'
 
-import './Advert.css'
+import '../Advert.css'
 
 class CategoryList extends Component {
 

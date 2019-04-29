@@ -1,5 +1,5 @@
 ### For Heroku ###
-#/src/constants/index.js
+/src/constants/index.js
 
 HELP.md
 /target/
