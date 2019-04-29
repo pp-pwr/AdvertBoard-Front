@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import LoadingIndicator from '../../common/LoadingIndicator';
 import { updateProfile, getCurrentUser } from "../../utils/APIUtils"
 import Alert from 'react-s-alert'
+import UserPreferences from './UserPreferences'
 
 import './Profile.css'
 
@@ -15,7 +16,8 @@ class ProfileForm extends Component {
                 "lastName": "",
                 "visibleName": "",
                 "telephoneNumber": 0,
-                "contactMail": ""
+                "contactMail": "",
+                "selectedCategories": []
             }
         }
 
@@ -23,6 +25,7 @@ class ProfileForm extends Component {
 
         this.handleInputChange = this.handleInputChange.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
+        this.updateCategoryPreferences = this.updateCategoryPreferences.bind(this)
     }
 
     componentDidMount() {
@@ -36,7 +39,7 @@ class ProfileForm extends Component {
                     "lastName": profile['lastName'],
                     "visibleName": profile['visibleName'],
                     "telephoneNumber": profile['telephoneNumber'],
-                    "contactMail": profile['contactMail']   
+                    "contactMail": profile['contactMail']
                 }
             })
         } else {
@@ -46,6 +49,15 @@ class ProfileForm extends Component {
 
     componentWillUnmount() {
         this.mounted = false
+    }
+
+    updateCategoryPreferences(categoryIdList) {
+        this.setState({
+            user: {
+                ...this.state.user,
+                selectedCategories: categoryIdList
+            }
+        })
     }
 
     handleInputChange(event, inputFieldName) {
@@ -108,6 +120,11 @@ class ProfileForm extends Component {
                             value={this.state.user.contactMail} onChange={ event => this.handleInputChange(event, 'contactMail') }/>
                         
                         </div>
+
+                        <div className="formItem">
+                            <UserPreferences updateForm={this.updateCategoryPreferences}/>
+                        </div>
+
                         <div className="form-item">
                         <button type="submit" className={`btn btn-block btn-primary`} onClick={ this.handleSubmit }>Wyślij</button>
                         </div>
