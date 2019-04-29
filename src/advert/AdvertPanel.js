@@ -38,6 +38,7 @@ class AdvertPanel extends Component {
         this.state = {
             advertGrid: {
                 currentCategoryID: 0,
+                currentCategory: null,
                 currentPage: 0,
                 pageCount: 0,
                 currentTitleFilter: "",
@@ -110,9 +111,19 @@ class AdvertPanel extends Component {
         console.log(advertRequest)
     }
 
-    categoryChange(event) {
-        console.log("CATEGORY CHANGE")
-        this.loadAdverts()
+    categoryChange(categoryID, category) {
+        this.setState({
+            advertGrid: {
+                ...this.state.advertGrid,
+                currentCategoryID: categoryID,
+                currentCategory: category
+            }
+        }, () => {
+            console.log("New category ID: " + categoryID)
+            console.log(category)
+            this.loadAdverts()
+        
+        })
     }
 
     titleChange(titleFilter) {
@@ -177,7 +188,12 @@ class AdvertPanel extends Component {
                 </Adverts>
                 <Details>
                     <SortPanel changeHandler={this.sortChange} sortingState={this.state.advertGrid.sorting} />
-                    <AdvertDetailsPanel changeHandler={this.detailsChange} />
+                    { this.state.advertGrid.currentCategory !== null 
+                    && typeof this.state.advertGrid.currentCategory.infoList !== "undefined" ? (
+                        <AdvertDetailsPanel changeHandler={this.detailsChange} details={this.state.advertGrid.currentCategory.infoList} />
+                    ) : (
+                        <div></div>
+                    )}
                 </Details>
             </Panel>
         )

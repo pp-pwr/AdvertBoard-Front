@@ -43,10 +43,14 @@ class CategoryList extends Component {
         if (this.state.loading) {
              return <LoadingIndicator />
         }
+        
         return (
             <div>
                 { this.state.categoryList ? (
-                    <CategoryDropList categories={this.state.categoryList['subcategories']} next_level={0}/>
+                    <CategoryDropList 
+                    categories={this.state.categoryList['subcategories']} 
+                    changeHandler={this.props.changeHandler} 
+                    next_level={0}/>
                 ): (
                     <div>Brak kategorii</div>
                 )}
