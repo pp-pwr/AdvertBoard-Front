@@ -2,6 +2,17 @@ import React, { Component } from 'react'
 import AdvertTile from './AdvertTile'
 
 import '../Advert.css'
+import styled from 'styled-components'
+
+const Grid = styled.div`
+    text-align: center;
+    position: relative;
+    &:footer {
+        position:absolute;
+        width:100%;
+    }
+`;
+
 
 class AdvertGrid extends Component {
     constructor(props) {
@@ -28,12 +39,12 @@ class AdvertGrid extends Component {
 
     render() {
         return (
-            <div className="advert-content-box">
+            <Grid>
                 <div className="advert-flexbox">
                     {this.state.advertList.map(item =>
                         <AdvertTile key={ "tile_ " + item.id } className="advert-flexbox-item" advert={ item } />)}
                 </div>
-            </div>
+            </Grid>
         )
     }
 }
