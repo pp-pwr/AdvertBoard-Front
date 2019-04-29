@@ -1,14 +1,19 @@
 import React, { Component } from 'react'
 
+import '../../common/Pagination.scss'
+
 class PageSelectionPanel extends Component {
     constructor(props) {
         super(props);
         
-        this.state = {
-            currentPage: 0
-        }
+        this.currentPage = 0;
 
         this.createButtons = this.createButtons.bind(this)
+        this.notifyParent = this.notifyParent.bind(this)
+    }
+
+    notifyParent() {
+        this.props.changeHandler(this.currentPage)
     }
 
     setPage(page) {
@@ -20,10 +25,8 @@ class PageSelectionPanel extends Component {
             page = this.props.pages - 1
         }
 
-        this.setState({
-            currentPage: page
-        })
-        //updatePage(page)
+        this.currentPage = page
+        this.notifyParent()
     }
 
     createButtons() {
@@ -44,11 +47,11 @@ class PageSelectionPanel extends Component {
             <div>
                 { this.props.pages > 0 ? (
                     <ul className="pagination">
-                        <li key={ "page_prev" } onClick={() => this.setPage(this.state.currentPage - 1)} className='left page-numbers'>
+                        <li key={ "page_prev" } onClick={() => this.setPage(this.currentPage - 1)} className='left page-numbers'>
                             <button>Poprzednia</button>
                         </li>
                         { this.createButtons() }
-                        <li key={ "page_next" } onClick={() => this.setPage(this.state.currentPage + 1)} className='right page-numbers'>
+                        <li key={ "page_next" } onClick={() => this.setPage(this.currentPage + 1)} className='right page-numbers'>
                             <button>Następna</button>
                         </li>
                     </ul>

@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import ListGroup from 'react-bootstrap/ListGroup'
-import { updateContent } from '../grid/AdvertGrid'
 
 class CategoryDropList extends Component {
     constructor(props) {
@@ -32,14 +31,14 @@ class CategoryDropList extends Component {
                 selectedId: id
             })
             this.selectedCategory = true
-            updateContent(id)
+            //updateContent(id)
         } else {
             this.setState({
                 selected: this.prev_state.selected,
                 selectedId: this.state.selectedId
             })
             this.selectedCategory = false
-            updateContent(this.prev_state.selectedId)
+            //updateContent(this.prev_state.selectedId)
         }
     }
 
