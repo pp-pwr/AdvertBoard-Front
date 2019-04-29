@@ -3,8 +3,11 @@ import CategoryList from './categories/CategoryList'
 import AdvertGrid from './grid/AdvertGrid'
 import styled from 'styled-components';
 
-import SortPanel from './filters/SortPanel'
-import SearchBoxPanel from './filters/SearchBoxPanel'
+// import SortPanel from './filters/SortPanel'
+// import SearchBoxPanel from './filters/SearchBoxPanel'
+// import PageSelectionPanel from './filters/PageSelectionPanel'
+import {SortPanel, SearchBoxPanel, PageSelectionPanel, AdvertDetailsPanel} from './filters'
+
 
 import './Advert.css'
 
@@ -99,7 +102,7 @@ class AdvertPanel extends Component {
                 <Adverts>
                     <SearchBoxPanel changeHandler={this.titleChange}/>
                     <AdvertGrid advertOptions={this.state.advertGrid}/>
-                    <Pagination pages={this.state.advertGrid.pageCount} changeHandler={this.pageChange}/>
+                    <PageSelectionPanel pages={this.state.advertGrid.pageCount} changeHandler={this.pageChange}/>
                 </Adverts>
                 <Details>
                     <SortPanel changeHandler={this.sortChange} sortingState={this.state.advertGrid.sorting} />
@@ -107,78 +110,6 @@ class AdvertPanel extends Component {
                 </Details>
             </Panel>
         )
-    }
-}
-
-class AdvertDetailsPanel extends Component {
-    constructor() {
-        super()
-    }
-
-    render() {
-        return (
-            <div></div>
-        )
-    }
-}
-
-class Pagination extends React.Component {
-    constructor(props) {
-        super(props);
-        
-        this.state = {
-            currentPage: 0
-        }
-
-        this.createButtons = this.createButtons.bind(this)
-    }
-
-    setPage(page) {
-        if(page < 0) {
-            page = 0
-        }
-
-        if(page >= this.props.pages) {
-            page = this.props.pages - 1
-        }
-
-        this.setState({
-            currentPage: page
-        })
-        //updatePage(page)
-    }
-
-    createButtons() {
-        let buttons = []
-
-        for(let i = 0; i < this.props.pages; i++) {
-            buttons.push(
-                <li key={ "page_" + i } onClick={() => this.setPage(i)} className='page-numbers'>
-                    <button>{ i + 1}</button>
-                </li>
-            );
-        }
-        return buttons
-    }
-
-    render() {
-        return (
-            <div>
-                { this.props.pages > 0 ? (
-                    <ul className="pagination">
-                        <li key={ "page_prev" } onClick={() => this.setPage(this.state.currentPage - 1)} className='left page-numbers'>
-                            <button>Poprzednia</button>
-                        </li>
-                        { this.createButtons() }
-                        <li key={ "page_next" } onClick={() => this.setPage(this.state.currentPage + 1)} className='right page-numbers'>
-                            <button>Następna</button>
-                        </li>
-                    </ul>
-                ) : (
-                    <div></div>
-                )}
-            </div>
-        );
     }
 }
 
