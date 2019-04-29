@@ -1,4 +1,10 @@
 import React, { Component } from 'react'
+import styled from 'styled-components'
+
+const SortBox = styled.div`
+    margin-top: 3vh;
+    width: 100%;
+`;
 
 class SortPanel extends Component {
 
@@ -46,13 +52,13 @@ class SortPanel extends Component {
 
     render() {
         return (
-            <div className="sort-box" width="30px">
+            <SortBox>
                     <button className="btn btn-block" name="title_desc" onClick={this.sortData}>Nazwa malejąco</button>
                     <button className="btn btn-block" name="title_asc" onClick={this.sortData}>Nazwa rosnąco</button>
                     <button className="btn btn-block" name="date_desc" onClick={this.sortData}>Data malejąco</button>
                     <button className="btn btn-block" name="date_asc" onClick={this.sortData}>Data rosnąco</button>
                     <button className="btn btn-block" name="reset" onClick={this.sortData}>Resetuj</button>
-            </div>
+            </SortBox>
         )
     }
 }
