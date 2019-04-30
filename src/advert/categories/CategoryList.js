@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
-import { getCategories } from '../utils/APIUtils'
-import LoadingIndicator from '../common/LoadingIndicator'
+import { getCategories } from '../../utils/APIUtils'
+import LoadingIndicator from '../../common/LoadingIndicator'
 import CategoryDropList from './CategoryChoice'
-import ListGroup from 'react-bootstrap/ListGroup'
 
-import './Advert.css'
+import '../Advert.css'
 
 class CategoryList extends Component {
 
@@ -44,10 +43,14 @@ class CategoryList extends Component {
         if (this.state.loading) {
              return <LoadingIndicator />
         }
+        
         return (
             <div>
                 { this.state.categoryList ? (
-                    <CategoryDropList categories={this.state.categoryList['subcategories']} next_level={0}/>
+                    <CategoryDropList 
+                    categories={this.state.categoryList['subcategories']} 
+                    changeHandler={this.props.changeHandler} 
+                    next_level={0}/>
                 ): (
                     <div>Brak kategorii</div>
                 )}

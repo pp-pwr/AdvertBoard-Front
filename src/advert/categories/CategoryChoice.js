@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import ListGroup from 'react-bootstrap/ListGroup'
-import { updateContent } from './AdvertGrid'
 
 class CategoryDropList extends Component {
     constructor(props) {
@@ -8,39 +7,35 @@ class CategoryDropList extends Component {
         this.state = {
             categoryList: [],
             selected: -1,
-            selectedId: -1,
+            selectedId: 0,
             level: 0
-        }
-
-        this.prev_state = {
-            selected: -1,
-            selectedId: -1
         }
 
         this.selectedCategory = this.props.selected
     }
 
     setCategory = (index, id) => {
-        this.prev_state = {
-            selected: this.state.selected,
-            selectedId: this.state.selectedId
+        let newSelected = this.state.selected
+        let newSelectedId = this.state.selectedId
+
+        if(newSelected !== index && newSelectedId !== id) {
+            newSelected = index
+            newSelectedId = id
+            this.selectedCategory = true
+        } else {
+            this.selectedCategory = false
         }
 
-        if(this.state.selected !== index && this.state.selectedId !== id) {
-            this.setState({
-                selected: index,
-                selectedId: id
-            })
-            this.selectedCategory = true
-            updateContent(id)
-        } else {
-            this.setState({
-                selected: this.prev_state.selected,
-                selectedId: this.state.selectedId
-            })
-            this.selectedCategory = false
-            updateContent(this.prev_state.selectedId)
-        }
+        this.setState({
+            selected: newSelected,
+            selectedId: newSelectedId
+        }, () => {
+            if(this.state.selected === -1) {
+                this.props.changeHandler(0, this.state.categoryList[0]);
+            } else {
+                this.props.changeHandler(this.state.selectedId, this.state.categoryList[this.state.selected]);
+            }
+        })
     }
 
     componentDidMount() {
@@ -54,6 +49,8 @@ class CategoryDropList extends Component {
             selected: -1,
             selectedId: selectedIndex,
             level: this.props.next_level
+        }, () => {
+            this.setCategory(-1, 0)
         })
     }
 
@@ -65,7 +62,6 @@ class CategoryDropList extends Component {
 
         for(let i = 0; i < this.state.categoryList.length; i++) {
             let category = this.state.categoryList[i]
-            let state = "categoryInactive"
 
             categories.push(
                 <ListGroup.Item className="category-list-item" action width="100%"
@@ -79,7 +75,9 @@ class CategoryDropList extends Component {
                 categories.push(
                     <CategoryDropList key={category['name']} 
                     categories={this.state.categoryList[this.state.selected]['subcategories']}
-                    next_level={this.state.level + 1} selectedCategory={false}/>
+                    next_level={this.state.level + 1} 
+                    selectedCategory={false} 
+                    changeHandler={this.props.changeHandler}/>
                 )
             }
         }
