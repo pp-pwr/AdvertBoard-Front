@@ -31,8 +31,9 @@ const Adverts = styled.div`
 `;
 
 const ContentGrid = styled.div`
-    display: flex;
+    display: flex-inline;
     align-items: center;
+    text-align: center;
 `;
 
 class AdvertPanel extends Component {
@@ -187,7 +188,7 @@ class AdvertPanel extends Component {
                     ) : (
                         <ContentGrid>
                             <AdvertGrid itemList={this.state.advertGrid.advertList}/>
-                            <PageSelectionPanel pages={this.state.advertGrid.currentPage} changeHandler={this.pageChange}/>
+                            <PageSelectionPanel pages={this.state.advertGrid.pageCount} changeHandler={this.pageChange}/>
                         </ContentGrid>
                     )}
                 </Adverts>
