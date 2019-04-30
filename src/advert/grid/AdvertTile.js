@@ -25,16 +25,8 @@ var normal = {
 }
 
 class AdvertTile extends Component {
-    handleAdvertClick = () => {
-        this.props.history.push({
-            pathname: '/advert',
-            state: { detail: this.props.advert }
-        })
-    }
-
     render() {
         this.advert = this.props.advert
-
         return (
             <Tile style={this.advert.recommended ? recommended : normal}>
                 <div className="advert-tile-body">
