@@ -14,6 +14,16 @@ const Tile = styled.div`
     border-radius:3px;
 `;
 
+var recommended = {
+    "border-style": "solid",
+    "border-width": "2px",
+    "border-color": "gold"
+}
+
+var normal = {
+
+}
+
 class AdvertTile extends Component {
     handleAdvertClick = () => {
         this.props.history.push({
@@ -26,7 +36,7 @@ class AdvertTile extends Component {
         this.advert = this.props.advert
 
         return (
-            <Tile>
+            <Tile style={this.advert.recommended ? recommended : normal}>
                 <div className="advert-tile-body">
                     { this.advert.pic ? (
                         <img src={ 'data:image/png;base64,' + this.advert.pic.substring(22)} alt="Ad" className="advert-photo"></img>
