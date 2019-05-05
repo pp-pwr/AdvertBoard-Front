@@ -17,6 +17,7 @@ class NavigationBar extends Component {
                 </Navbar.Collapse>
                 <Navbar.Collapse className="justify-content-end" id="basic-navbar-nav">
                     <Nav>
+                        <Nav.Link href="/admin">PANEL ADMINA</Nav.Link>
                         <Nav.Link href="/profile/search">Wyszukaj użytkownika</Nav.Link>
                     </Nav>
                     { this.props.authenticated ? (
