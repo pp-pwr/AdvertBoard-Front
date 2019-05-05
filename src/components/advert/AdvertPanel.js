@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
-import CategoryList from './categories/CategoryList'
+import CategoryList from '../category/CategoryList'
 import AdvertGrid from './grid/AdvertGrid'
 import styled from 'styled-components';
-import LoadingIndicator from '../common/LoadingIndicator'
+import LoadingIndicator from '../../common/LoadingIndicator'
 import Alert from 'react-s-alert';
 
-import { getAdvertsByCategory } from '../utils/APIUtils'
+import { getAdvertsByCategory } from '../../utils/APIUtils'
 
-import {SortPanel, SearchBoxPanel, PageSelectionPanel, AdvertDetailsPanel} from './filters'
+import {SortPanel, SearchBoxPanel, PageSelectionPanel} from './filters'
 
 
 import './Advert.css'
@@ -16,18 +16,19 @@ const Panel = styled.div`
     display: flex;
     align-items: flex-start;
     flex-grow: 1;
-    flex: 1;
 `;
 
 const Details = styled.div`
     display: flex-inline;
+    max-width: 25vw;
     text-align: center;
-    margin-right: 0px;
-    flex: 1;
+    margin-right: 1vw;
 `;
 
 const Adverts = styled.div`
-    width: 70vw;
+    text-align: center;
+    width: 100%;
+    flex-grow: 1;
 `;
 
 const ContentGrid = styled.div`

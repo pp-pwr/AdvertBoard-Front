@@ -9,12 +9,12 @@ import './App.css'
 import NotFound from "../common/NotFound"
 import LoadingIndicator from "../common/LoadingIndicator"
 import NavigationBar from "../common/NavigationBar"
-import AdvertPanel from "../advert/AdvertPanel"
+import AdvertPanel from "../components/advert/AdvertPanel"
 import Login from "../user/login/Login"
 import Signup from "../user/signup/Signup"
 import OAuth2RedirectHandler from "../user/oauth2/OAuth2RedirectHandler"
 import PrivateRoute from "../common/PrivateRoute"
-import AdvertDetails from "../advert/AdvertDetails"
+import AdvertDetails from "../components/advert/AdvertDetails"
 import Profile from "../user/profile/Profile"
 import ProfileForm from "../user/profile/ProfileForm"
 import NoProfile from "../user/profile/NoProfile"
@@ -22,7 +22,7 @@ import ProfileList from "../user/profile/ProfileList"
 
 import {ACCESS_TOKEN} from "../constants"
 import {getCurrentUser} from "../utils/APIUtils"
-import AdvertForm from "../advert/AdvertForm";
+import AdvertForm from "../components/advert/AdvertForm";
 
 class App extends Component {
 

@@ -1,8 +1,8 @@
 import React, {Component} from "react"
-import {getCategories, addAdvert, updateAdvert } from "../utils/APIUtils"
+import {getCategories, addAdvert, updateAdvert } from "../../utils/APIUtils"
 import Alert from 'react-s-alert'
 import ReactSearchBox from 'react-search-box'
-import LoadingIndicator from "../common/LoadingIndicator";
+import LoadingIndicator from "../../common/LoadingIndicator";
 import AdditionalInfo from './AdditionalInfo'
 
 import { FilePond } from 'react-filepond'

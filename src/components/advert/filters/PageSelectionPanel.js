@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import '../../common/Pagination.scss'
+import '../../../common/Pagination.scss'
 
 class PageSelectionPanel extends Component {
     constructor(props) {

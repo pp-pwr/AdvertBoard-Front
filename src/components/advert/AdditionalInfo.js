@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import LoadingIndicator from "../common/LoadingIndicator";
+import LoadingIndicator from "../../common/LoadingIndicator";
 
 import './Advert.css'
 

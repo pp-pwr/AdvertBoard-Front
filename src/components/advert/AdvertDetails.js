@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import './Advert.css'
-import { getCurrentUser, getAdvertById, getAdvertImageURL } from '../utils/APIUtils'
+import { getCurrentUser, getAdvertById, getAdvertImageURL } from '../../utils/APIUtils'
 import Alert from 'react-s-alert'
-import LoadingIndicator from '../common/LoadingIndicator';
+import LoadingIndicator from '../../common/LoadingIndicator';
 import { Link } from 'react-router-dom'
-import bike from '../assets/images/bike.jpg'
+import bike from '../../assets/images/bike.jpg'
 
 class AdvertDetails extends Component {
 

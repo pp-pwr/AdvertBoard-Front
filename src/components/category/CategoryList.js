@@ -3,8 +3,6 @@ import { getCategories } from '../../utils/APIUtils'
 import LoadingIndicator from '../../common/LoadingIndicator'
 import CategoryDropList from './CategoryChoice'
 
-import '../Advert.css'
-
 class CategoryList extends Component {
 
     constructor() {
