@@ -134,6 +134,13 @@ export function getAdverts(advertsRequest) {
     })
 }
 
+export function getRecommendedAdverts(size) {
+    return request({
+        url: API_BASE_URL + "/advert/recommended?advertCount=" + size,
+        method: 'GET'
+    })
+}
+
 export function getAdvertById(advertRequest) {
     const advert_id = advertRequest['id']
     return request({
