@@ -17,6 +17,7 @@ const Panel = styled.div`
     display: flex;
     align-items: flex-start;
     flex-grow: 1;
+    justify-content: space-around;
 `;
 
 const Details = styled.div`
@@ -24,18 +25,21 @@ const Details = styled.div`
     max-width: 25vw;
     text-align: center;
     margin-right: 1vw;
+    justify-content: space-around;
 `;
 
 const Adverts = styled.div`
     text-align: center;
     width: 100%;
     flex-grow: 1;
+    
 `;
 
 const ContentGrid = styled.div`
     display: flex-inline;
     align-items: center;
     text-align: center;
+    justify-content: space-around;
 `;
 
 const RecommendedAdverts = styled.div`
