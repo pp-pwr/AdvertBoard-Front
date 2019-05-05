@@ -25,21 +25,22 @@ class CategoryDropList extends Component {
         } else {
             this.selectedCategory = false
         }
+        
+        let modified = false;
 
         this.setState({
             selected: newSelected,
             selectedId: newSelectedId
         }, () => {
-            if(this.state.selected === -1) {
-                this.props.changeHandler(0, this.state.categoryList[0]);
-            } else {
-                this.props.changeHandler(this.state.selectedId, this.state.categoryList[this.state.selected]);
+            if(!modified) {
+                this.props.changeHandler(newSelectedId, this.state.categoryList[newSelected]);
+                modified = true
             }
         })
     }
 
     componentDidMount() {
-        let selectedIndex = -1
+        let selectedIndex = 0
         if(this.props.categories && this.state.selected !== -1) {
             selectedIndex = this.props.categories[0]['id']
         }
@@ -49,8 +50,6 @@ class CategoryDropList extends Component {
             selected: -1,
             selectedId: selectedIndex,
             level: this.props.next_level
-        }, () => {
-            this.setCategory(-1, 0)
         })
     }
 
