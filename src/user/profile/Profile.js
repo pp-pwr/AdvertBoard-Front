@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { getCurrentUser, getUserById } from '../../utils/APIUtils'
+import { getCurrentUser, getUserById, getAdvertImageURL } from '../../utils/APIUtils'
 import Alert from 'react-s-alert'
 import LoadingIndicator from '../../common/LoadingIndicator';
 import { Redirect, Link } from 'react-router-dom'
@@ -93,11 +93,7 @@ class Profile extends Component {
                 
                 user_adverts.push(
                     <div key={advert.id} className="advert-list-element" onClick={() => this.handleAdvertClick(advert.id)}>
-                        { advert.pic ? (
-                        <img className="advert-list-element-image" src={ 'data:image/png;base64,' + advert.pic.substring(22)} alt="Ad"></img>
-                    ) : (
-                        <img src={bike} alt="Ad" className="advert-list-element-image"></img>
-                    )}
+                        <img className="advert-list-element-image" src={getAdvertImageURL(advert.id)} alt="Ad"></img>
                         <p className="advert-list-element-title">{advert.title}</p>
                         <p className="advert-list-element-date">Data dodania: {advert.date}</p>
                     </div>
