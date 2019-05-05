@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
-
+import { getAdvertImageURL } from '../../utils/APIUtils'
 import '../Advert.css'
 import bike from '../../assets/images/bike.jpg'
 
@@ -30,11 +30,7 @@ class AdvertTile extends Component {
         return (
             <Tile style={this.advert.recommended ? recommended : normal}>
                 <div className="advert-tile-body">
-                    { this.advert.pic ? (
-                        <img src={ 'data:image/png;base64,' + this.advert.pic.substring(22)} alt="Ad" className="advert-photo"></img>
-                    ) : (
-                        <img src={bike} alt="Ad" className="advert-photo"></img>
-                    )}
+                    <img src={getAdvertImageURL(this.advert.id)} alt="Ad" className="advert-photo"></img>
                 </div>
                 <div className="advert-tile-body">
                     <div className="advert-details">

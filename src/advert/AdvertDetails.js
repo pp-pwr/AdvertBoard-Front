@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import './Advert.css'
-import { getCurrentUser, getAdvertById } from '../utils/APIUtils'
+import { getCurrentUser, getAdvertById, getAdvertImageURL } from '../utils/APIUtils'
 import Alert from 'react-s-alert'
 import LoadingIndicator from '../common/LoadingIndicator';
 import { Link } from 'react-router-dom'
@@ -48,7 +48,6 @@ class AdvertDetails extends Component {
     }
 
     getAdvert(id) {
-        console.log(id)
         const advertRequest = {
             "id": id
         }
@@ -72,7 +71,7 @@ class AdvertDetails extends Component {
                     loadingAdvert: false
                 })
             }).catch(error => {
-                Alert.error(error)
+                Alert.error(error.message)
             });
     }
 
@@ -102,11 +101,7 @@ class AdvertDetails extends Component {
                 <p>{'Opis: ' + this.state.advertInfo.description}</p>
                 <p>{'Data: ' + this.state.advertInfo.date}</p>
                 <p>Obrazek: </p><br/>
-                { this.state.advertInfo.image ? (
-                    <img className="crop-image" src={ 'data:image/png;base64,' + this.state.advertInfo.image.substring(22)} alt="Ad"></img>
-                ) : (
-                    <img src={bike} alt="Ad" className="crop-image"></img>
-                )}
+                <img className="crop-image" src={getAdvertImageURL(this.state.advertInfo.id)} alt="Ad"></img>
                 <br/>
                 { !this.state.loadingUser && this.state.user_adverts.includes(this.state.advertInfo.id) ? (
                     <Link className="" to={{

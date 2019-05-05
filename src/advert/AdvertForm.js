@@ -1,10 +1,14 @@
 import React, {Component} from "react"
 import {getCategories, addAdvert, updateAdvert } from "../utils/APIUtils"
 import Alert from 'react-s-alert'
-import FileBase64 from 'react-file-base64'
 import ReactSearchBox from 'react-search-box'
 import LoadingIndicator from "../common/LoadingIndicator";
 import AdditionalInfo from './AdditionalInfo'
+
+import { FilePond } from 'react-filepond'
+
+import 'filepond/dist/filepond.min.css'
+import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css';
 
 export function setCategory(categoryId) {
     if(this !== undefined) {
@@ -27,8 +31,7 @@ class AdvertForm extends Component {
                 title: '',
                 tags: '',
                 description: '',
-                image: '',
-                fileName: '',
+                image: null,
                 infos: {},
                 selectedCat: props.advert_id
             },
@@ -40,6 +43,7 @@ class AdvertForm extends Component {
         this.categories = []
         this.update = false
         this.handleSubmit = this.handleSubmit.bind(this)
+        this.loadFiles = this.loadFiles.bind(this)
     }
 
     addChilds(categoryList) {
@@ -114,18 +118,14 @@ class AdvertForm extends Component {
             }})
     };
 
-    loadFiles(file) {
-        let base64_string = JSON.stringify(file.base64).substring(23)
+    loadFiles = (event) => {
         this.setState({
             advertInfo: {
                 ...this.state.advertInfo,
-                image: {
-                    name: file.name,
-                    size: file.size,
-                    type: file.type,
-                    base64: base64_string
-                }
+                image: event.target.files[0]
             }
+        }, () => {
+            console.log(this.state.advertInfo.image)
         })
     }
 
@@ -167,8 +167,6 @@ class AdvertForm extends Component {
     handleSubmit(event) {
         event.preventDefault();
 
-        console.log("state")
-        console.log(this.state)
         if(this.state.advertInfo.title.length > 0 && this.state.advertInfo.description.length > 0 
             && this.state.advertInfo.selectedCat) {
 
@@ -177,9 +175,11 @@ class AdvertForm extends Component {
                 "description": this.state.advertInfo.description,
                 "tags": this.state.advertInfo.tags.split(/(\s+)/).filter( e => e.trim().length > 0),
                 "category": this.state.advertInfo.selectedCat,
-                "image": this.state.advertInfo.image,
-                "additionalInfo": this.state.advertInfo.infos
+                "imageFile": this.state.advertInfo.image,
+                "additionalInfo": JSON.stringify(this.state.advertInfo.infos)
             }
+            
+            console.log(advertInfo)
 
             if(!this.state.advert_id) {
                 if(!this.update) {
@@ -195,7 +195,7 @@ class AdvertForm extends Component {
                         "description": this.state.advertInfo.description,
                         "tags": this.state.advertInfo.tags.split(/(\s+)/).filter( e => e.trim().length > 0),
                         "id": this.props.location.advert.id,
-                        "image": this.state.advertInfo.image
+                        "imageFile": this.state.advertInfo.image
                     }
                     updateAdvert(advertInfo).then(response => {
                         Alert.success("Pomyślnie zaktualizowano")
@@ -232,9 +232,7 @@ class AdvertForm extends Component {
                             <input className="add-advert-item" type="text" name="tags" placeholder="Tagi"
                                 value={this.state.advertInfo.tags} onChange={this.handleInputChange} />
                             <br/>
-                            {/* <input className="add-advert-item" type="file" name="image" size="50"
-                                value={this.state.advertInfo.fileName ? this.state.advertInfo.fileName : ""} onChange={this.handleFileChange}/> */}
-                            <FileBase64 className="add-advert-item" multiple={false} onDone={this.loadFiles.bind(this)} />
+                            <input className="add-advert-item" accept="image/*" type="file" name="image" size="50" onChange={(files) => this.loadFiles(files)}/>
                             <br/>
                         </div>
                         

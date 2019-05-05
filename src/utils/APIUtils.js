@@ -1,9 +1,11 @@
 import { API_BASE_URL, ACCESS_TOKEN } from '../constants'
 
-const request = (options) => {
-    const headers = new Headers({
-        'Content-Type': 'application/json'
-    })
+const request = (options, content_type=null) => {
+    const headers = new Headers()
+
+    if(content_type !== null) {
+        headers.append('Content-Type', content_type)
+    }
 
     if(localStorage.getItem(ACCESS_TOKEN)) {
         headers.append('Authorization', 'Bearer ' + localStorage.getItem(ACCESS_TOKEN))
@@ -43,7 +45,7 @@ export function updateProfile(profileRequest) {
         url: API_BASE_URL + "/user/me",
         method: 'POST',
         body: JSON.stringify(profileRequest)
-    })
+    }, 'application/json')
 }
 
 export function getUserById(userRequest) {
@@ -58,7 +60,7 @@ export function login(loginRequest) {
         url: API_BASE_URL + "/auth/login",
         method: 'POST',
         body: JSON.stringify(loginRequest)
-    });
+    }, 'application/json');
 }
 
 export function signup(signupRequest) {
@@ -66,7 +68,7 @@ export function signup(signupRequest) {
         url: API_BASE_URL + "/auth/signup",
         method: 'POST',
         body: JSON.stringify(signupRequest)
-    });
+    }, 'application/json');
 }
 
 export function getCategories(categoryRequest) {
@@ -118,7 +120,7 @@ export function getAdvertsByCategory(categoryRequest) {
     }
 
     return request({
-        url: API_BASE_URL + "/category/get?categoryId=" + categoryId + "&page=" + page + "&limit=" + limit + containsString + sortString,
+        url: API_BASE_URL + "/advert/browse?categoryId=" + categoryId + "&page=" + page + "&limit=" + limit + containsString + sortString,
         method: 'GET'
     })
 }
@@ -141,17 +143,34 @@ export function getAdvertById(advertRequest) {
 }
 
 export function addAdvert(advertForm) {
+
+    const formData = new FormData()
+
+    for(const [key, value] of Object.entries(advertForm)) {
+        formData.append(key, value)
+    }
+
     return request({
         url: API_BASE_URL + "/advert/add",
         method: 'POST',
-        body: JSON.stringify(advertForm)
+        body: formData
     });
 }
 
 export function updateAdvert(advertForm) {
+    const formData = new FormData()
+
+    for(const [key, value] of Object.entries(advertForm)) {
+        formData.append(key, value)
+    }
+
     return request({
         url: API_BASE_URL + "/advert/edit",
         method: 'POST',
-        body: JSON.stringify(advertForm)
+        body: formData
     });
+}
+
+export function getAdvertImageURL(advertId) {
+    return API_BASE_URL + "/advert/image?advertId=" + advertId
 }
