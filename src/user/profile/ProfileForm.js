@@ -18,10 +18,10 @@ class ProfileForm extends Component {
                 "telephoneNumber": 0,
                 "contactMail": "",
                 "selectedCategories": []
-            }
+            },
+            mounted: false
         }
 
-        this.mounted = false
 
         this.handleInputChange = this.handleInputChange.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
@@ -29,8 +29,6 @@ class ProfileForm extends Component {
     }
 
     componentDidMount() {
-        this.mounted = true
-
         if (this.props.user && this.props.user.profileView) {
             const profile = this.props.user.profileView
             this.setState({
@@ -40,15 +38,20 @@ class ProfileForm extends Component {
                     "visibleName": profile['visibleName'],
                     "telephoneNumber": profile['telephoneNumber'],
                     "contactMail": profile['contactMail']
-                }
+                },
+                mounted: true
             })
         } else {
-            this.forceUpdate()
+            this.setState({
+                mounted: true
+            })
         }
     }
 
     componentWillUnmount() {
-        this.mounted = false
+        this.setState({
+            mounted: false
+        })
     }
 
     updateCategoryPreferences(categoryIdList) {
@@ -67,8 +70,6 @@ class ProfileForm extends Component {
                 [inputFieldName]: event.target.value
             }
         })
-
-        console.log(this.state.user)
     }
 
     handleSubmit(event) {
@@ -78,15 +79,15 @@ class ProfileForm extends Component {
 
         updateProfile(loginRequest).then(response => {
             Alert.success("Witaj, " + this.state.user.firstName + " " + this.state.user.lastName + ". Twoje nowe dane są teraz widoczne dla wszystkich użytkowników serwisu!")
-            this.props.history.push('/profile/me')
         }).catch(error => {
             Alert.error((error && error.message) || "Wystąpił nieznany błąd! Skontaktuj się z administratorem!")
         })
+
+        this.props.history.push('/profile/me')
     }
 
     render() {
-        console.log("MOunted? " + this.mounted)
-        if (!this.mounted) {
+        if (!this.state.mounted) {
             return <LoadingIndicator />
         }
 

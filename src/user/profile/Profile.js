@@ -20,10 +20,10 @@ class Profile extends Component {
                 telephoneNumber: null,
                 contactMail: "",
                 adverts: []
-            }
+            },
+            mounted: false
         }
 
-        this.mounted = false
     }
 
     setUser(userData) {
@@ -46,13 +46,11 @@ class Profile extends Component {
 
     loadCurrentUser() {
         getCurrentUser().then(response => {
-            console.log('aajjjj')
-            console.log(response.profileView)
-            if(this.mounted) {
+            if(this.state.mounted) {
                 this.setUser(response.profileView)
             }
         }).catch(error => {
-            Alert.error(error)
+            Alert.error((error && error.message) || "Ups!")
         })
     }
 
@@ -64,7 +62,7 @@ class Profile extends Component {
         const userRequest = Object.assign({}, user)
         
         getUserById(userRequest).then(response => {
-            if(this.mounted) {
+            if(this.state.mounted) {
                 this.setUser(response)
             }
         }).catch(error => {
@@ -107,23 +105,30 @@ class Profile extends Component {
     componentDidMount() {
         this.user_id = this.props.match.params.user_id
         this.current_user = this.props.user
-        this.mounted = true
+
+        this.setState({
+            mounted: true
+        })
 
         this.loadUserData()
     }
 
     componentWillUnmount() {
-        this.mounted = false
+        this.setState({
+            mounted: false
+        })
     }
 
     render() {
-        if(!this.mounted) {
+        if(!this.state.mounted) {
             return <LoadingIndicator/>
         }
-        
+
         if(this.current_user && this.current_user.profileView === null) {
             return <Redirect to='/profile/edit' />
         }
+
+        console.log(this.state)
 
         return (
             <div className="profile-info">

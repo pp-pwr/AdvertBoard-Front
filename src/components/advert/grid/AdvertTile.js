@@ -12,6 +12,8 @@ const Tile = styled.div`
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     padding: 0vw 0vh 0.2vw 0vh;
     margin: 1vw 2vh 1vw 2vh;
+    
+    text-align:center;
 
     --webkit-transition: transform 250ms;
     transition: transform 250ms;
@@ -52,9 +54,9 @@ const TileImage = styled.div`
 `
 
 var recommended = {
-    "border-style": "solid",
-    "border-width": "2px",
-    "border-color": "gold"
+    "borderStyle": "solid",
+    "borderWidth": "2px",
+    "borderColor": "gold"
 }
 
 var normal = {
