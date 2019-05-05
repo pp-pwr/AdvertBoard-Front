@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
 import CategoryList from '../category/CategoryList'
 import AdvertGrid from './grid/AdvertGrid'
+import AdvertSlider from "./grid/AdvertSlick"
 import styled from 'styled-components';
 import LoadingIndicator from '../../common/LoadingIndicator'
 import Alert from 'react-s-alert';
 
-import { getAdvertsByCategory } from '../../utils/APIUtils'
+import { getAdvertsByCategory, getRecommendedAdverts } from '../../utils/APIUtils'
 
 import {SortPanel, SearchBoxPanel, PageSelectionPanel} from './filters'
 
@@ -37,6 +38,18 @@ const ContentGrid = styled.div`
     text-align: center;
 `;
 
+const RecommendedAdverts = styled.div`
+    width: 70vw;
+    padding: 0vw 2vh 2vw 2vh;
+    
+    margin-left: auto;
+    margin-right: auto;
+
+    & > .recommended-slider {
+        text-align: center;
+    }
+`
+
 class AdvertPanel extends Component {
 
     constructor(props) {
@@ -51,7 +64,8 @@ class AdvertPanel extends Component {
                 currentTitleFilter: "",
                 pageLimit: 10,
                 sorting: [],
-                advertList: []
+                advertList: [],
+                recommendedAdverts: []
             },
             mounted: false,
             loading: true
@@ -64,19 +78,42 @@ class AdvertPanel extends Component {
         this.pageChange = this.pageChange.bind(this);
 
         this.loadAdverts = this.loadAdverts.bind(this);
+        this.loadRecommendedAdverts = this.loadRecommendedAdverts.bind(this);
     }
 
     componentDidMount() {
         this.setState({
             mounted: true
         }, () => {
-            this.loadAdverts()
+            this.loadAdverts();
+            this.loadRecommendedAdverts();
         })
     }
 
     componentWillUnmount() {
         this.setState({
             mounted: false
+        })
+    }
+
+    loadRecommendedAdverts() {
+        if(!this.state.mounted) {
+            return
+        }
+
+        const requestSize = 10;
+
+        getRecommendedAdverts(requestSize)
+        .then(response => {
+            this.setState({
+                advertGrid: {
+                    ...this.state.advertGrid,
+                    recommendedAdverts: response
+                }
+            })
+        })
+        .catch(error => {
+            Alert.error((error && error.message) || "Coś poszło nie tak! Spróbuj ponownie lub skontaktuj się z administratorem!")
         })
     }
 
@@ -188,6 +225,9 @@ class AdvertPanel extends Component {
                         <LoadingIndicator />
                     ) : (
                         <ContentGrid>
+                            <RecommendedAdverts>
+                                <AdvertSlider itemList={this.state.advertGrid.recommendedAdverts} />
+                            </RecommendedAdverts>
                             <AdvertGrid itemList={this.state.advertGrid.advertList}/>
                             <PageSelectionPanel pages={this.state.advertGrid.pageCount} changeHandler={this.pageChange}/>
                         </ContentGrid>
