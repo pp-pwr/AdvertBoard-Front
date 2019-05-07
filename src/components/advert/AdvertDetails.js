@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import './Advert.css'
-import { getCurrentUser, getAdvertById, getAdvertImageURL } from '../../utils/APIUtils'
+import { getCurrentUser, getAdvertById, getAdvertImageURL, reportAdvertById } from '../../utils/APIUtils'
 import Alert from 'react-s-alert'
 import LoadingIndicator from '../../common/LoadingIndicator';
 import { Link } from 'react-router-dom'
@@ -22,6 +22,8 @@ class AdvertDetails extends Component {
             },
             loadingUser: true,
             loadingAdvert: true,
+            user: null,
+            reportComment: "",
             user_adverts: []
         }
     }
@@ -42,7 +44,8 @@ class AdvertDetails extends Component {
                     this.state.user_adverts.push(adverts[i]['id'])
                 }
                 this.setState({
-                    loadingUser: false
+                    loadingUser: false,
+                    user: response
                 })
             }).catch(error => {});
     }
@@ -75,6 +78,23 @@ class AdvertDetails extends Component {
             });
     }
 
+    reportAdvertHandler() {
+        const reportRequest = {
+            advertId: this.state.advertInfo.id,
+            comment: this.state.reportComment
+        }
+
+        reportAdvertById(Object.assign({}, reportRequest))
+            .then(response => {
+                this.setState({
+                    reported: true
+                })
+                //Alert.ok("Ogłoszenie zostało wysłane do administratora! Dziękujemy za pomoc!")
+            }).catch(error => {
+                Alert.error(error.message)
+            });
+    }
+
     getAdditionalInfo(infos) {
         let infos_arr = []
         for (var key in infos) {
@@ -89,6 +109,12 @@ class AdvertDetails extends Component {
         }
 
         return infos_arr
+    }
+
+    handleCommentUpdate = (event) => {
+        this.setState({
+            reportComment: event.target.value
+        })
     }
 
     render() {
@@ -115,6 +141,17 @@ class AdvertDetails extends Component {
                 <div className="additional-info-holder">
                     { this.getAdditionalInfo(this.state.advertInfo.infos) }
                 </div>
+
+                {
+                    this.state.user !== null && !this.state.reported ? (
+                        <div>
+                            <input type="text" placeholder="Komentarz" onChange={this.handleCommentUpdate.bind(this)} />
+                            <input type="button" onClick={this.reportAdvertHandler.bind(this)} value="Zgłoś" />
+                        </div>
+                    ) : (
+                        <div></div>
+                    )
+                }
             </div>
         )
     }

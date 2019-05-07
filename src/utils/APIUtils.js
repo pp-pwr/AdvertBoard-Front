@@ -149,6 +149,27 @@ export function getAdvertById(advertRequest) {
     })
 }
 
+export function getAdvertByAdvertId(id) {
+    return request({
+        url: API_BASE_URL + "/advert/get?id=" + id,
+        method: 'GET'
+    })
+}
+
+export function getUnsolvedReports(page, limit) {
+    return request({
+        url: API_BASE_URL + "/admin/report?caseStatus=unsolved&page=" + page + "&limit=" + limit,
+        method: 'GET'
+    })
+}
+
+export function getBannedAdverts(page, limit) {
+    return request({
+        url: API_BASE_URL + "/admin/advert/banned", // "&page=" + page + "&limit=" + limit,"
+        method: 'GET'
+    })
+}
+
 export function addAdvert(advertForm) {
 
     const formData = new FormData()
@@ -162,6 +183,40 @@ export function addAdvert(advertForm) {
         method: 'POST',
         body: formData
     });
+}
+
+export function setAdvertStatus(id, newStatus) {
+    const formData = new FormData()
+    formData.append('advertId', id)
+    formData.append('status', newStatus)
+    return request({
+        url: API_BASE_URL + "/admin/advert/status",
+        method: 'POST',
+        body: formData
+    })
+}
+
+
+export function setCaseStatus(id, newCaseStatus) {
+
+    const formData = new FormData()
+
+    formData.append('reportId', id)
+    formData.append('status', newCaseStatus)
+
+    return request({
+        url: API_BASE_URL + "/admin/report/status",
+        method: 'POST',
+        body: formData
+    })
+}
+
+export function reportAdvertById(reportRequest) {
+    return request({
+        url: API_BASE_URL + "/advert/report",
+        method: 'POST',
+        body: JSON.stringify(reportRequest)
+    }, 'application/json')
 }
 
 export function updateAdvert(advertForm) {

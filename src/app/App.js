@@ -51,6 +51,8 @@ class App extends Component {
                     authenticated: true,
                     user: response,
                     loading: false
+                }, () => {
+                    console.log(this.state.user)
                 })
                 if (showAlert)
                     Alert.success("Zostałeś zalogowany!")
