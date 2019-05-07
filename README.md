@@ -17,3 +17,12 @@ Uruchomienie testów
 
 Budowanie aplikacji:
 ### `npm run build`
+
+## Zrzuty ekranu
+
+### ![alt Ogloszenia](https://imgur.com/qdam2dw.png)
+### ![alt Formularz Logowania](https://imgur.com/bZvtGf6.png)
+### ![alt Formularz rejestracji](https://imgur.com/QxRsPu8.png)
+### ![alt Formularz dodawania ogloszenia](https://imgur.com/xP2x12j.png)
+### ![alt Uzupełnianie profilu](https://imgur.com/92XcXRE.png)
+### ![alt Profil użytkownika](https://imgur.com/QN0WdSv.png)
