@@ -19,15 +19,7 @@ class Advert:
         self.description = description
         self.tags = tags
         self.category = category
-
-        base_64 = base64.b64encode(imageIO.getvalue())
-        base_64_size = len(str(base_64))
-        self.image = {
-            "base64": str(base_64)[2:base_64_size-1],
-            "name": "obrazek.png",
-            "size": "100 kB",
-            "type": "image/png"
-        }
+        self.image = imageIO
         #print(self.image["base64"])
         self.additionalInfo = {}
 
@@ -40,25 +32,26 @@ class Advert:
 
 correct_categories = {
     "Motoryzacja": 1,
-    "Motocykle": 3,
-    "Samochody": 4,
-    "Opel": 6,
-    "BMW": 7,
-    "Volvo": 8,
-    "Volkswagen": 9,
-    "Hyundai": 10,
-    "Elektronika": 2,
-    "Smartfony": 5,
-    "Samsung": 11,
-    "Huawei": 12,
+    "Samochody": 2,
+    "Opel": 9,
+    "BMW": 6,
+    "Volvo": 7,
+    "Volkswagen": 10,
+    "Lancia": 8,
+    "Hyundai": 11,
+    "Audi": 16,
+    "Elektronika": 3,
+    "Smartfony": 4,
+    "Samsung": 12,
+    "Huawei": 14,
     "LG": 13,
-    "Motorola": 14
+    "Motorola": 15 
 }
 
-base_url="https://pwr-advert-board-backend.herokuapp.com/api/advert/add"
+base_url="http://localhost:8080/api/advert/add"
 
-auth_token='eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTU2NjE5MDY4LCJleHAiOjE1NTc0ODMwNjh9.UEE1Ncm8UH_xdmMmWutx9GQzdj1G-hnB7G4cUNNjFetgupx2ebUIEHz36XJWmeigyExPQgSQA-ZZoPhxB8R6TA'
-hed = {"authorization": "Bearer " + auth_token, "Content-Type" : "application/json;charset=UTF-8"}
+auth_token='eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiaWF0IjoxNTU3MjQyODY4LCJleHAiOjE1NTgxMDY4Njh9.lUZxsuvs_Eh1FBSQ6k5sufcUdj1aFom9aPSU_-AMvXgdzFQTfzU8R_8cEaKTXC0ykHfAYRyvZ7aLv0ur4wkO4Q'
+hed = {"authorization": "Bearer " + auth_token}
 
 def get_search_params(queryBody):
     _search_params = {
@@ -67,7 +60,7 @@ def get_search_params(queryBody):
         'safe': 'medium',
         'fileType': 'png',
         'imgType': 'photo',
-        'imgSize': 'small',
+        'imgSize': 'medium',
         'searchType': 'image'
     }
 
@@ -87,7 +80,7 @@ def generate_cars():
         "Hyundai": ["i30", "Getz"]
     }
 
-    for i in range(250):
+    for i in range(100):
         random_manufacturer = r.choice(manufacturers)
         random_model = r.choice(models[random_manufacturer])
         random_year = r.randint(1990, 2019)
@@ -107,6 +100,7 @@ def generate_cars():
         imageIO = BytesIO()
 
         if len(gis.results()) > 0:
+            
             for image in gis.results():
                 imageIO.seek(0)
 
@@ -116,29 +110,37 @@ def generate_cars():
 
                 imageIO.seek(0)
 
-            advert = Advert(f"{random_manufacturer} {random_model} - {random_year}", description, tags, category, imageIO, {})
+            additionalInfo = {
+                "cena": r.randint(5000, 35000)
+            }
+
+            if random_manufacturer == "Audi":
+                additionalInfo["model"] = random_model
+
+            print(additionalInfo)
+
+            advert = Advert(f"{random_manufacturer} {random_model} - {random_year}", description, tags, category, imageIO, additionalInfo)
 
             #print(f"Adres: {base_url}\n")
             #print(advert.toJSON() + "\n")
-            
+                
             data = {
                 "title": advert.title,
                 "description": advert.description,
                 "tags": advert.tags,
                 "additionalInfo": advert.additionalInfo,
-                "image": {
-                    "name": advert.image['name'],
-                    "base64": advert.image['base64'],
-                    "size": advert.image['size'],
-                    "type": advert.image['type']
-                },
                 "category": advert.category
             }
 
+            files = {
+                "imageFile": imageIO.getvalue()
+            }
+            if random_manufacturer == "Audi":
+                data["additionalInfo"] = random_model
 
-            #
-            response = requests.post(base_url, json=data, headers=hed)
-            print(f"{i}. Result: {response}")
+            print(f"{i}. Sending request...")
+            response = requests.post(base_url, data=data, files=files, headers=hed)
+            print(f"{i}. Result: {response} Response: {response.text}")
             # print(response.content)
             #print(response.json())
 
@@ -182,35 +184,38 @@ def generate_phones():
 
                 imageIO.seek(0)
 
-            advert = Advert(f"{random_manufacturer} {random_model} - {random_year}", description, tags, category, imageIO, {})
+            additionalInfo = {
+                "cena": r.randint(100, 5000)
+            }
+
+            print(additionalInfo)
+
+            advert = Advert(f"{random_manufacturer} {random_model} - {random_year}", description, tags, category, imageIO, additionalInfo)
 
             #print(f"Adres: {base_url}\n")
             #print(advert.toJSON() + "\n")
-            
+                
             data = {
                 "title": advert.title,
                 "description": advert.description,
                 "tags": advert.tags,
                 "additionalInfo": advert.additionalInfo,
-                "image": {
-                    "name": advert.image['name'],
-                    "base64": advert.image['base64'],
-                    "size": advert.image['size'],
-                    "type": advert.image['type']
-                },
                 "category": advert.category
             }
 
+            files = {
+                "imageFile": imageIO.getvalue()
+            }
+            if random_manufacturer == "Audi":
+                data["additionalIn"]
 
-            #
-            response = requests.post(base_url, json=data, headers=hed)
-            print(f"{i}. Result: {response}")
-            # print(response.content)
-            #print(response.json())
+            print(f"{i}. Sending request...")
+            response = requests.post(base_url, data=data, files=files, headers=hed)
+            print(f"{i}. Result: {response} Response: {response.text}")
 
 
 def generate_bikes():
     pass
 
 
-generate_phones()
+generate_cars()

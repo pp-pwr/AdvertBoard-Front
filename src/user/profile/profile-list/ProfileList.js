@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import LoadingIndicator from '../../common/LoadingIndicator';
-import { getUsers } from '../../utils/APIUtils'
+import LoadingIndicator from '../../../common/LoadingIndicator';
+import { getUsers } from '../../../utils/APIUtils'
 import Alert from 'react-s-alert'
-import bike from '../../assets/images/bike.jpg'
+import bike from '../../../assets/images/bike.jpg'
 
 import './ProfileList.css'
 

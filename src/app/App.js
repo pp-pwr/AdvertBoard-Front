@@ -15,10 +15,10 @@ import Signup from "../user/signup/Signup"
 import OAuth2RedirectHandler from "../user/oauth2/OAuth2RedirectHandler"
 import PrivateRoute from "../common/PrivateRoute"
 import AdvertDetails from "../components/advert/AdvertDetails"
-import Profile from "../user/profile/Profile"
-import ProfileForm from "../user/profile/ProfileForm"
-import NoProfile from "../user/profile/NoProfile"
-import ProfileList from "../user/profile/ProfileList"
+import Profile from "../user/profile/profile-view/Profile"
+import ProfileForm from "../user/profile/profile-forms/ProfileForm"
+import NoProfile from "../common/NoProfile"
+import ProfileList from "../user/profile/profile-list/ProfileList"
 import AdminPanel from "../components/admin/AdminPanel"
 
 import {ACCESS_TOKEN} from "../constants"
@@ -122,7 +122,7 @@ class App extends Component {
 
                         <Route path="/error/noprofile" component={NoProfile}></Route>
 
-                        <Route exact path="/" component={AdvertPanel}></Route>
+                        <Route exact path="/" show_recommended={this.state.authenticated} component={AdvertPanel}></Route>
 
                         <Route component={NotFound}></Route>
                     </Switch>

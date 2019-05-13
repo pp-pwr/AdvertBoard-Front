@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-
+import styled from 'styled-components'
 import '../../../common/Pagination.scss'
 
 class PageSelectionPanel extends Component {
@@ -35,7 +35,7 @@ class PageSelectionPanel extends Component {
         for(let i = 0; i < this.props.pages; i++) {
             buttons.push(
                 <li key={ "page_" + i } onClick={() => this.setPage(i)} className='page-numbers'>
-                    <button>{ i + 1}</button>
+                    <button style={{"font-size": "0.6em"}}>{ i + 1}</button>
                 </li>
             );
         }
@@ -45,14 +45,14 @@ class PageSelectionPanel extends Component {
     render() {
         return (
             <div>
-                { this.props.pages > 0 ? (
+                { this.props.pages > 1 ? (
                     <ul className="pagination">
                         <li key={ "page_prev" } onClick={() => this.setPage(this.currentPage - 1)} className='left page-numbers'>
-                            <button>Poprzednia</button>
+                            <button style={{"font-size": "0.75em"}}>Poprzednia</button>
                         </li>
                         { this.createButtons() }
                         <li key={ "page_next" } onClick={() => this.setPage(this.currentPage + 1)} className='right page-numbers'>
-                            <button>Następna</button>
+                            <button style={{"font-size": "0.75em"}}>Następna</button>
                         </li>
                     </ul>
                 ) : (

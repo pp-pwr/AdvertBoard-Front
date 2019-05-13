@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
-import LoadingIndicator from '../../common/LoadingIndicator';
-import { updateProfile, getCurrentUser } from "../../utils/APIUtils"
+import LoadingIndicator from '../../../common/LoadingIndicator';
+import { updateProfile, getCurrentUser } from "../../../utils/APIUtils"
 import Alert from 'react-s-alert'
 import UserPreferences from './UserPreferences'
 
-import './Profile.css'
+import '../profile-view/Profile.css'
 
 class ProfileForm extends Component {
     constructor() {
@@ -12,12 +12,12 @@ class ProfileForm extends Component {
 
         this.state = {
             user: {
-                "firstName": "",
-                "lastName": "",
-                "visibleName": "",
-                "telephoneNumber": 0,
-                "contactMail": "",
-                "selectedCategories": []
+                firstName: "",
+                lastName: "",
+                visibleName: "",
+                telephoneNumber: 0,
+                contactMail: "",
+                categoryEntries: {}
             },
             mounted: false
         }
@@ -55,10 +55,20 @@ class ProfileForm extends Component {
     }
 
     updateCategoryPreferences(categoryIdList) {
+        let categoryMap = {}
+
+        for(var i = 0; i < categoryIdList.length; i++) {
+            let name = categoryIdList[i]
+            categoryMap = {
+                ...categoryMap,
+                [name]: 0.1
+            }
+        }
+
         this.setState({
             user: {
                 ...this.state.user,
-                selectedCategories: categoryIdList
+                categoryEntries: categoryMap
             }
         })
     }

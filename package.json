@@ -30,6 +30,7 @@
     "react-sidenav": "^3.1.9",
     "react-simple-scroll-container": "^1.2.1",
     "react-slick": "^0.24.0",
+    "react-star-ratings": "^2.3.0",
     "react-test-renderer": "^16.8.6",
     "styled-components": "^4.2.0"
   },

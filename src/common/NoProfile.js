@@ -1,13 +1,12 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 
-import './Profile.css'
+import "./NotFound.css"
 
 class NoProfile extends Component {
     render() {
-        console.log('gitara siema')
         return (
-            <div className="profile-not-found">
+            <div className="page-not-found">
                 <h1 className="title">
                     Błąd 404
                 </h1>

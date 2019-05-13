@@ -66,7 +66,7 @@ class AdvertPanel extends Component {
                 currentPage: 0,
                 pageCount: 0,
                 currentTitleFilter: "",
-                pageLimit: 10,
+                pageLimit: 12,
                 sorting: [],
                 advertList: [],
                 recommendedAdverts: []
@@ -101,7 +101,7 @@ class AdvertPanel extends Component {
     }
 
     loadRecommendedAdverts() {
-        if(!this.state.mounted) {
+        if(!this.state.mounted || !this.props.show_recommended) {
             return
         }
 

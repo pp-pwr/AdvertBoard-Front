@@ -21,6 +21,8 @@ class AdvertSlider extends Component {
             initialSlide: 0,
             responsive: [{breakpoint: 500, settings: {autoplay: true, slidesToShow: 1}}],
             centerMode: true,
+            autoplay: true,
+            autoplaySpeed: 5000
         };
 
         return (
