@@ -1,9 +1,30 @@
 import React, { Component } from 'react'
-import { getCurrentUser, getUserById, getAdvertImageURL } from '../../utils/APIUtils'
+import { getCurrentUser, getUserById, getAdvertImageURL} from '../../../utils/APIUtils'
 import Alert from 'react-s-alert'
-import LoadingIndicator from '../../common/LoadingIndicator';
-import { Redirect, Link } from 'react-router-dom'
-import bike from '../../assets/images/bike.jpg'
+import LoadingIndicator from '../../../common/LoadingIndicator';
+import { Redirect } from 'react-router-dom'
+import ProfileDetails from './ProfileDetails'
+import styled from 'styled-components'
+
+
+const Adverts = styled.div`
+    padding-left: 1em;
+
+    & > .title {
+        font-size: 2em;
+        font-weight: bold;
+        margin-top: 1em;
+        margin-bottom: 1em;
+    }
+
+    & * .advert-list-element {
+        border-radius: 3px;
+    }
+`
+
+const ProfileContainer = styled.div`
+    display: flex;
+`
 
 class Profile extends Component {
     constructor(props) {
@@ -13,41 +34,27 @@ class Profile extends Component {
         this.user_id = null
 
         this.state = {
-            profile: {
-                firstName: "",
-                lastName: "",
-                visibleName: "",
-                telephoneNumber: null,
-                contactMail: "",
-                adverts: []
-            },
+            adverts: [],
             mounted: false
         }
-
     }
 
     setUser(userData) {
-        let advertPath = 'advertSummaryViews'
-        if (!this.user_id) {
-            advertPath = 'adverts'
-        }
         this.setState({
+            adverts: this.user_id ? userData['advertSummaryViews'] : userData['adverts'],
             profile: {
                 ...this.state.profile,
-                firstName: userData['firstName'],
-                lastName: userData['lastName'],
-                visibleName: userData['visibleName'],
-                telephoneNumber: userData['telephoneNumber'],
-                contactMail: userData['contactMail'],
-                adverts: userData[advertPath]
+                id: this.user_id ? userData['id'] : userData['profileView']['id']
             }
+        }, () => {
+            console.log(this.state)
         })
     }
 
     loadCurrentUser() {
         getCurrentUser().then(response => {
             if(this.state.mounted) {
-                this.setUser(response.profileView)
+                this.setUser(response)
             }
         }).catch(error => {
             Alert.error((error && error.message) || "Ups!")
@@ -85,9 +92,9 @@ class Profile extends Component {
 
     userAdvertList() {
         const user_adverts = []
-        if (this.state.profile.adverts) {
-            for(let i = 0; i < this.state.profile.adverts.length; i++) {
-                let advert = this.state.profile.adverts[i]
+        if (this.state.adverts) {
+            for(let i = 0; i < this.state.adverts.length; i++) {
+                let advert = this.state.adverts[i]
                 
                 user_adverts.push(
                     <div key={advert.id} className="advert-list-element" onClick={() => this.handleAdvertClick(advert.id)}>
@@ -120,7 +127,7 @@ class Profile extends Component {
     }
 
     render() {
-        if(!this.state.mounted) {
+        if(!this.state.mounted || !this.state.profile) {
             return <LoadingIndicator/>
         }
 
@@ -128,31 +135,22 @@ class Profile extends Component {
             return <Redirect to='/profile/edit' />
         }
 
-        console.log(this.state)
-
         return (
-            <div className="profile-info">
-                <div className="profile-data">
-                    <p><b>Imię:</b> {this.state.profile.firstName}</p>
-                    <p><b>Nazwisko:</b> {this.state.profile.lastName}</p>
-                    <p><b>Nazwa wyświetlana:</b> {this.state.profile.visibleName}</p>
-                    <p><b>Kontaktowy email:</b> {this.state.profile.contactMail}</p>
-                    <p><b>Kontaktowy nr telefonu:</b> {this.state.profile.telephoneNumber}</p>
-                </div>
-                
-                { this.current_user ? (
-                    <Link to="/profile/edit">Edytuj swój profil!</Link>
-                ) : (
-                    <div></div>
-                )}
+            <ProfileContainer>
+                <ProfileDetails 
+                user_id={this.state.profile.id} 
+                show_adverts={false} 
+                rating_enabled={true}
+                current_user_id={this.current_user ? this.current_user.profileView.id : null}/>
 
-                <p><b>Ogłoszenia użytkownika:</b> </p>
-                <div className="advert-list">
-                    { this.userAdvertList() }
-                </div>
-
+                <Adverts>
+                    <div className="title">Ogłoszenia użytkownika: </div>
+                    <div className="advert-list">
+                        { this.userAdvertList() }
+                    </div>
+                </Adverts>
                 {/* <div>{this.state.user.adverts}</div> */}
-            </div>
+            </ProfileContainer>
         )
     }
 }

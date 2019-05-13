@@ -131,7 +131,7 @@ class AdvertForm extends Component {
 
     handleInfoChange = (event) => {
         const target = event.target;
-        const inputName = "" + target.name
+        const inputName = parseInt(target.name)
         const inputValue = target.value;    
 
         this.setState({
@@ -169,7 +169,9 @@ class AdvertForm extends Component {
 
         if(this.state.advertInfo.title.length > 0 && this.state.advertInfo.description.length > 0 
             && this.state.advertInfo.selectedCat) {
+            
 
+            console.log(this.state.advertInfo.infos)
             let advertInfo = {
                 "title": this.state.advertInfo.title,
                 "description": this.state.advertInfo.description,

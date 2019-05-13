@@ -170,6 +170,25 @@ export function getBannedAdverts(page, limit) {
     })
 }
 
+export function getUserLastAdverts(userId, limit) {
+    return request({
+        url: API_BASE_URL + "/advert/last?userId=" + userId + "&limit=" + limit,
+        method: 'GET'
+    })
+}
+
+export function rateProfile(id, rating) {
+    const formData = new FormData()
+    formData.append('profileId', id)
+    formData.append('rating', rating)
+
+    return request({
+        url: API_BASE_URL + "/user/rate",
+        method: 'POST',
+        body: formData
+    })
+}
+
 export function addAdvert(advertForm) {
 
     const formData = new FormData()
