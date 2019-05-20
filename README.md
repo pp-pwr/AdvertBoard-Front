@@ -31,3 +31,4 @@ Budowanie aplikacji:
 ### ![alt Formularz Logowania](https://imgur.com/bZvtGf6.png)
 ### ![alt Formularz rejestracji](https://imgur.com/QxRsPu8.png)
 ### ![alt Uzupełnianie profilu](https://imgur.com/92XcXRE.png)
+### ![alt Statystyki dot. zgłoszeń](https://imgur.com/IkkHCe2.png)
