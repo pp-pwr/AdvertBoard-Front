@@ -89,6 +89,10 @@ const StyledLink = styled(Link)`
     }
 `
 
+const TotalRatings = styled.p`
+
+`
+
 class ProfileDetails extends Component {
     constructor() {
         super();
@@ -134,6 +138,7 @@ class ProfileDetails extends Component {
 
         const userRequest = Object.assign({}, user)
         getUserById(userRequest).then(userData => {
+            console.log(userData)
             this.setState({
                 user: {
                     ...this.state.user,
@@ -143,6 +148,7 @@ class ProfileDetails extends Component {
                     telephoneNumber: userData['telephoneNumber'],
                     contactMail: userData['contactMail'],
                     rating: userData['rating'] == null ? 0 : userData['rating'],
+                    totalRatings: userData['ratingCount'] == null ? 0 : userData['ratingCount'],
                     id: userData['id']
                 },
                 mounted: true
@@ -196,6 +202,9 @@ class ProfileDetails extends Component {
                         numberOfStars={5}
                         name='rating'
                         />
+                        <TotalRatings>
+                            (na podstawie {this.state.user.totalRatings} {this.state.user.totalRatings === 1 ? 'ogłoszenia' : 'ogłoszeń'})
+                        </TotalRatings>
                     </div>
                 ) : (null)}
 
