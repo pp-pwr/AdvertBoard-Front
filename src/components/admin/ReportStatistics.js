@@ -9,18 +9,49 @@ import { getReportStatistics } from '../../utils/APIUtils'
 import { getMonths, getMonthID, getYearsFromToDate} from '../../utils/DateUtils'
 import LoadingIndicator from '../../common/LoadingIndicator';
 
+const StatsContainer = styled.div`
+    width: 100%;
+    text-align: center;
+    position: relative;
+`
 
 const PeriodSelectioPanel = styled.div`
     display: flex;
-    width: 80vw;
+    min-height: 8vh;
+    text-align: center;
+    items-align: center;
+    border: solid 1px lightgrey;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-right: 5%;
+    margin-left: 5%;
+    padding: 1.5em 1.5em 1.5em 1.5em;
 `
 
 const SelectionCell = styled.div`
+    display: flex;
+    align-items: center;
+    position: relative;
+    & p {
+        margin-top: 8%;
+        align-items: center;
+        font-size: 1.2em;
+    }
+
+    & select {
+        margin-left: 0.8vw;
+        min-width: 8vw;
+    }
 
 `
 
 const StyledSelection = styled.select`
-
+    min-width: 4vw;
+    min-height: 5vh;
+    border-radius: 3px;
+    background-color: white;
+    border: solid 1px grey;
 `
 
 const StyledButton = styled(Button)`
@@ -28,15 +59,31 @@ const StyledButton = styled(Button)`
 `
 
 const TotalInfoPanel = styled.div`
-
+    margin-left: 20%;
+    margin-right: 20%;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 2.5em;
 `
 
 const ChartsPanel = styled.div`
-
+    margin-top: 2vh;
 `
 
 const ChartContainer = styled.div`
+`
 
+const InfoCell = styled.div`
+    text-align: center;
+
+    & .info-title {
+        font-weight: bold;
+        font-size: 1.8em;
+    }
+
+    & .info-value {
+        font-size: 1.6em;
+    }
 `
 
 class ReportStatistics extends Component {
@@ -186,7 +233,7 @@ class ReportStatistics extends Component {
         }
 
         return (
-            <div>
+            <StatsContainer>
                 <PeriodSelectioPanel>
                     <SelectionCell>
                         <p>Rok: </p>
@@ -213,7 +260,18 @@ class ReportStatistics extends Component {
                     </SelectionCell>
                 </PeriodSelectioPanel>
                 <TotalInfoPanel>
-
+                    <InfoCell>
+                        <p className="info-title">Liczba zgłoszonych ogłoszeń</p>
+                        <p className="info-value">{this.state.data.allReportedAdvertsCount}</p>
+                    </InfoCell>
+                    <InfoCell>
+                        <p className="info-title">Liczba zgłoszonych ogłoszeń (dzisiaj)</p>
+                        <p className="info-value">{this.state.data.todayReportedAdvertsCount}</p>
+                    </InfoCell>
+                    <InfoCell>
+                        <p className="info-title">Liczba zgłoszeń (dzisiaj)</p>
+                        <p className="info-value">{this.state.data.todayAdvertReportsCount}</p>
+                    </InfoCell>
                 </TotalInfoPanel>
                 <ChartsPanel>
                     <ChartContainer>
@@ -227,11 +285,12 @@ class ReportStatistics extends Component {
                                 title: 'Zgłoszone ogłoszenia w danym przedziale',
                                 chartArea: { width: '30%' },
                                 hAxis: {
-                                    format: '####',
+                                    title: 'Miesiąc',
                                     minValue: this.state.options.monthFrom,
                                     maxValue: this.state.options.monthTo
                                 },
                                 vAxis: {
+                                    format: '####',
                                     title: 'Liczba zgłoszonych ogłoszeń',
                                     minValue: 0
                                 }
@@ -264,7 +323,7 @@ class ReportStatistics extends Component {
                             />                        
                     </ChartContainer>
                 </ChartsPanel>
-            </div>
+            </StatsContainer>
         )
     }
 }
