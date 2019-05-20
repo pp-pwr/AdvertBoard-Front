@@ -91,7 +91,7 @@ class AdvertField extends Component {
             mounted: true
         })
 
-        getAdvertByAdvertId(this.props.advert.id)
+        getAdvertByAdvertId(this.props.advertId)
         .then(response => {
             this.setState({
                 advert: response
@@ -122,9 +122,13 @@ class AdvertField extends Component {
                         this.state.advert !== null ? (
                             <div>
                                 <p>Tytuł: {this.state.advert.title}</p>
-                                <p>Raport przez: {this.props.advert.reportingUserName}</p>
                                 <p>Dodano przez: {this.state.advert.profileName}</p>
-                                <p>Komentarz: {this.props.advert.comment}</p>
+                                { this.props.declineVisible ? (
+                                    <div>
+                                         <p>Raport przez: {this.props.advert.reportingUserName}</p>
+                                        <p>Komentarz: {this.props.advert.comment}</p>
+                                    </div>
+                                ) : (null)}
                             </div>
                         ) : (
                             <div></div>
@@ -132,7 +136,7 @@ class AdvertField extends Component {
                     }
                 </ReportDetails>
                 <ButtonDiv>
-                    <Button className="button" id="accept-button" onClick={() => this.props.approveButtonHandler(this.props.advertId, this.state.advert.id)}>OK</Button>
+                    <Button className="button" id="accept-button" onClick={() => this.props.approveButtonHandler(this.props.advertId, this.props.caseId)}>OK</Button>
                     { this.props.declineVisible ? (
                         <Button className="button" id="decline-button" onClick={() => this.props.declineButtonHandler(this.state.advert.id)}>NO</Button>
                     ) : (
@@ -293,6 +297,7 @@ class ReportedAdverts extends Component {
                             <AdvertField 
                                 key={item.id}
                                 advert={item}
+                                caseId={item.id}
                                 advertId={item.reportedAdvertId}
                                 approveButtonHandler={this.acceptReport.bind(this)}
                                 declineButtonHandler={this.declineReport.bind(this)}
@@ -311,6 +316,7 @@ class ReportedAdverts extends Component {
                             <AdvertField 
                                 key={item.id} 
                                 advert={item}
+                                caseId={0}
                                 advertId={item.id}
                                 approveButtonHandler={this.unbanAdvert.bind(this)}
                                 declineVisible={false}  />

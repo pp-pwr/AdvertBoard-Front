@@ -227,7 +227,7 @@ class ReportStatistics extends Component {
                                 title: 'Zgłoszone ogłoszenia w danym przedziale',
                                 chartArea: { width: '30%' },
                                 hAxis: {
-                                    title: 'Miesiąc',
+                                    format: '####',
                                     minValue: this.state.options.monthFrom,
                                     maxValue: this.state.options.monthTo
                                 },
@@ -255,6 +255,7 @@ class ReportStatistics extends Component {
                                         maxValue: this.state.options.monthTo
                                     },
                                     vAxis: {
+                                        format: '####',
                                         title: 'Liczba zgłoszeń',
                                         minValue: 0
                                     }
