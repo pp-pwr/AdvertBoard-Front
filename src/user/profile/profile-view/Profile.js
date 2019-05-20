@@ -134,6 +134,8 @@ class Profile extends Component {
         if(this.current_user && this.current_user.profileView === null) {
             return <Redirect to='/profile/edit' />
         }
+        
+        console.log(this.props.user)
 
         return (
             <ProfileContainer>

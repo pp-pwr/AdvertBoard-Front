@@ -255,3 +255,10 @@ export function updateAdvert(advertForm) {
 export function getAdvertImageURL(advertId) {
     return API_BASE_URL + "/advert/image?advertId=" + advertId
 }
+
+export function getReportStatistics(year, beginMonth, endMonth) {
+    return request({
+        url: API_BASE_URL + "/admin/report/stats?year=" + year + "&monthFrom=" + beginMonth + "&monthTo=" + endMonth,
+        method: 'GET'
+    })
+}
