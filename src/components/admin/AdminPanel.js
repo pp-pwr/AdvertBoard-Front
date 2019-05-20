@@ -6,6 +6,7 @@ import Navbar from 'react-bootstrap/Navbar'
 import ReportedAdverts from './ReportedAdverts'
 import ReportedUsers from './ReportedUsers'
 import UserAuthorization from './UserAuthorization'
+import ReportStatistics from './ReportStatistics'
 
 const PanelContainer = styled.div`
     padding-top: 5vh;
@@ -69,6 +70,8 @@ class AdminPanel extends Component {
                 return <ReportedUsers />
             case "user-authorize":
                 return <UserAuthorization />
+            case "report-stats":
+                return <ReportStatistics />
             default:
                 return <ReportedAdverts />
         }
@@ -83,6 +86,7 @@ class AdminPanel extends Component {
                             <CustomNavLink onClick={e => this.changePage(e, "advert-reports")}>Zgłoszone ogłoszenia</CustomNavLink>
                             <CustomNavLink onClick={e => this.changePage(e, "user-reports")}>Zgłoszeni użytkownicy</CustomNavLink>
                             <CustomNavLink onClick={e => this.changePage(e, "user-authorize")}>Autoryzacja użytkowników</CustomNavLink>
+                            <CustomNavLink onClick={e => this.changePage(e, "report-stats")}>Statystyki zgłoszeń</CustomNavLink>
                         </CustomNav>
                     </Navbar.Collapse>
                 </Navbar>
