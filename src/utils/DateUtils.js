@@ -15,7 +15,7 @@ export function getYearsFromToDate(yearFrom) {
 function getYearsFromTo(yearFrom, yearTo) {
     const years = []
 
-    for(let i = yearFrom; i <= yearTo; i++) {
+    for(let i = yearTo; i >= yearFrom; i--) {
         years.push(i)
     }
 

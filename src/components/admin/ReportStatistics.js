@@ -134,7 +134,7 @@ class ReportStatistics extends Component {
     }
 
     getYearSelectors() {
-        const years = getYearsFromToDate(2010);
+        const years = getYearsFromToDate(2019);
         return this.createOptions(years)
     }
 
