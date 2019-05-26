@@ -238,6 +238,14 @@ export function reportAdvertById(reportRequest) {
     }, 'application/json')
 }
 
+export function reportUserById(reportRequest) {
+    return request({
+        url: API_BASE_URL + "/user/report",
+        method: 'POST',
+        body: JSON.stringify(reportRequest)
+    })
+}
+
 export function updateAdvert(advertForm) {
     const formData = new FormData()
 
