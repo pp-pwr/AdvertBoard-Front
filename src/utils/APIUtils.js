@@ -158,7 +158,14 @@ export function getAdvertByAdvertId(id) {
 
 export function getUnsolvedReports(page, limit) {
     return request({
-        url: API_BASE_URL + "/admin/report?caseStatus=unsolved&page=" + page + "&limit=" + limit,
+        url: API_BASE_URL + "/admin/report/advert?caseStatus=unsolved&page=" + page + "&limit=" + limit,
+        method: 'GET'
+    })
+}
+
+export function getUnsolvedProfileReports(page, limit) {
+    return request({
+        url: API_BASE_URL + "/admin/report/profile?caseStatus=unsolved&page=" + page + "&limit=" + limit,
         method: 'GET'
     })
 }
@@ -166,6 +173,13 @@ export function getUnsolvedReports(page, limit) {
 export function getBannedAdverts(page, limit) {
     return request({
         url: API_BASE_URL + "/admin/advert/banned&page=" + page + "&limit=" + limit,
+        method: 'GET'
+    })
+}
+
+export function getBannedProfiles(page, limit) {
+    return request({
+        url: API_BASE_URL + "/admin/profile/banned&page=" + page + "&limit=" + limit,
         method: 'GET'
     })
 }
