@@ -5,7 +5,7 @@ import { Button } from 'react-bootstrap'
 import Chart from 'react-google-charts'
 
 
-import { getReportStatistics } from '../../utils/APIUtils'
+import { getReportStatistics, getUserStatistics } from '../../utils/APIUtils'
 import { getMonths, getMonthID, getYearsFromToDate} from '../../utils/DateUtils'
 import LoadingIndicator from '../../common/LoadingIndicator';
 
@@ -62,6 +62,7 @@ const TotalInfoPanel = styled.div`
     margin-left: 20%;
     margin-right: 20%;
     display: flex;
+    flex-wrap: wrap
     justify-content: space-between;
     margin-top: 2.5em;
 `
@@ -75,14 +76,14 @@ const ChartContainer = styled.div`
 
 const InfoCell = styled.div`
     text-align: center;
-
+    width: 33%;
     & .info-title {
         font-weight: bold;
-        font-size: 1.8em;
+        font-size: 1.5em;
     }
 
     & .info-value {
-        font-size: 1.6em;
+        font-size: 1.3em;
     }
 `
 
@@ -94,12 +95,19 @@ class ReportStatistics extends Component {
         this.data = {}
 
         this.state = {
-            data: {
+            advert_data: {
                 monthAdvertReportsCount: {},
                 monthReportedAdvertsCount: {},
                 allReportedAdvertsCount: 0,
                 todayAdvertReportsCount: 0,
                 todayReportedAdvertsCount: 0
+            },
+            user_data: {
+                monthUserReportsCount: {},
+                monthReportedUsersCount: {},
+                allReportedUsersCount: 0,
+                todayUserReportsCount: 0,
+                todayReportedUsersCount: 0
             },
             mounted: false,
             options: {
@@ -184,12 +192,22 @@ class ReportStatistics extends Component {
         getReportStatistics(year, monthFrom, monthTo)
         .then(response => {
             this.setState({
-                data: response
+                advert_data: response
             }, () => {
                 console.log(this.state)
             })
 
             console.log(year + " " + monthFrom + " " + monthTo)
+        })
+        .catch(error => {
+            Alert.error((error && error.message) || "Ups!")
+        })
+
+        getUserStatistics(year, monthFrom, monthTo)
+        .then(response => {
+            this.setState({
+                user_data: response
+            })
         })
         .catch(error => {
             Alert.error((error && error.message) || "Ups!")
@@ -262,15 +280,27 @@ class ReportStatistics extends Component {
                 <TotalInfoPanel>
                     <InfoCell>
                         <p className="info-title">Liczba zgłoszonych ogłoszeń</p>
-                        <p className="info-value">{this.state.data.allReportedAdvertsCount}</p>
+                        <p className="info-value">{this.state.advert_data.allReportedAdvertsCount}</p>
                     </InfoCell>
                     <InfoCell>
                         <p className="info-title">Liczba zgłoszonych ogłoszeń (dzisiaj)</p>
-                        <p className="info-value">{this.state.data.todayReportedAdvertsCount}</p>
+                        <p className="info-value">{this.state.advert_data.todayReportedAdvertsCount}</p>
                     </InfoCell>
                     <InfoCell>
                         <p className="info-title">Liczba zgłoszeń (dzisiaj)</p>
-                        <p className="info-value">{this.state.data.todayAdvertReportsCount}</p>
+                        <p className="info-value">{this.state.advert_data.todayAdvertReportsCount}</p>
+                    </InfoCell>
+                    <InfoCell>
+                        <p className="info-title">Liczba zgłoszonych użytkowników</p>
+                        <p className="info-value">{this.state.user_data.allReportedUsersCount}</p>
+                    </InfoCell>
+                    <InfoCell>
+                        <p className="info-title">Liczba zgłoszonych użytkowników (dzisiaj)</p>
+                        <p className="info-value">{this.state.user_data.todayReportedUsersCount}</p>
+                    </InfoCell>
+                    <InfoCell>
+                        <p className="info-title">Liczba zgłoszeń użytkowników (dzisiaj)</p>
+                        <p className="info-value">{this.state.user_data.todayUserReportsCount}</p>
                     </InfoCell>
                 </TotalInfoPanel>
                 <ChartsPanel>
@@ -280,7 +310,7 @@ class ReportStatistics extends Component {
                             height={300}
                             chartType="ColumnChart"
                             loader={<LoadingIndicator />}
-                            data={this.transformCharData(this.state.data.monthReportedAdvertsCount)}
+                            data={this.transformCharData(this.state.advert_data.monthReportedAdvertsCount)}
                             options={{
                                 title: 'Zgłoszone ogłoszenia w danym przedziale',
                                 chartArea: { width: '30%' },
@@ -304,9 +334,57 @@ class ReportStatistics extends Component {
                                 height={300}
                                 chartType="ColumnChart"
                                 loader={<LoadingIndicator />}
-                                data={this.transformCharData(this.state.data.monthAdvertReportsCount)}
+                                data={this.transformCharData(this.state.advert_data.monthAdvertReportsCount)}
                                 options={{
-                                    title: 'Zgłoszenia w danym przedziale',
+                                    title: 'Zgłoszenia ogłoszeń w danym przedziale',
+                                    chartArea: { width: '30%' },
+                                    hAxis: {
+                                        title: 'Miesiąc',
+                                        minValue: this.state.options.monthFrom,
+                                        maxValue: this.state.options.monthTo
+                                    },
+                                    vAxis: {
+                                        format: '####',
+                                        title: 'Liczba zgłoszeń',
+                                        minValue: 0
+                                    }
+                                }}
+                                legendToggle
+                            />                        
+                    </ChartContainer>
+                    <ChartContainer>
+                        <Chart 
+                                width='100%'
+                                height={300}
+                                chartType="ColumnChart"
+                                loader={<LoadingIndicator />}
+                                data={this.transformCharData(this.state.user_data.monthReportedUsersCount)}
+                                options={{
+                                    title: 'Zgłoszeni użytkownicy w danym przedziale',
+                                    chartArea: { width: '30%' },
+                                    hAxis: {
+                                        title: 'Miesiąc',
+                                        minValue: this.state.options.monthFrom,
+                                        maxValue: this.state.options.monthTo
+                                    },
+                                    vAxis: {
+                                        format: '####',
+                                        title: 'Liczba zgłoszonych użytkowników',
+                                        minValue: 0
+                                    }
+                                }}
+                                legendToggle
+                            />                        
+                    </ChartContainer>
+                    <ChartContainer>
+                        <Chart 
+                                width='100%'
+                                height={300}
+                                chartType="ColumnChart"
+                                loader={<LoadingIndicator />}
+                                data={this.transformCharData(this.state.user_data.monthUserReportsCount)}
+                                options={{
+                                    title: 'Zgłoszenia użytkowników w danym przedziale',
                                     chartArea: { width: '30%' },
                                     hAxis: {
                                         title: 'Miesiąc',
