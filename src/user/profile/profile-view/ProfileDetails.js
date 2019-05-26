@@ -191,6 +191,10 @@ class ProfileDetails extends Component {
                     </div>
                 ) : (null)}
 
+                { this.state.user.is_verified ? (
+                    <VerifiedBadge>Zweryfikowany</VerifiedBadge>
+                ) : (null)}
+
                 { rating_enabled ? (
                     <div>
                         <StarRatings
