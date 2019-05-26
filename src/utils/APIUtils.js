@@ -271,13 +271,6 @@ export function getReportStatistics(year, beginMonth, endMonth) {
     })
 }
 
-export function getUserStatistics(year, beginMonth, endMonth) {
-    return request({
-        url: API_BASE_URL + "/admin/report/userStats?year=" + year + "&monthFrom=" + beginMonth + "&monthTo=" + endMonth,
-        method: 'GET'
-    })
-}
-
 export function confirmEmail(confirmToken) {
     const formData = new FormData()
 
