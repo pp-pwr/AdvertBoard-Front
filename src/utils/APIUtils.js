@@ -282,3 +282,9 @@ export function confirmEmail(confirmToken) {
         body: formData
     })
 }
+export function refreshConfirmToken() {
+    return request({
+        url: API_BASE_URL + "/user/refreshToken",
+        method: 'POST'
+    })
+}
