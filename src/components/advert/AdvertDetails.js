@@ -345,14 +345,15 @@ class AdvertDetails extends Component {
     render() {
         if(this.state.loadingAdvert)
             return <LoadingIndicator />
-
+        console.log(this.state.current_user_id)
         return (
             <AdvertContainer>
                 <ProfileDetails 
                 user_id={this.state.advertInfo.authorId} 
                 show_adverts={false} 
                 rating_enabled={true}
-                current_user_id={this.state.current_user_id}/>
+                current_user_id={this.state.current_user_id}
+                is_verified={this.state.isVerified}/>
 
                 <AdvertInfo>
                     <img className="crop-image" src={getAdvertImageURL(this.state.advertInfo.id)} alt="Ad"></img>
@@ -380,7 +381,7 @@ class AdvertDetails extends Component {
                     ) : (null)
                 }
                 {
-                    this.state.user_id !== null && !this.state.reported ? (
+                    this.state.current_user_id && !this.state.reported ? (
                         <StyledButton onClick={this.showReportDialog.bind(this)}>Zgłoś</StyledButton>
                     ) : (null)
                 }
