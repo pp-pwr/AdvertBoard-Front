@@ -101,11 +101,11 @@ class ReportStatistics extends Component {
                 allReportedAdvertsCount: 0,
                 todayAdvertReportsCount: 0,
                 todayReportedAdvertsCount: 0,
-                monthUserReportsCount: {},
-                monthReportedUsersCount: {},
-                allReportedUsersCount: 0,
-                todayUserReportsCount: 0,
-                todayReportedUsersCount: 0
+                monthProfileReportsCount: {},
+                monthReportedProfilesCount: {},
+                allReportedProfilesCount: 0,
+                todayProfileReportsCount: 0,
+                todayReportedProfilesCount: 0
             },
             mounted: false,
             options: {
@@ -280,15 +280,15 @@ class ReportStatistics extends Component {
                     </InfoCell>
                     <InfoCell>
                         <p className="info-title">Liczba zgłoszonych użytkowników</p>
-                        <p className="info-value">{this.state.data.allReportedUsersCount}</p>
+                        <p className="info-value">{this.state.data.allReportedProfilesCount}</p>
                     </InfoCell>
                     <InfoCell>
                         <p className="info-title">Liczba zgłoszonych użytkowników (dzisiaj)</p>
-                        <p className="info-value">{this.state.data.todayReportedUsersCount}</p>
+                        <p className="info-value">{this.state.data.todayReportedProfilesCount}</p>
                     </InfoCell>
                     <InfoCell>
                         <p className="info-title">Liczba zgłoszeń użytkowników (dzisiaj)</p>
-                        <p className="info-value">{this.state.data.todayUserReportsCount}</p>
+                        <p className="info-value">{this.state.data.todayProfileReportsCount}</p>
                     </InfoCell>
                 </TotalInfoPanel>
                 <ChartsPanel>
@@ -346,7 +346,7 @@ class ReportStatistics extends Component {
                                 height={300}
                                 chartType="ColumnChart"
                                 loader={<LoadingIndicator />}
-                                data={this.transformCharData(this.state.data.monthReportedUsersCount)}
+                                data={this.transformCharData(this.state.data.monthReportedProfilesCount)}
                                 options={{
                                     title: 'Zgłoszeni użytkownicy w danym przedziale',
                                     chartArea: { width: '30%' },
@@ -370,7 +370,7 @@ class ReportStatistics extends Component {
                                 height={300}
                                 chartType="ColumnChart"
                                 loader={<LoadingIndicator />}
-                                data={this.transformCharData(this.state.data.monthUserReportsCount)}
+                                data={this.transformCharData(this.state.data.monthProfileReportsCount)}
                                 options={{
                                     title: 'Zgłoszenia użytkowników w danym przedziale',
                                     chartArea: { width: '30%' },
