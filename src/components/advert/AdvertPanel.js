@@ -230,7 +230,7 @@ class AdvertPanel extends Component {
                     ) : (
                         <ContentGrid>
                             <RecommendedAdverts>
-                                <AdvertSlider itemList={this.state.advertGrid.recommendedAdverts} />
+                                {/* <AdvertSlider itemList={this.state.advertGrid.recommendedAdverts} /> */}
                             </RecommendedAdverts>
                             <AdvertGrid itemList={this.state.advertGrid.advertList}/>
                             <PageSelectionPanel pages={this.state.advertGrid.pageCount} changeHandler={this.pageChange}/>

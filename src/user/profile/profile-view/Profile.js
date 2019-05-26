@@ -19,6 +19,7 @@ const Adverts = styled.div`
 
     & * .advert-list-element {
         border-radius: 3px;
+        min-width: 35vw;
     }
 `
 

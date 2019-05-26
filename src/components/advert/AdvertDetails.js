@@ -48,7 +48,14 @@ const AdvertInfo = styled.div`
         text-align: right;
         position: absolute;
         right: 0.3em;
-        bottom: 0.3em;
+        bottom: 0.1em;
+    }
+
+    & > .title-panel > .advert-entries {
+        text-align: right;
+        position: absolute;
+        right: 0.3em;
+        bottom: 2em;
     }
 
     & * > .advert-additional-info {
@@ -263,7 +270,8 @@ class AdvertDetails extends Component {
                         date: response['date'],
                         id: response['id'],
                         infos: response['additionalInfo'],
-                        authorId: response['profileId']
+                        authorId: response['profileId'],
+                        entries: response['entryCount']
                     },
                     loadingAdvert: false
                 })
@@ -351,6 +359,7 @@ class AdvertDetails extends Component {
                     <div className="title-panel">
                         <p className="advert-title">{this.state.advertInfo.title}</p>
                         <p className="advert-date">{'Data dodania: ' + this.state.advertInfo.date}</p>
+                        <p className="advert-entries">{'Wyświetlenia: ' + this.state.advertInfo.entries}</p>
                     </div>
                     <div className="info-panel">
                         <p>Dodatkowe informacje: </p>

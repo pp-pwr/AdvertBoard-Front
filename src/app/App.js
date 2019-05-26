@@ -20,6 +20,8 @@ import ProfileForm from "../user/profile/profile-forms/ProfileForm"
 import NoProfile from "../common/NoProfile"
 import ProfileList from "../user/profile/profile-list/ProfileList"
 import AdminPanel from "../components/admin/AdminPanel"
+import SignupConfirm from '../user/signup/SignupConfirm'
+
 
 import {ACCESS_TOKEN} from "../constants"
 import {getCurrentUser} from "../utils/APIUtils"
@@ -107,6 +109,8 @@ class App extends Component {
                             component={AdvertForm} user={this.state.user}></PrivateRoute>
 
                         <Route path="/oauth2/redirect" component={OAuth2RedirectHandler}></Route>
+
+                        <Route path="/signupConfirm" component={SignupConfirm}></Route>
 
                         <Route path="/advert/:advert_id" component={AdvertDetails}></Route>
 

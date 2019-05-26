@@ -165,7 +165,7 @@ export function getUnsolvedReports(page, limit) {
 
 export function getBannedAdverts(page, limit) {
     return request({
-        url: API_BASE_URL + "/admin/advert/banned", // "&page=" + page + "&limit=" + limit,"
+        url: API_BASE_URL + "/admin/advert/banned&page=" + page + "&limit=" + limit,
         method: 'GET'
     })
 }
@@ -260,5 +260,17 @@ export function getReportStatistics(year, beginMonth, endMonth) {
     return request({
         url: API_BASE_URL + "/admin/report/stats?year=" + year + "&monthFrom=" + beginMonth + "&monthTo=" + endMonth,
         method: 'GET'
+    })
+}
+
+export function confirmEmail(confirmToken) {
+    const formData = new FormData()
+
+    formData.append('token', confirmToken)
+
+    return request({
+        url: API_BASE_URL + "/auth/signupConfirm",
+        method: 'POST',
+        body: formData
     })
 }
