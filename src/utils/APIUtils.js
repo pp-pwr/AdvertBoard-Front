@@ -229,8 +229,19 @@ export function setAdvertStatus(id, newStatus) {
     })
 }
 
+export function setProfileStatus(id, newStatus) {
+    const formData = new FormData()
+    formData.append('advertId', id)
+    formData.append('status', newStatus)
+    return request({
+        url: API_BASE_URL + "/admin/profile/status",
+        method: 'POST',
+        body: formData
+    })
+}
 
-export function setCaseStatus(id, newCaseStatus) {
+
+export function setAdvertCaseStatus(id, newCaseStatus) {
 
     const formData = new FormData()
 
@@ -238,7 +249,21 @@ export function setCaseStatus(id, newCaseStatus) {
     formData.append('status', newCaseStatus)
 
     return request({
-        url: API_BASE_URL + "/admin/report/status",
+        url: API_BASE_URL + "/admin/report/advert/status",
+        method: 'POST',
+        body: formData
+    })
+}
+
+export function setProfileCaseStatus(id, newCaseStatus) {
+
+    const formData = new FormData()
+
+    formData.append('reportId', id)
+    formData.append('status', newCaseStatus)
+
+    return request({
+        url: API_BASE_URL + "/admin/report/advert/status",
         method: 'POST',
         body: formData
     })
