@@ -297,7 +297,7 @@ class ProfileDetails extends Component {
 
     reportUserHandler(id, message) {
         const reportRequest = {
-            userId: id,
+            profileId: id,
             comment: message
         }
 
