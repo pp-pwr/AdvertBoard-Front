@@ -112,7 +112,7 @@ class App extends Component {
 
                         <Route path="/signupConfirm" component={SignupConfirm}></Route>
 
-                        <Route path="/advert/:advert_id" component={AdvertDetails}></Route>
+                        <Route path="/advert/:advert_id" user={this.state.user} component={AdvertDetails}></Route>
 
                         <Route path="/profile/user/:user_id" user={this.state.user} component={Profile}></Route>
 
@@ -122,7 +122,7 @@ class App extends Component {
 
                         <PrivateRoute path="/admin" user={this.state.user} component={AdminPanel}></PrivateRoute>
 
-                        <Route path="/profile/search" component={ProfileList} history={this.props.history}></Route>
+                        <Route path="/profile/search" user={this.state.user} component={ProfileList} history={this.props.history}></Route>
 
                         <Route path="/error/noprofile" component={NoProfile}></Route>
 
