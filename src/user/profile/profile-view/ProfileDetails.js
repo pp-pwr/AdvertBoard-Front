@@ -400,7 +400,7 @@ class ProfileDetails extends Component {
 
                 ) : (null)}
 
-                { this.props.current_user_id === this.props.user_id  && this.state.user.is_verified ? (
+                { this.props.current_user_id === this.props.user_id  && !this.state.user.is_verified ? (
                     <VerifyButton onClick={e => this.sendConfirmToken(e)}>Potwierdz swojego maila!</VerifyButton>
                 ) : (null)}
 

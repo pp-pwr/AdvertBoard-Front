@@ -32,12 +32,30 @@ class PageSelectionPanel extends Component {
     createButtons() {
         let buttons = []
 
+
         for(let i = 0; i < this.props.pages; i++) {
-            buttons.push(
-                <li key={ "page_" + i } onClick={() => this.setPage(i)} className='page-numbers'>
-                    <button style={{"font-size": "0.6em"}}>{ i + 1}</button>
-                </li>
-            );
+
+            if(this.props.pages > 20 && (i > 5) && i < this.props.pages - 1 && (i > this.currentPage) && this.currentPage < this.props.pages / 2) {
+                buttons.push(
+                    <li key={"page_dots" } className='page-numbers'>
+                        <button style={{"font-size": "0.6rem"}}>...</button>
+                    </li>
+                )
+                i = this.props.pages - 2;
+            } else if(this.props.pages > 20 && i > 1 && i < this.props.pages - 5 && (i < this.currentPage) && this.currentPage > this.props.pages / 2 ) {
+                buttons.push(
+                    <li key={"page_dots" } className='page-numbers'>
+                        <button style={{"font-size": "0.6rem"}}>...</button>
+                    </li>
+                )
+                i = this.props.pages - 2;
+            } else {
+                buttons.push(
+                    <li key={ "page_" + i } onClick={() => this.setPage(i)} className='page-numbers'>
+                        <button style={{"font-size": "0.6rem"}}>{ i + 1}</button>
+                    </li>
+                );
+            }
         }
         return buttons
     }
