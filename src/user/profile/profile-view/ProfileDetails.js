@@ -97,9 +97,9 @@ const ReportDialog = styled.div`
     z-index: 1000;
     position: absolute;
     background: #ffffff;
-    left: 50%;
-    top: 50%;
-    transform: translateX(50%) translateY(-50%);
+    left: 50vw;
+    top: 50vh;
+    transform: translateX(-50%) translateY(-50%);
     border-radius: 15px;
     border: solid lightblue 3px;
 

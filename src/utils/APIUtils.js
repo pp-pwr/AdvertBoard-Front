@@ -49,6 +49,7 @@ export function updateProfile(profileRequest) {
 }
 
 export function getUserById(userRequest) {
+    console.log(userRequest)
     return request({
         url: API_BASE_URL + "/user/get?profileId=" + userRequest['profileId'],
         method: 'GET'
@@ -172,14 +173,14 @@ export function getUnsolvedProfileReports(page, limit) {
 
 export function getBannedAdverts(page, limit) {
     return request({
-        url: API_BASE_URL + "/admin/advert/banned&page=" + page + "&limit=" + limit,
+        url: API_BASE_URL + "/admin/advert/banned?page=" + page + "&limit=" + limit,
         method: 'GET'
     })
 }
 
 export function getBannedProfiles(page, limit) {
     return request({
-        url: API_BASE_URL + "/admin/profile/banned&page=" + page + "&limit=" + limit,
+        url: API_BASE_URL + "/admin/profile?role=banned&page=" + page + "&limit=" + limit,
         method: 'GET'
     })
 }
@@ -231,10 +232,10 @@ export function setAdvertStatus(id, newStatus) {
 
 export function setProfileStatus(id, newStatus) {
     const formData = new FormData()
-    formData.append('advertId', id)
-    formData.append('status', newStatus)
+    formData.append('profileId', id)
+    formData.append('role', newStatus)
     return request({
-        url: API_BASE_URL + "/admin/profile/status",
+        url: API_BASE_URL + "/admin/user/role",
         method: 'POST',
         body: formData
     })
@@ -263,7 +264,7 @@ export function setProfileCaseStatus(id, newCaseStatus) {
     formData.append('status', newCaseStatus)
 
     return request({
-        url: API_BASE_URL + "/admin/report/advert/status",
+        url: API_BASE_URL + "/admin/report/profile/status",
         method: 'POST',
         body: formData
     })
@@ -282,7 +283,7 @@ export function reportUserById(reportRequest) {
         url: API_BASE_URL + "/user/report",
         method: 'POST',
         body: JSON.stringify(reportRequest)
-    })
+    }, 'application/json')
 }
 
 export function updateAdvert(advertForm) {
