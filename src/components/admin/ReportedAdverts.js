@@ -138,7 +138,7 @@ class AdvertField extends Component {
                 <ButtonDiv>
                     <Button className="button" id="accept-button" onClick={() => this.props.approveButtonHandler(this.props.advertId, this.props.caseId)}>OK</Button>
                     { this.props.declineVisible ? (
-                        <Button className="button" id="decline-button" onClick={() => this.props.declineButtonHandler(this.state.advert.id)}>NO</Button>
+                        <Button className="button" id="decline-button" onClick={() => this.props.declineButtonHandler(this.state.caseId)}>NO</Button>
                     ) : (
                         <div></div>
                     )
