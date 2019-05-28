@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components'
 import Button from 'react-bootstrap/Button'
-import { setAdvertStatus, setCaseStatus, getAdvertByAdvertId, getAdvertImageURL, getUnsolvedReports, getBannedAdverts } from '../../utils/APIUtils'
+import { setAdvertStatus, setAdvertCaseStatus, getAdvertByAdvertId, getAdvertImageURL, getUnsolvedReports, getBannedAdverts } from '../../utils/APIUtils'
 import { PageSelectionPanel } from '../advert/filters'
 import LoadingIndicator from '../../common/LoadingIndicator'
 import Alert from 'react-s-alert'
@@ -242,7 +242,7 @@ class ReportedAdverts extends Component {
     }
 
     acceptReport(id, caseId) {
-        setCaseStatus(caseId, "solved")
+        setAdvertCaseStatus(caseId, "solved")
         .then(() => {
             //Alert.ok("Pomyślnie przyjęto zgłoszenie")
 
@@ -262,7 +262,7 @@ class ReportedAdverts extends Component {
     }
 
     declineReport(caseId) {
-        setCaseStatus(caseId, "solved")
+        setAdvertCaseStatus(caseId, "solved")
         .then(response => {
             //Alert.ok("Pomyślnie odrzucono zgłoszenie")
             this.reportedPageChange(this.state.reported.currentPage)

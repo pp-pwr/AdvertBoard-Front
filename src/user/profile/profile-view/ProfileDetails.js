@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
-import { getUserById, rateProfile } from '../../../utils/APIUtils'
+import { getUserById, rateProfile, refreshConfirmToken, reportUserById } from '../../../utils/APIUtils'
 import Alert from 'react-s-alert'
 import { Link } from 'react-router-dom'
 import profile_pic from '../../../assets/images/account.png'
 import edit_icon from '../../../assets/images/edit-icon.png'
 import styled from 'styled-components'
 import StarRatings from 'react-star-ratings'
+import { Button } from 'react-bootstrap'
 
 const ProfileView = styled.div`
 
@@ -89,6 +90,131 @@ const StyledLink = styled(Link)`
     }
 `
 
+const ReportDialog = styled.div`
+    align-items: center;
+    text-align: center;
+    padding: 2vh 1.5vw 2vh 1.5vw;
+    z-index: 1000;
+    position: absolute;
+    background: #ffffff;
+    left: 50%;
+    top: 50%;
+    transform: translateX(50%) translateY(-50%);
+    border-radius: 15px;
+    border: solid lightblue 3px;
+
+    & > .report-comment {
+        min-width: 30vw;
+        min-height: 25vh;
+    }
+
+    & > .button {
+        width: 5em;
+        height: 3.5em;
+        border: transparent;
+
+        --webkit-transition: transform 150ms;
+        transition: transform 150ms;
+
+    }
+    & > .button:hover {
+        transform: scale(1.1, 1.1);
+    }
+
+    & * #report-button {
+        background-color: lightgreen;
+        margin-right: 1vw;
+    }
+
+    & * #cancel-button {
+        background-color: salmon;
+        margin-right: 1vw;
+    }
+`
+
+const TotalRatings = styled.p`
+
+`
+
+const VerifyButton = styled(Button)`
+    background-color: lightblue;
+    border: transparent;
+    --webkit-transition: transform 150ms;
+    transition: transform 150ms;
+
+    &:hover {
+        background-color: SkyBlue;
+        transform: scale(1.1, 1.1);
+    }
+`
+
+const ReportButton = styled(Button)`
+    background-color: IndianRed;
+    border: transparent;
+    --webkit-transition: transform 150ms;
+    transition: transform 150ms;
+
+    &:hover {
+        background-color: Crimson;
+        transform: scale(1.1, 1.1);
+    }
+`
+
+const VerifiedBadge = styled.div`
+    background-color: lightgreen;
+    font-weight: bold;
+    font-size: 0.8em;
+    border-radius: 5px;
+    text-align: center;
+    margin-left: 25%;
+    margin-right: 25%;
+    margin-bottom: 1em;
+`
+
+class ReportForm extends Component {
+
+    constructor() {
+        super()
+
+        this.state = {
+            userId: 0,
+            message: ""
+        }
+    }
+
+    componentDidMount() {
+        this.setState({
+            userId: this.props.user_id
+        })
+    }
+
+    handleReportSubmit() {
+        this.props.reportUserHandler(this.state.userId, this.state.message);
+    }
+
+    handleInputChange = (event) => {
+        const target = event.target
+        const value = target.value
+
+        this.setState({
+            message: value
+        })
+    }
+
+    render() {
+        return (
+        <ReportDialog className="report-form">
+            <p>Prześlij zgłoszenie</p>
+            <textarea className="report-comment" type="text" placeholder="Komentarz" onChange={this.handleInputChange.bind(this)} />
+            <div className="action-buttons">
+                <Button id="report-button" className="button" onClick={this.handleReportSubmit.bind(this)}>Zgłoś</Button>
+                <Button id="cancel-button" className="button" onClick={this.props.closeDialog}>Zamknij</Button>
+            </div>
+        </ReportDialog>
+        )
+    }
+}
+
 class ProfileDetails extends Component {
     constructor() {
         super();
@@ -99,12 +225,14 @@ class ProfileDetails extends Component {
         }
 
         this.changeRating = this.changeRating.bind(this);
+        this.closeDialog = this.closeDialog.bind(this);
+        this.reportUserHandler = this.reportUserHandler.bind(this);
+        this.showReportForm = this.showReportForm.bind(this);
     }
 
     changeRating(newRating, name) {
         const rating = Math.ceil(newRating);
-        console.log(this.current_user_id)
-        if(this.current_user_id) {
+        if(this.current_user_id && this.current_user_id !== this.user_id) {
             rateProfile(this.user_id, rating)
             .then(response => {
                 this.loadUserById();
@@ -112,6 +240,9 @@ class ProfileDetails extends Component {
             .catch(error => {
                 console.log(error);
             })
+        } else {
+            console.log(this.current_user_id)
+            console.log(this.user_id)
         }
     }
 
@@ -134,6 +265,7 @@ class ProfileDetails extends Component {
 
         const userRequest = Object.assign({}, user)
         getUserById(userRequest).then(userData => {
+            console.log(userData)
             this.setState({
                 user: {
                     ...this.state.user,
@@ -143,12 +275,57 @@ class ProfileDetails extends Component {
                     telephoneNumber: userData['telephoneNumber'],
                     contactMail: userData['contactMail'],
                     rating: userData['rating'] == null ? 0 : userData['rating'],
-                    id: userData['id']
+                    totalRatings: userData['ratingCount'] == null ? 0 : userData['ratingCount'],
+                    id: userData['id'],
+                    is_verified: userData['isVerified']
                 },
                 mounted: true
             })
         }).catch(error => {
             Alert.error((error && error.message) || "Ups!")
+        })
+    }
+
+    sendConfirmToken(event) {
+        event.preventDefault()
+
+        refreshConfirmToken()
+        .then(response => {
+            Alert.success("Link do weryfikacji konta został wysłany na twoją skrzynkę pocztową!")
+        })
+    }
+
+    reportUserHandler(id, message) {
+        const reportRequest = {
+            profileId: id,
+            comment: message
+        }
+
+        reportUserById(Object.assign({}, reportRequest))
+            .then(response => {
+                this.setState({
+                    reported: true
+                })
+            }).catch(error => {
+                Alert.error(error.message)
+            });
+
+            this.setState({
+                showReportDialog: false
+            })
+    }
+
+    showReportForm(event) {
+        event.preventDefault()
+
+        this.setState({
+            showReportDialog: true
+        })
+    }
+
+    closeDialog() {
+        this.setState({
+            showReportDialog: false
         })
     }
 
@@ -160,7 +337,7 @@ class ProfileDetails extends Component {
         const rating_enabled = this.props.rating_enabled;
 
         const unknownUser = !this.state.user.firstName || !this.state.user.lastName;
-
+        console.log(this.state.user)
         return (
             <ProfileView>
                 <StyledLink to={"/profile/user/" + this.user_id}>
@@ -185,6 +362,10 @@ class ProfileDetails extends Component {
                     </div>
                 ) : (null)}
 
+                { this.state.user.is_verified ? (
+                    <VerifiedBadge>Zweryfikowany</VerifiedBadge>
+                ) : (null)}
+
                 { rating_enabled ? (
                     <div>
                         <StarRatings
@@ -196,6 +377,9 @@ class ProfileDetails extends Component {
                         numberOfStars={5}
                         name='rating'
                         />
+                        <TotalRatings>
+                            (na podstawie {this.state.user.totalRatings} {this.state.user.totalRatings === 1 ? 'ogłoszenia' : 'ogłoszeń'})
+                        </TotalRatings>
                     </div>
                 ) : (null)}
 
@@ -207,13 +391,31 @@ class ProfileDetails extends Component {
                 ) : (null)}
 
 
-                { this.props.current_user_id == this.props.user_id ? (
+                { this.props.current_user_id === this.props.user_id ? (
                     <a href="/profile/edit">
                         <div className="edit-link">
                             <img className="edit-image" border="0" alt="edit-profile" src={edit_icon} text="Edytuj"/>
                         </div>
                     </a>
+
                 ) : (null)}
+
+                { this.props.current_user_id === this.props.user_id  && this.state.user.is_verified ? (
+                    <VerifyButton onClick={e => this.sendConfirmToken(e)}>Potwierdz swojego maila!</VerifyButton>
+                ) : (null)}
+
+                { this.props.current_user_id && this.props.current_user_id !== this.props.user_id ? (
+                    <ReportButton onClick={e => this.showReportForm(e)}>Zgłoś</ReportButton>
+                ) : (null)}
+
+                {
+                this.state.showReportDialog ? (
+                        <ReportForm 
+                        user_id={this.props.user_id} 
+                        reportUserHandler={this.reportUserHandler}
+                        closeDialog={this.closeDialog}/>
+                    ) : (null)
+                }
             </ProfileView>
         )
     }

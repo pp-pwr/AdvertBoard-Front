@@ -19,6 +19,7 @@ const Adverts = styled.div`
 
     & * .advert-list-element {
         border-radius: 3px;
+        min-width: 35vw;
     }
 `
 
@@ -61,6 +62,16 @@ class Profile extends Component {
         })
     }
 
+    getCurrentUser() {
+        getCurrentUser().then(response => {
+            this.setState({
+                current_user: response
+            })
+        }).catch(error => {
+            Alert.error((error && error.message) || "Ups!")
+        })
+    }
+
     loadUserById() {
         const user = {
             "profileId": this.user_id
@@ -81,6 +92,7 @@ class Profile extends Component {
     loadUserData() {
         if(this.user_id) {
             this.loadUserById()
+            this.getCurrentUser()
         } else {
             this.loadCurrentUser()
         }
@@ -111,7 +123,12 @@ class Profile extends Component {
 
     componentDidMount() {
         this.user_id = this.props.match.params.user_id
-        this.current_user = this.props.user
+
+        if(this.props.user !== null && this.props.user !== undefined) {
+            this.setState({
+                current_user: this.props.user
+            })
+        }
 
         this.setState({
             mounted: true
@@ -131,19 +148,19 @@ class Profile extends Component {
             return <LoadingIndicator/>
         }
 
-        if(this.current_user && this.current_user.profileView === null) {
+        if(this.state.current_user && this.state.current_user.profileView === null) {
             return <Redirect to='/profile/edit' />
         }
         
-        console.log(this.props.user)
-
         return (
+
             <ProfileContainer>
                 <ProfileDetails 
                 user_id={this.state.profile.id} 
                 show_adverts={false} 
                 rating_enabled={true}
-                current_user_id={this.current_user ? this.current_user.profileView.id : null}/>
+                current_user_id={this.state.current_user ? this.state.current_user.profileView.id : null}
+                is_verified={this.state.profile.isVerified}/>
 
                 <Adverts>
                     <div className="title">Ogłoszenia użytkownika: </div>

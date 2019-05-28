@@ -1,19 +1,12 @@
 import React, { Component } from "react"
 import { Redirect } from "react-router-dom"
 import { ACCESS_TOKEN } from "../../constants"
+import { getUrlParameter } from "../../utils/UrlParameter"
 
 class OAuth2RedirectHandler extends Component {
-    getUrlParameter(name) {
-        name = name.replace(/[[]/, '\\[').replace(/[\]]/, '\\]');
-        var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
-
-        var results = regex.exec(this.props.location.search);
-        return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
-    };
-
     render() {        
-        const token = this.getUrlParameter('token');
-        const error = this.getUrlParameter('error');
+        const token = getUrlParameter('token', this.props.location);
+        const error = getUrlParameter('error', this.props.location);
 
         if(token) {
             localStorage.setItem(ACCESS_TOKEN, token);

@@ -158,14 +158,28 @@ export function getAdvertByAdvertId(id) {
 
 export function getUnsolvedReports(page, limit) {
     return request({
-        url: API_BASE_URL + "/admin/report?caseStatus=unsolved&page=" + page + "&limit=" + limit,
+        url: API_BASE_URL + "/admin/report/advert?caseStatus=unsolved&page=" + page + "&limit=" + limit,
+        method: 'GET'
+    })
+}
+
+export function getUnsolvedProfileReports(page, limit) {
+    return request({
+        url: API_BASE_URL + "/admin/report/profile?caseStatus=unsolved&page=" + page + "&limit=" + limit,
         method: 'GET'
     })
 }
 
 export function getBannedAdverts(page, limit) {
     return request({
-        url: API_BASE_URL + "/admin/advert/banned", // "&page=" + page + "&limit=" + limit,"
+        url: API_BASE_URL + "/admin/advert/banned&page=" + page + "&limit=" + limit,
+        method: 'GET'
+    })
+}
+
+export function getBannedProfiles(page, limit) {
+    return request({
+        url: API_BASE_URL + "/admin/profile/banned&page=" + page + "&limit=" + limit,
         method: 'GET'
     })
 }
@@ -215,8 +229,19 @@ export function setAdvertStatus(id, newStatus) {
     })
 }
 
+export function setProfileStatus(id, newStatus) {
+    const formData = new FormData()
+    formData.append('advertId', id)
+    formData.append('status', newStatus)
+    return request({
+        url: API_BASE_URL + "/admin/profile/status",
+        method: 'POST',
+        body: formData
+    })
+}
 
-export function setCaseStatus(id, newCaseStatus) {
+
+export function setAdvertCaseStatus(id, newCaseStatus) {
 
     const formData = new FormData()
 
@@ -224,7 +249,21 @@ export function setCaseStatus(id, newCaseStatus) {
     formData.append('status', newCaseStatus)
 
     return request({
-        url: API_BASE_URL + "/admin/report/status",
+        url: API_BASE_URL + "/admin/report/advert/status",
+        method: 'POST',
+        body: formData
+    })
+}
+
+export function setProfileCaseStatus(id, newCaseStatus) {
+
+    const formData = new FormData()
+
+    formData.append('reportId', id)
+    formData.append('status', newCaseStatus)
+
+    return request({
+        url: API_BASE_URL + "/admin/report/advert/status",
         method: 'POST',
         body: formData
     })
@@ -236,6 +275,14 @@ export function reportAdvertById(reportRequest) {
         method: 'POST',
         body: JSON.stringify(reportRequest)
     }, 'application/json')
+}
+
+export function reportUserById(reportRequest) {
+    return request({
+        url: API_BASE_URL + "/user/report",
+        method: 'POST',
+        body: JSON.stringify(reportRequest)
+    })
 }
 
 export function updateAdvert(advertForm) {
@@ -260,5 +307,24 @@ export function getReportStatistics(year, beginMonth, endMonth) {
     return request({
         url: API_BASE_URL + "/admin/report/stats?year=" + year + "&monthFrom=" + beginMonth + "&monthTo=" + endMonth,
         method: 'GET'
+    })
+}
+
+export function confirmEmail(confirmToken) {
+    const formData = new FormData()
+
+    formData.append('token', confirmToken)
+
+    return request({
+        url: API_BASE_URL + "/auth/signupConfirm",
+        method: 'POST',
+        body: formData
+    })
+}
+
+export function refreshConfirmToken() {
+    return request({
+        url: API_BASE_URL + "/user/refreshToken",
+        method: 'POST'
     })
 }

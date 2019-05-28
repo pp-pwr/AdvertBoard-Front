@@ -62,6 +62,7 @@ const TotalInfoPanel = styled.div`
     margin-left: 20%;
     margin-right: 20%;
     display: flex;
+    flex-wrap: wrap
     justify-content: space-between;
     margin-top: 2.5em;
 `
@@ -75,14 +76,14 @@ const ChartContainer = styled.div`
 
 const InfoCell = styled.div`
     text-align: center;
-
+    width: 33%;
     & .info-title {
         font-weight: bold;
-        font-size: 1.8em;
+        font-size: 1.5em;
     }
 
     & .info-value {
-        font-size: 1.6em;
+        font-size: 1.3em;
     }
 `
 
@@ -99,7 +100,12 @@ class ReportStatistics extends Component {
                 monthReportedAdvertsCount: {},
                 allReportedAdvertsCount: 0,
                 todayAdvertReportsCount: 0,
-                todayReportedAdvertsCount: 0
+                todayReportedAdvertsCount: 0,
+                monthProfileReportsCount: {},
+                monthReportedProfilesCount: {},
+                allReportedProfilesCount: 0,
+                todayProfileReportsCount: 0,
+                todayReportedProfilesCount: 0
             },
             mounted: false,
             options: {
@@ -272,6 +278,18 @@ class ReportStatistics extends Component {
                         <p className="info-title">Liczba zgłoszeń (dzisiaj)</p>
                         <p className="info-value">{this.state.data.todayAdvertReportsCount}</p>
                     </InfoCell>
+                    <InfoCell>
+                        <p className="info-title">Liczba zgłoszonych użytkowników</p>
+                        <p className="info-value">{this.state.data.allReportedProfilesCount}</p>
+                    </InfoCell>
+                    <InfoCell>
+                        <p className="info-title">Liczba zgłoszonych użytkowników (dzisiaj)</p>
+                        <p className="info-value">{this.state.data.todayReportedProfilesCount}</p>
+                    </InfoCell>
+                    <InfoCell>
+                        <p className="info-title">Liczba zgłoszeń użytkowników (dzisiaj)</p>
+                        <p className="info-value">{this.state.data.todayProfileReportsCount}</p>
+                    </InfoCell>
                 </TotalInfoPanel>
                 <ChartsPanel>
                     <ChartContainer>
@@ -306,7 +324,55 @@ class ReportStatistics extends Component {
                                 loader={<LoadingIndicator />}
                                 data={this.transformCharData(this.state.data.monthAdvertReportsCount)}
                                 options={{
-                                    title: 'Zgłoszenia w danym przedziale',
+                                    title: 'Zgłoszenia ogłoszeń w danym przedziale',
+                                    chartArea: { width: '30%' },
+                                    hAxis: {
+                                        title: 'Miesiąc',
+                                        minValue: this.state.options.monthFrom,
+                                        maxValue: this.state.options.monthTo
+                                    },
+                                    vAxis: {
+                                        format: '####',
+                                        title: 'Liczba zgłoszeń',
+                                        minValue: 0
+                                    }
+                                }}
+                                legendToggle
+                            />                        
+                    </ChartContainer>
+                    <ChartContainer>
+                        <Chart 
+                                width='100%'
+                                height={300}
+                                chartType="ColumnChart"
+                                loader={<LoadingIndicator />}
+                                data={this.transformCharData(this.state.data.monthReportedProfilesCount)}
+                                options={{
+                                    title: 'Zgłoszeni użytkownicy w danym przedziale',
+                                    chartArea: { width: '30%' },
+                                    hAxis: {
+                                        title: 'Miesiąc',
+                                        minValue: this.state.options.monthFrom,
+                                        maxValue: this.state.options.monthTo
+                                    },
+                                    vAxis: {
+                                        format: '####',
+                                        title: 'Liczba zgłoszonych użytkowników',
+                                        minValue: 0
+                                    }
+                                }}
+                                legendToggle
+                            />                        
+                    </ChartContainer>
+                    <ChartContainer>
+                        <Chart 
+                                width='100%'
+                                height={300}
+                                chartType="ColumnChart"
+                                loader={<LoadingIndicator />}
+                                data={this.transformCharData(this.state.data.monthProfileReportsCount)}
+                                options={{
+                                    title: 'Zgłoszenia użytkowników w danym przedziale',
                                     chartArea: { width: '30%' },
                                     hAxis: {
                                         title: 'Miesiąc',

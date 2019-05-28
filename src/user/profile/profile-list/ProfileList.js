@@ -34,7 +34,7 @@ class ProfileCell extends Component {
     }
 
     redirectToPage = () => {
-        this.props.history.push('/profile/user/' + this.state.user.id)
+        this.props.onUserClick(this.state.user.id)
     }
 
     componentWillUnmount() {
@@ -67,6 +67,7 @@ class ProfileList extends Component {
         }
 
         this.mounted = false
+        this.showProfile = this.showProfile.bind(this)
     }
 
     componentDidMount() {
@@ -102,6 +103,12 @@ class ProfileList extends Component {
         }) 
     }
 
+    showProfile(id) {
+        this.props.history.push({
+            pathname: '/profile/user/' + id
+          })
+    }
+
     renderUserCells() {
         const user_cells = []
 
@@ -110,7 +117,11 @@ class ProfileList extends Component {
                 let user_profile = this.state.userList[i]
 
                 user_cells.push(
-                    <ProfileCell key={user_profile.id} profile={user_profile} history={this.props.history}/>
+                    <ProfileCell 
+                        key={user_profile.id} 
+                        profile={user_profile} 
+                        history={this.props.history}
+                        onUserClick={this.showProfile}/>
                 )
             }
         }
