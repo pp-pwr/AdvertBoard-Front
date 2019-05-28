@@ -91,10 +91,14 @@ class ProfileField extends Component {
             mounted: true
         })
 
-        getUserById(this.props.profileId)
+        const profileRequest = {
+            profileId: this.props.profileId
+        }
+
+        getUserById(profileRequest)
         .then(response => {
             this.setState({
-                profile: response['profileView']
+                profile: response
             })
         })
         .catch(error => {
@@ -139,7 +143,7 @@ class ProfileField extends Component {
                 <ButtonDiv>
                     <Button className="button" id="accept-button" onClick={() => this.props.approveButtonHandler(this.props.profileId, this.props.caseId)}>OK</Button>
                     { this.props.declineVisible ? (
-                        <Button className="button" id="decline-button" onClick={() => this.props.declineButtonHandler(this.state.profile.id)}>NO</Button>
+                        <Button className="button" id="decline-button" onClick={() => this.props.declineButtonHandler(this.props.caseId)}>NO</Button>
                     ) : (
                         <div></div>
                     )
@@ -247,7 +251,7 @@ class ReportedUsers extends Component {
         .then(() => {
             //Alert.ok("Pomyślnie przyjęto zgłoszenie")
 
-            setProfileStatus(id, "BANNED")
+            setProfileStatus(id, "banned")
             .then(() => {
                 //Alert.ok("Ogłoszenie zostało zbanowane!")
                 this.reportedPageChange(this.state.reported.currentPage)
@@ -274,7 +278,7 @@ class ReportedUsers extends Component {
     }
 
     unbanProfile(id, caseId) {
-        setProfileStatus(id, "OK")
+        setProfileStatus(id, "user")
         .then(() => {
             //Alert.ok("Ogłoszenie zostało odbanowane!")
             this.bannedPageChange(this.state.banned.currentPage)
