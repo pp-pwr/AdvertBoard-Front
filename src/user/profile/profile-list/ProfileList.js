@@ -3,56 +3,81 @@ import LoadingIndicator from '../../../common/LoadingIndicator';
 import { getUsers } from '../../../utils/APIUtils'
 import Alert from 'react-s-alert'
 import bike from '../../../assets/images/bike.jpg'
+import profile_pic from '../../../assets/images/account.png'
+import styled from 'styled-components'
 
-import './ProfileList.css'
+const ProfileContainer = styled.div`
+    text-align: center;
+    width: 100%;
+    height: 100%;
+
+    & > .userlist-content {
+        background: #fff;
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        border-radius: 2px;
+        margin-top: 30px;
+        vertical-align: center;
+        position: relative;    
+        padding: 35px;
+    }
+`
+
+const ProfileListEntry = styled.div`
+    box-shadow: 0 1px 11px rgba(0, 0, 0, 0.05);
+    height: 120px;
+    width: 30%;
+    max-width: 30%;
+    margin-left: 2rem;
+    margin-right: 2rem;
+    position: relative;
+    margin-top: 2rem;
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+    text-align: center;
+
+    border-radius: 75px 25px 25px 75px;
+
+    margin-top: 3.5rem;
+
+    &:hover {
+        box-shadow: 0 1px 24px lightblue;
+    }
+
+    & > img {
+        width: auto;
+        height: 150px;
+        position: absolute;
+        left: 0px;
+    }
+
+    & > .userlist-element-info {
+        text-align: left;
+        margin-left: 180px;
+        position: absolute;
+        font-size: 2rem;
+        text-align: left;
+    }
+`
 
 class ProfileCell extends Component {
-    constructor(props) {
-        super(props)
-
-        this.state = {
-            user: {
-                visibleName: "",
-                id: null
-            }
-        }
-
-        this.mounted = false
-    }
-
-    componentDidMount() {
-        this.mounted = true;
-        const profile = this.props.profile
-        console.log(profile)
-        this.setState({
-            user: {
-                ...this.state.user,
-                visibleName: profile.visibleName,
-                id: profile.id
-            }
-        })
-    }
-
-    redirectToPage = () => {
-        this.props.onUserClick(this.state.user.id)
-    }
-
-    componentWillUnmount() {
-        this.mounted = false;
+    redirectToPage = (e) => {
+        e.preventDefault()
+        this.props.onUserClick(this.props.profile.id)
     }
 
     render() {
-        if(!this.mounted) {
-            return <LoadingIndicator/>
-        }
+        const profile = this.props.profile
 
         return (
-            <div className="userlist-element" onClick={this.redirectToPage}>
-            <img src={bike} alt="ProfileImage" className="profile-image"></img>
-            <div className="userlist-element-info">
-                <p id="displayName"><b>{this.state.user.visibleName}</b></p>
-            </div>
-            </div>
+            <ProfileListEntry onClick={this.redirectToPage}>
+                <img src={profile_pic} alt="ProfileImage" className="profile-image" />
+                <p className="userlist-element-info">
+                    <b>{profile.visibleName}</b>
+                </p>
+            </ProfileListEntry>
         )
     }
 }
@@ -135,16 +160,17 @@ class ProfileList extends Component {
         }
 
         return (
-            <div className="userlist-container">
+            <ProfileContainer>
             <div className="userlist-search">
                 <input className="search-box-field" type="text" name="currentUserFilter"
                                 onChange={this.handleInputChange}/>
                 <button className="btn btn-primary" onClick={this.updateUserList}>Filtruj</button>
             </div>
+
             <div className="userlist-content">
                 { this.renderUserCells() }
             </div>
-            </div>
+            </ProfileContainer>
         )
     }
 }

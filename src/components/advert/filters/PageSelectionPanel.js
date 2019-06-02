@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import '../../../common/Pagination.scss'
 
+
 class PageSelectionPanel extends Component {
     constructor(props) {
         super(props);
@@ -103,7 +104,7 @@ class PageSelectionPanel extends Component {
 
         if(this.currentPage < this.props.pages - 1) {
             buttons.push(
-                <li key={ "page_first" } onClick={() => this.setPage(this.props.pages - 1)} className='page-numbers'>
+                <li key={ "page_last" } onClick={() => this.setPage(this.props.pages - 1)} className='page-numbers'>
                     <button>Ostatnia</button>
                 </li>
             )
