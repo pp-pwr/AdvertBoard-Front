@@ -154,9 +154,6 @@ class AdvertPanel extends Component {
         .catch(error => {
             Alert.error((error && error.message) || "Coś poszło nie tak! Spróbuj ponownie lub skontaktuj się z administratorem!")
         })
-
-        console.log("Sent request.")
-        console.log(advertRequest)
     }
 
     categoryChange(categoryID, category) {
@@ -167,8 +164,6 @@ class AdvertPanel extends Component {
                 currentCategory: category
             }
         }, () => {
-            console.log("New category ID: " + categoryID)
-            console.log(category)
             this.loadAdverts()
         
         })
@@ -181,7 +176,6 @@ class AdvertPanel extends Component {
                 currentTitleFilter: titleFilter 
             }
         }, () => {
-            console.log("New title: " + titleFilter)
             this.loadAdverts()
         })
     }
@@ -193,13 +187,11 @@ class AdvertPanel extends Component {
                 sorting: sortInfo
             }
         }, () => {
-            console.log("New sort options: " + sortInfo)
             this.loadAdverts()
         })
     }
 
     detailsChange(event) {
-        console.log("DETAILS CHANGE")
         this.loadAdverts()
     }
 
@@ -210,7 +202,6 @@ class AdvertPanel extends Component {
                 currentPage: newPage
             }
         }, () => {
-            console.log("New page number: " + newPage)
             this.loadAdverts()
         })
     }
@@ -230,7 +221,7 @@ class AdvertPanel extends Component {
                     ) : (
                         <ContentGrid>
                             <RecommendedAdverts>
-                                {/* <AdvertSlider itemList={this.state.advertGrid.recommendedAdverts} /> */}
+                                <AdvertSlider itemList={this.state.advertGrid.recommendedAdverts} />
                             </RecommendedAdverts>
                             <AdvertGrid itemList={this.state.advertGrid.advertList}/>
                             <PageSelectionPanel pages={this.state.advertGrid.pageCount} changeHandler={this.pageChange}/>

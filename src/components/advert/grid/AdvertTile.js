@@ -12,11 +12,15 @@ const Tile = styled.div`
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     padding: 0vw 0vh 0.2vw 0vh;
     margin: 1vw 2vh 1vw 2vh;
-    
     text-align:center;
 
     --webkit-transition: transform 250ms;
     transition: transform 250ms;
+
+    & > img {
+        width: 100%;
+        height: auto;
+    }
 
     &:hover {
         transform: scale(1.2, 1.2);
