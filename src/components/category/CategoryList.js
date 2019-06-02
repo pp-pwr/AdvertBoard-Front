@@ -37,16 +37,35 @@ class CategoryList extends Component {
             })
     }
 
+    prepareCatList() {
+        let categories = []
+
+        if(!this.state.categoryList['subcategories'])
+            return [this.state.categoryList]
+
+        categories.push(
+            this.state.categoryList
+        )
+
+        for(let i = 0 ; i < this.state.categoryList['subcategories'].length; i++) {
+            categories.push(
+                this.state.categoryList['subcategories'][i]
+            )
+        }
+
+        return categories
+    }
+
     render() {
         if (this.state.loading) {
              return <LoadingIndicator />
         }
-        
+
         return (
             <div>
                 { this.state.categoryList ? (
                     <CategoryDropList 
-                    categories={this.state.categoryList['subcategories']} 
+                    categories={this.prepareCatList()} 
                     changeHandler={this.props.changeHandler} 
                     next_level={0}/>
                 ): (

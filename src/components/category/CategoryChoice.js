@@ -1,5 +1,61 @@
 import React, { Component } from 'react'
 import ListGroup from 'react-bootstrap/ListGroup'
+import { getCategoryLabel } from '../../utils/APIUtils'
+import styled from 'styled-components'
+
+const ListItem = styled(ListGroup.Item)`
+    width: 100%;
+    display: flex;
+    align-items: center;
+    border: none;
+    position: relative;
+    margin-top: 0.2rem;
+
+    & > img {
+        width: 36px;
+        height: auto;
+        border-radius: 18px;
+        margin-right: 0.4rem;
+    }
+
+    &::after {
+        content: "";
+        position: absolute;
+        left: 10%;
+        bottom: 0;
+        width: 90%;
+        height: 2px;
+        background: lightgrey;
+
+        transform: scaleX(0);
+        transform-origin: left;
+
+        transition: transform 250ms ease-in;
+    }
+
+    &:hover::after {
+        transform: scaleX(1);
+    }
+
+    &.selected {
+        font-weight: bold;
+    }
+
+    &.top-cat {
+        font-weight; bold;
+    }
+
+    &.top-cat::before {
+        content: '<';
+        font-size: 1.2em;
+        font-weight: bold;
+        margin-right: 0.5rem;
+    }
+
+    &.root-cat {
+        display: none;
+    }
+`
 
 class CategoryDropList extends Component {
     constructor(props) {
@@ -7,99 +63,133 @@ class CategoryDropList extends Component {
         this.state = {
             categoryList: [],
             selected: -1,
-            selectedId: 0,
+            selectedId: null,
+            prev_selected: [],
+            prev_selectedId: [],
             level: 0
         }
 
         this.selectedCategory = this.props.selected
+        this.changeCategory = this.changeCategory.bind(this)
     }
 
-    setCategory = (index, id) => {
-        let newSelected = this.state.selected
+    setCategory = (category, level, save_history = false) => {
         let newSelectedId = this.state.selectedId
 
-        if(newSelected !== index && newSelectedId !== id) {
-            newSelected = index
-            newSelectedId = id
-            this.selectedCategory = true
-        } else {
-            this.selectedCategory = false
+        if(newSelectedId === null || newSelectedId['id'] !== category['id']) {
+            newSelectedId = category
         }
         
-        let modified = false;
+        if(save_history) {
+            this.setState({
+                prev_selectedId: [
+                    ...this.state.prev_selectedId,
+                    this.state.selectedId
+                ]
+            })
+        }
 
         this.setState({
-            selected: newSelected,
-            selectedId: newSelectedId
+            selectedId: newSelectedId,
+            level: level
         }, () => {
-            if(!modified) {
-                this.props.changeHandler(newSelectedId, this.state.categoryList[newSelected]);
-                modified = true
-            }
+            this.props.changeHandler(category['id']);
         })
     }
 
     componentDidMount() {
-        let selectedIndex = 0
-        if(this.props.categories && this.state.selected !== -1) {
-            selectedIndex = this.props.categories[0]['id']
-        }
-
         this.setState({
             categoryList: this.props.categories,
-            selected: -1,
-            selectedId: selectedIndex,
+            selectedId: this.props.categories[0],
             level: this.props.next_level
         })
     }
 
-    createList = () => {
+    createTopLevelList() {
         let categories = []
-
-        if(!this.state.categoryList)
-            return
 
         for(let i = 0; i < this.state.categoryList.length; i++) {
             let category = this.state.categoryList[i]
 
             categories.push(
-                <ListGroup.Item className="category-list-item" action width="100%"
-                            onClick={() => this.setCategory(i, category['id'])}
-                            key={ category['name'] + category['id']}> 
-                        { (this.state.level + 1) + ". " + category['name'] }  
-                </ListGroup.Item>
+                this.getListItem(category, this.state.level, false)
             )
-                
-            if (i === this.state.selected && category['subcategories'].length > 0) {
-                categories.push(
-                    <CategoryDropList key={category['name']} 
-                    categories={this.state.categoryList[this.state.selected]['subcategories']}
-                    next_level={this.state.level + 1} 
-                    selectedCategory={false} 
-                    changeHandler={this.props.changeHandler}/>
-                )
-            }
         }
 
         return categories
     }
 
-    render() {
+    changeCategory(e, category, level) {
+        e.preventDefault()
+
+        if(this.state.selectedId !== null && this.state.selectedId['id'] === category['id']) {
+            if(this.state.prev_selectedId.length > 0) {
+                this.setCategory(
+                    this.state.prev_selectedId.pop(),
+                     level - 1)
+            }
+        } else {
+            this.setCategory(category, level + 1, true)
+        }
+    }
+
+    createList() {
+        let categories = []
+
+        if(!this.state.categoryList)
+            return
+
+        if(this.state.level === 0)
+            return this.createTopLevelList()
+
+        const current_cat = this.state.selectedId
+        const sub_cats = current_cat['subcategories']
+
+        categories.push(
+            this.getListItem(current_cat, this.state.level, true)
+        )
+
+        for(let i = 0; i < sub_cats.length; i++) {
+            const sub_cat = sub_cats[i];
+
+            categories.push(
+                this.getListItem(sub_cat, this.state.level + 1, false)
+            )
+        }
+
+        return categories
+    }
+
+    getListItem(category, level, backBtn = false) {
+
+        if(category === null || category === 0)
+            return null
+
+        let className =  'category-list-item'
+        className = backBtn ? 'top-cat category-list-view' : className;
+        className = category['name'] === 'root' ? 'root-cat category-list-item' : className
+
+        const categoryName = category['name'] === 'root' ? 'Wszystkie' : category['name']
+
         return (
-            <div className="category-listgroup">
-                { this.state.level === 0 ? (
-                    <ListGroup.Item className="categoryInactive" action width="100%"
-                            onClick={() => this.setCategory(-1, 0)}
-                            key="all"> 
-                        Wszystkie  
-                    </ListGroup.Item>
-                ) : (
-                    <div></div>
-                )}
-                <ListGroup>
-                    { this.createList() }
-                </ListGroup>
-            </div>
+            <ListItem
+                className={className}
+                onClick={(e) => this.changeCategory(e, category, level + 1)}
+                key={category['name'] + category['id']}>
+
+                <img src={getCategoryLabel(categoryName)} alt={category['name']} />
+                { categoryName }
+            </ListItem>
+        )
+    }
+
+    render() {
+        console.log(this.props.categories)
+
+        return (
+            <ListGroup>
+                { this.createList()}
+            </ListGroup>
         )
     }
 }

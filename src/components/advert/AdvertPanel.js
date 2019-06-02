@@ -62,7 +62,6 @@ class AdvertPanel extends Component {
         this.state = {
             advertGrid: {
                 currentCategoryID: 0,
-                currentCategory: null,
                 currentPage: 0,
                 pageCount: 0,
                 currentTitleFilter: "",
@@ -156,12 +155,11 @@ class AdvertPanel extends Component {
         })
     }
 
-    categoryChange(categoryID, category) {
+    categoryChange(categoryID) {
         this.setState({
             advertGrid: {
                 ...this.state.advertGrid,
-                currentCategoryID: categoryID,
-                currentCategory: category
+                currentCategoryID: categoryID
             }
         }, () => {
             this.loadAdverts()

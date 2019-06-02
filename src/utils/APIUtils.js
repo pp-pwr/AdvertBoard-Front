@@ -1,4 +1,5 @@
 import { API_BASE_URL, ACCESS_TOKEN } from '../constants'
+import { stringToRGB } from './ColorUtils'
 
 const request = (options, content_type=null) => {
     const headers = new Headers()
@@ -328,4 +329,11 @@ export function refreshConfirmToken() {
         url: API_BASE_URL + "/user/refreshToken",
         method: 'POST'
     })
+}
+
+export function getCategoryLabel(categoryName) {
+    let size = categoryName.split(" ").length
+    let color = stringToRGB(categoryName)
+
+    return 'https://ui-avatars.com/api/?name=' + categoryName + '&length=' + size + '&size=64&font-size=0.45&color=ffffff&bold=true&background=' + color
 }
