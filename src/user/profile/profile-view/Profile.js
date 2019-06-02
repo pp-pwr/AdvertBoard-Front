@@ -151,6 +151,11 @@ class Profile extends Component {
         if(this.state.current_user && this.state.current_user.profileView === null) {
             return <Redirect to='/profile/edit' />
         }
+
+        let rating_enabled = this.state.current_user ? true : false
+
+        if(rating_enabled)
+            rating_enabled = this.state.current_user.profileView.id === this.state.profile.id ? false : true
         
         return (
 
@@ -158,7 +163,7 @@ class Profile extends Component {
                 <ProfileDetails 
                 user_id={this.state.profile.id} 
                 show_adverts={false} 
-                rating_enabled={true}
+                rating_enabled={rating_enabled}
                 current_user_id={this.state.current_user ? this.state.current_user.profileView.id : null}
                 is_verified={this.state.profile.isVerified}/>
 

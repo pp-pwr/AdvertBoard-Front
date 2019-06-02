@@ -343,15 +343,19 @@ class AdvertDetails extends Component {
     }
 
     render() {
+
         if(this.state.loadingAdvert)
             return <LoadingIndicator />
-        console.log(this.state.current_user_id)
+
+        let rating_enabled = this.state.current_user_id ? true : false
+        rating_enabled = this.state.advertInfo.authorId === this.state.current_user_id ? false : true
+        
         return (
             <AdvertContainer>
                 <ProfileDetails 
                 user_id={this.state.advertInfo.authorId} 
                 show_adverts={false} 
-                rating_enabled={true}
+                rating_enabled={rating_enabled}
                 current_user_id={this.state.current_user_id}
                 is_verified={this.state.isVerified}/>
 

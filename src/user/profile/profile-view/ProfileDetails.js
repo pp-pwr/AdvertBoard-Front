@@ -232,18 +232,13 @@ class ProfileDetails extends Component {
 
     changeRating(newRating, name) {
         const rating = Math.ceil(newRating);
-        if(this.current_user_id && this.current_user_id !== this.user_id) {
-            rateProfile(this.user_id, rating)
+        rateProfile(this.user_id, rating)
             .then(response => {
                 this.loadUserById();
             })
             .catch(error => {
-                console.log(error);
+          
             })
-        } else {
-            console.log(this.current_user_id)
-            console.log(this.user_id)
-        }
     }
 
     componentDidMount() {
