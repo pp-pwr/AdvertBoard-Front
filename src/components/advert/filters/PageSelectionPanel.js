@@ -80,11 +80,11 @@ class PageSelectionPanel extends Component {
         let i_upper = Math.min(this.props.pages, this.currentPage + (page_limit / 2)) 
 
         if(i_upper < page_limit && this.currentPage < (page_limit / 2)) {
-            i_upper = page_limit
+            i_upper = Math.min(this.props.pages, page_limit)
         }
 
         if(i_lower > 0 && this.currentPage > (this.props.pages - page_limit / 2)) {
-            i_lower = this.props.pages - page_limit;
+            i_lower = Math.max(0, this.props.pages - page_limit)
         }
 
         for(let i = i_lower; i < i_upper; i++) {

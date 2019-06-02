@@ -63,6 +63,10 @@ button:hover {
 	letter-spacing: 0.2em;
 	line-height: 4.5rem;
 
+	&.selected {
+		font-size: 1.8rem;
+	}
+
 	&.left {
 		border-radius: 35px 0px 0px 35px;
 		padding-left: 2rem;
