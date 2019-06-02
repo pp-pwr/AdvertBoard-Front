@@ -77,9 +77,18 @@ button:hover {
 	float: left;
 	transition: $duration $easing;
 	color: $grey;
-	font-size: 20px;
+	font-size: 1rem;
 	letter-spacing: 0.1em;
 	line-height: 70px;
+
+
+	&.selected {
+		font-size: 1.7rem;
+	}
+
+	&.selected > button {
+		color: $blue;
+	}
 
 	&:hover,
 	&.current {
@@ -124,7 +133,8 @@ button:hover {
 		&:nth-last-child(-n+4) {
 			padding-right: 14px;
 
-			&::after {
+			&::after,
+			&-selected::after {
 				content: none;
 			}
 		}

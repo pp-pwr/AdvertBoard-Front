@@ -32,31 +32,47 @@ class PageSelectionPanel extends Component {
     createButtons() {
         let buttons = []
 
+        let page_limit = 10;
 
-        for(let i = 0; i < this.props.pages; i++) {
+        let className = 'page-numbers';
 
-            if(this.props.pages > 20 && (i > 5) && i < this.props.pages - 1 && (i > this.currentPage) && this.currentPage < this.props.pages / 2) {
-                buttons.push(
-                    <li key={"page_dots" } className='page-numbers'>
-                        <button style={{"font-size": "0.6rem"}}>...</button>
-                    </li>
-                )
-                i = this.props.pages - 2;
-            } else if(this.props.pages > 20 && i > 1 && i < this.props.pages - 5 && (i < this.currentPage) && this.currentPage > this.props.pages / 2 ) {
-                buttons.push(
-                    <li key={"page_dots" } className='page-numbers'>
-                        <button style={{"font-size": "0.6rem"}}>...</button>
-                    </li>
-                )
-                i = this.props.pages - 2;
-            } else {
-                buttons.push(
-                    <li key={ "page_" + i } onClick={() => this.setPage(i)} className='page-numbers'>
-                        <button style={{"font-size": "0.6rem"}}>{ i + 1}</button>
-                    </li>
-                );
-            }
+        buttons.push(
+            <li key={ "page_first" } onClick={() => this.setPage(0)} className='page-numbers'>
+                <button>Pierwsza</button>
+            </li>
+        )
+
+        let i_lower = Math.max(0, this.currentPage - (page_limit / 2))
+        let i_upper = Math.min(this.props.pages, this.currentPage + (page_limit / 2)) 
+
+        if(i_upper < page_limit && this.currentPage < (page_limit / 2)) {
+            i_upper = page_limit
         }
+
+        if(i_lower > 0 && this.currentPage > (this.props.pages - page_limit / 2)) {
+            i_lower = this.props.pages - page_limit;
+        }
+
+        for(let i = i_lower; i < i_upper; i++) {
+            className = 'page-numbers'
+
+            if(i === this.currentPage) {
+                className = 'selected page-numbers'
+            }
+
+            buttons.push(
+                <li key={ "page_" + i } onClick={() => this.setPage(i)} className={className}>
+                <button>{ i + 1}</button>
+            </li>
+            )
+        }
+
+        buttons.push(
+            <li key={ "page_first" } onClick={() => this.setPage(this.props.pages - 1)} className='page-numbers'>
+                <button>Ostatnia</button>
+            </li>
+        )
+
         return buttons
     }
 
@@ -66,11 +82,11 @@ class PageSelectionPanel extends Component {
                 { this.props.pages > 1 ? (
                     <ul className="pagination">
                         <li key={ "page_prev" } onClick={() => this.setPage(this.currentPage - 1)} className='left page-numbers'>
-                            <button style={{"font-size": "0.75em"}}>Poprzednia</button>
+                            <button>Poprzednia</button>
                         </li>
                         { this.createButtons() }
                         <li key={ "page_next" } onClick={() => this.setPage(this.currentPage + 1)} className='right page-numbers'>
-                            <button style={{"font-size": "0.75em"}}>Następna</button>
+                            <button>Następna</button>
                         </li>
                     </ul>
                 ) : (
