@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { Redirect } from 'react-router-dom'
 import { getAdvertImageURL } from '../../../utils/APIUtils'
+import { getColorFromImgElement } from '../../../utils/ColorUtils'
+
 import '../Advert.css'
 import bike from '../../../assets/images/bike.jpg'
 
@@ -23,11 +25,6 @@ const Tile = styled.div`
     transition: 
         transform 250ms,
         filter 300ms;
-
-    & > img {
-        width: 100%;
-        height: auto;
-    }
 
     &:hover {
         z-index: 9999;
@@ -62,7 +59,39 @@ const TileDetails = styled.div`
 const TileImage = styled.div`
     width: 100%;
     height: auto;
+    text-align: center;
     overflow: hidden;
+
+    & > img {
+        display: block;
+        overflow: hidden;
+        margin: auto;
+    }
+`
+
+const TileInfo = styled.div`
+    background-color: #007bff;
+    opacity: 0.6;
+    position: relative;
+    color: white;
+    width: 100%;
+    height: 150%;
+    overflow: hidden;
+    margin-bottom: -5px;
+
+    &::before {
+        position: absolute;
+        content: "";
+        width: 100%;
+        transform: translateX(-50%);
+        background-color: white;
+        height: 15px;
+        border-right: -2px solid #007bff;
+        border-bottom: 2px solid #007bff;
+        border-bottom-right-radius: 15px;
+        border-left: -2px solid #007bff;
+        border-bottom-left-radius: 15px;
+    }
 `
 
 var recommended = {
@@ -101,15 +130,17 @@ class AdvertTile extends Component {
         return (
             <Tile style={this.advert.recommended ? recommended : normal} onClick={this.handleTileClick.bind(this)}>
                 <TileImage>
-                    <img src={getAdvertImageURL(this.advert.id)} alt="Ad" className="advert-photo"></img>
+                    <img src={getAdvertImageURL(this.advert.id)} alt="Ad" className="advert-photo" id={'advert_' + this.advert.id}></img>
                 </TileImage>
-                <TileTitle>
-                        <p>{ this.advert.title }</p>
-                </TileTitle>
-                <TileDetails>
-                    {/* <p className="advert-price"> { this.advert.price }500zł </p> */}
-                    <p className="advert-date">Dodano: { this.advert.date } </p>
-                </TileDetails>
+                <TileInfo>
+                    <TileTitle>
+                            <p>{ this.advert.title }</p>
+                    </TileTitle>
+                    <TileDetails>
+                        {/* <p className="advert-price"> { this.advert.price }500zł </p> */}
+                        <p className="advert-date">Dodano: { this.advert.date } </p>
+                    </TileDetails>
+                </TileInfo>
             </Tile>
         )
     }

@@ -177,7 +177,7 @@ class CategoryDropList extends Component {
                 onClick={(e) => this.changeCategory(e, category, level + 1)}
                 key={category['name'] + category['id']}>
 
-                <img src={getCategoryLabel(categoryName)} alt={category['name']} />
+                <img id={'catimg_' + category['id']} src={getCategoryLabel(categoryName)} alt={category['name']} />
                 { categoryName }
             </ListItem>
         )

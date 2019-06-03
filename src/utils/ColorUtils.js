@@ -1,3 +1,5 @@
+import FastAverageColor from 'fast-average-color'
+
 export function hashCode(str) { // java String#hashCode
     var hash = 0;
     for (var i = 0; i < str.length; i++) {
@@ -17,4 +19,9 @@ export function intToRGB(i){
 export function stringToRGB(string) {
     let hash = hashCode(string)
     return intToRGB(hash)
+}
+
+export function getColorFromImgElement(imgElement) {
+    const fac = new FastAverageColor()
+    return fac.getColor(imgElement)
 }
