@@ -58,15 +58,30 @@ const TileDetails = styled.div`
 
 const TileImage = styled.div`
     width: 100%;
+    max-width: 15vw;
     height: auto;
     text-align: center;
+    position: relative;
     overflow: hidden;
 
     & > img {
+        width: 100%;
+        height: auto;
         display: block;
         overflow: hidden;
         margin: auto;
     }
+
+    &::after {
+        content: "";
+        position: absolute;
+        width: 100%;
+        z-index: 9991;
+        transform: translateX(-50%) translateY(-100%)
+        height: 30px;
+        background-color: green;
+    }
+
 `
 
 const TileInfo = styled.div`
@@ -78,20 +93,6 @@ const TileInfo = styled.div`
     height: 150%;
     overflow: hidden;
     margin-bottom: -5px;
-
-    &::before {
-        position: absolute;
-        content: "";
-        width: 100%;
-        transform: translateX(-50%);
-        background-color: white;
-        height: 15px;
-        border-right: -2px solid #007bff;
-        border-bottom: 2px solid #007bff;
-        border-bottom-right-radius: 15px;
-        border-left: -2px solid #007bff;
-        border-bottom-left-radius: 15px;
-    }
 `
 
 var recommended = {
