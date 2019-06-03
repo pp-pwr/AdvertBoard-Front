@@ -65,11 +65,17 @@ const AdvertInfo = styled.div`
         padding-left: 1.5em;
         padding-right: 1.5em;
         padding-bottom: 0.5em;
-    }
 
-    & * > .details-additional-info {
-        flex-basis: 1%;
-        min-width: 25%;
+        & > .details-additional-info {
+            min-width: 25%;
+            width: 25%;
+            max-width: 33%;
+
+            & > label, p {
+                width: 100%;
+                text-align: center;
+            }
+        }
     }
 `
 
