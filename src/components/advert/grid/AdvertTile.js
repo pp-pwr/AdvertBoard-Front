@@ -10,13 +10,13 @@ import styled from 'styled-components';
 
 const Tile = styled.div`
     background: #fff;
-    overflow: auto;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     padding: 0vw 0vh 0.2vw 0vh;
     border-radius: 10px;
     margin: 1vw 2vh 1vw 2vh;
     text-align:center;
     position: relative;
+    min-height: 15vh;
 
     --webkit-transition: 
         transform 250ms,
@@ -57,9 +57,8 @@ const TileDetails = styled.div`
 `
 
 const TileImage = styled.div`
-    width: 100%;
     max-width: 15vw;
-    height: auto;
+    max-height: 10vw;
     text-align: center;
     position: relative;
     overflow: hidden;
@@ -67,32 +66,23 @@ const TileImage = styled.div`
     & > img {
         width: 100%;
         height: auto;
+        min-width: 15vw;
+        min-height: 20vh;
+        max-height: 20vh;
         display: block;
         overflow: hidden;
         margin: auto;
     }
-
-    &::after {
-        content: "";
-        position: absolute;
-        width: 100%;
-        z-index: 9991;
-        transform: translateX(-50%) translateY(-100%)
-        height: 30px;
-        background-color: green;
-    }
-
 `
 
 const TileInfo = styled.div`
     background-color: #007bff;
     opacity: 0.6;
-    position: relative;
     color: white;
     width: 100%;
-    height: 150%;
     overflow: hidden;
     margin-bottom: -5px;
+    border-radius: 0px 0px 10px 10px;
 `
 
 var recommended = {
