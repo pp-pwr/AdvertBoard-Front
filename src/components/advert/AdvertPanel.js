@@ -56,8 +56,8 @@ const RecommendedAdverts = styled.div`
 
 class AdvertPanel extends Component {
 
-    constructor(props) {
-        super(props)
+    constructor() {
+        super()
 
         this.state = {
             advertGrid: {
@@ -100,7 +100,8 @@ class AdvertPanel extends Component {
     }
 
     loadRecommendedAdverts() {
-        if(!this.state.mounted) {
+        console.log(this.props)
+        if(!this.state.mounted || !this.props.user) {
             return
         }
 
@@ -214,27 +215,28 @@ class AdvertPanel extends Component {
                 <CategoryList changeHandler={this.categoryChange}/>
                 <Adverts>
                     <SearchBoxPanel changeHandler={this.titleChange}/>
+                    <SortPanel changeHandler={this.sortChange} sortingState={this.state.advertGrid.sorting} />
                     { this.state.loading ? (
                         <LoadingIndicator />
                     ) : (
                         <ContentGrid>
                             <RecommendedAdverts>
-                                <AdvertSlider itemList={this.state.advertGrid.recommendedAdverts} />
+                                    <AdvertSlider itemList={this.state.advertGrid.recommendedAdverts} />
                             </RecommendedAdverts>
                             <AdvertGrid itemList={this.state.advertGrid.advertList}/>
                             <PageSelectionPanel pages={this.state.advertGrid.pageCount} changeHandler={this.pageChange}/>
                         </ContentGrid>
                     )}
                 </Adverts>
-                <Details>
-                    <SortPanel changeHandler={this.sortChange} sortingState={this.state.advertGrid.sorting} />
-                    {/* { this.state.advertGrid.currentCategory !== null 
+                {/* <Details>
+                    
+                    { this.state.advertGrid.currentCategory !== null 
                     && typeof this.state.advertGrid.currentCategory.infoList !== "undefined" ? (
                         <AdvertDetailsPanel changeHandler={this.detailsChange} details={this.state.advertGrid.currentCategory.infoList} />
                     ) : (
                         <div></div>
-                    )} */}
-                </Details>
+                    )}
+                </Details> */}
             </Panel>
         )
     }

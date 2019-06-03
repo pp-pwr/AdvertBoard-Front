@@ -63,6 +63,9 @@ class Profile extends Component {
     }
 
     getCurrentUser() {
+        if(!this.props.user)
+            return null
+
         getCurrentUser().then(response => {
             this.setState({
                 current_user: response

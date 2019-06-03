@@ -125,8 +125,10 @@ class App extends Component {
                         <Route path="/profile/search" user={this.state.user} component={ProfileList} history={this.props.history}></Route>
 
                         <Route path="/error/noprofile" component={NoProfile}></Route>
-
-                        <Route exact path="/" show_recommended={this.state.authenticated} component={AdvertPanel}></Route>
+                        
+                        <Route exact path='/' render={() => (
+                            <AdvertPanel show_recommended={this.state.authenticated} user={this.state.user} />
+                        )} />
 
                         <Route component={NotFound}></Route>
                     </Switch>

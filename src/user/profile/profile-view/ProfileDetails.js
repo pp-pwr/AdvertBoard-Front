@@ -350,7 +350,7 @@ class ProfileDetails extends Component {
                     </div>
                 ) : (null)}
 
-                { this.state.user.telephoneNumber !== null ? (
+                { this.props.current_user_id && this.state.user.telephoneNumber !== null ? (
                     <div>
                         <p className="info-label">Numer telefonu</p>
                         <p className="user-phone">{this.state.user.telephoneNumber}</p>
