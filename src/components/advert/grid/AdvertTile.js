@@ -11,11 +11,18 @@ const Tile = styled.div`
     overflow: auto;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     padding: 0vw 0vh 0.2vw 0vh;
+    border-radius: 10px;
     margin: 1vw 2vh 1vw 2vh;
     text-align:center;
+    position: relative;
 
-    --webkit-transition: transform 250ms;
-    transition: transform 250ms;
+    --webkit-transition: 
+        transform 250ms,
+        filter 300ms;
+
+    transition: 
+        transform 250ms,
+        filter 300ms;
 
     & > img {
         width: 100%;
@@ -23,7 +30,8 @@ const Tile = styled.div`
     }
 
     &:hover {
-        transform: scale(1.2, 1.2);
+        z-index: 9999;
+        transform: scale(1.05, 1.05);
         filter: drop-shadow(16px 16px 20px rgba(0, 0, 0, 0.19));
     }
 
