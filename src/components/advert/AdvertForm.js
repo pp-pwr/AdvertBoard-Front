@@ -79,7 +79,8 @@ class AdvertForm extends Component {
                 title: advert.title,
                 description: advert.description,
                 tags: tags,
-                infos: advert.infos
+                infos: advert.infos,
+                id: advert.id
             }
         })
     }
@@ -193,11 +194,8 @@ class AdvertForm extends Component {
                 })
                 } else {
                     advertInfo = {
-                        "title": this.state.advertInfo.title,
-                        "description": this.state.advertInfo.description,
-                        "tags": this.state.advertInfo.tags.split(/(\s+)/).filter( e => e.trim().length > 0),
-                        "id": this.props.location.advert.id,
-                        "imageFile": this.state.advertInfo.image
+                        ...advertInfo,
+                        "id": this.state.advertInfo.id
                     }
                     updateAdvert(advertInfo).then(response => {
                         Alert.success("Pomyślnie zaktualizowano")
