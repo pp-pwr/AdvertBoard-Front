@@ -9,7 +9,7 @@
     "bootstrap": "^4.3.1",
     "dominant-color": "0.0.1",
     "fast-average-color": "^5.2.0",
-    "filepond": "^4.4.2",
+    "filepond": "^4.4.8",
     "filepond-plugin-image-preview": "^4.1.0",
     "http-proxy-middleware": "^0.19.1",
     "image-to-base64": "^2.0.1",

@@ -5,10 +5,13 @@ import ReactSearchBox from 'react-search-box'
 import LoadingIndicator from "../../common/LoadingIndicator";
 import AdditionalInfo from './AdditionalInfo'
 
-import { FilePond } from 'react-filepond'
-
+import { FilePond, registerPlugin } from 'react-filepond'
 import 'filepond/dist/filepond.min.css'
+
+import FilePondPluginImagePreview from "filepond-plugin-image-preview";
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css';
+
+registerPlugin(FilePondPluginImagePreview)
 
 export function setCategory(categoryId) {
     if(this !== undefined) {
@@ -119,14 +122,12 @@ class AdvertForm extends Component {
             }})
     };
 
-    loadFiles = (event) => {
+    loadFiles = (files) => {
         this.setState({
             advertInfo: {
                 ...this.state.advertInfo,
-                image: event.target.files[0]
+                image: files[0].file
             }
-        }, () => {
-            console.log(this.state.advertInfo.image)
         })
     }
 
@@ -232,7 +233,16 @@ class AdvertForm extends Component {
                             <input className="add-advert-item" type="text" name="tags" placeholder="Tagi"
                                 value={this.state.advertInfo.tags} onChange={this.handleInputChange} />
                             <br/>
-                            <input className="add-advert-item" accept="image/*" type="file" name="image" size="50" onChange={(files) => this.loadFiles(files)}/>
+
+                            <FilePond
+                                ref={ref => (this.pond = ref)}
+                                allowMultiple={false}
+                                maxFiles={1}
+                                onupdatefiles={fileItems => {
+                                    this.loadFiles(fileItems)
+                                }} />
+
+                            {/* <input className="add-advert-item" accept="image/*" type="file" name="image" size="50" onChange={(files) => this.loadFiles(files)}/> */}
                             <br/>
                         </div>
                         
