@@ -4,6 +4,7 @@ import Alert from 'react-s-alert'
 import ReactSearchBox from 'react-search-box'
 import LoadingIndicator from "../../common/LoadingIndicator";
 import AdditionalInfo from './AdditionalInfo'
+import styled from 'styled-components'
 
 import { FilePond, registerPlugin } from 'react-filepond'
 import 'filepond/dist/filepond.min.css'
@@ -12,6 +13,17 @@ import FilePondPluginImagePreview from "filepond-plugin-image-preview";
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css';
 
 registerPlugin(FilePondPluginImagePreview)
+
+const MainContainer = styled.div`
+
+`
+
+const InputArea= styled.div`
+
+    & > .file-pond {
+        margin-top: 1rem;
+    }
+`
 
 export function setCategory(categoryId) {
     if(this !== undefined) {
@@ -83,6 +95,7 @@ class AdvertForm extends Component {
                 description: advert.description,
                 tags: tags,
                 infos: advert.infos,
+
                 id: advert.id
             }
         })
@@ -219,11 +232,11 @@ class AdvertForm extends Component {
 
 
         return (
-            <div className="add-advert-container">
+            <MainContainer className="add-advert-container">
                 <div className="add-advert-content-whole">
                     <form className="add-advert-content" onSubmit={this.handleSubmit}>
                         <h3>Dodaj ogłoszenie</h3>
-                        <div>
+                        <InputArea>
                             <input className="add-advert-item" type="text" name="title" placeholder="Tytuł"
                                 value={this.state.advertInfo.title} onChange={this.handleInputChange} required/>
                             <br/>
@@ -235,8 +248,10 @@ class AdvertForm extends Component {
                             <br/>
 
                             <FilePond
+                                className='file-pond'
                                 ref={ref => (this.pond = ref)}
                                 allowMultiple={false}
+                                label-idle='Przenieś swój obrazek lub kliknij i dodaj go z dysku!'
                                 maxFiles={1}
                                 onupdatefiles={fileItems => {
                                     this.loadFiles(fileItems)
@@ -244,9 +259,9 @@ class AdvertForm extends Component {
 
                             {/* <input className="add-advert-item" accept="image/*" type="file" name="image" size="50" onChange={(files) => this.loadFiles(files)}/> */}
                             <br/>
-                        </div>
+                        </InputArea>
                         
-                        <ReactSearchBox data={this.categories} onSelect={record => this.handleCatChange(record['key'])}/>
+                        <ReactSearchBox className='category-search' data={this.categories} onSelect={record => this.handleCatChange(record['key'])}/>
 
                         <div className="add-advert-item">
                             <button type="submit" 
@@ -260,7 +275,7 @@ class AdvertForm extends Component {
                         <AdditionalInfo infos={ this.state.currentCategory } infoChangeHandler={this.handleInfoChange}/>
                     </div>
                 </div>
-            </div>
+            </MainContainer>
         );
     }
 }
