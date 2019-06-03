@@ -63,6 +63,7 @@ const TotalInfoPanel = styled.div`
     margin-right: 20%;
     display: flex;
     flex-wrap: wrap
+    align-items: flex-end;
     justify-content: space-between;
     margin-top: 2.5em;
 `
