@@ -5,6 +5,7 @@ import { setProfileStatus, setProfileCaseStatus, getUserById, getUnsolvedProfile
 import { PageSelectionPanel } from '../advert/filters'
 import LoadingIndicator from '../../common/LoadingIndicator'
 import Alert from 'react-s-alert'
+import { Redirect } from 'react-router-dom'
 
 const ProfileTile = styled.div`
     display: flex;
@@ -82,8 +83,11 @@ class ProfileField extends Component {
 
         this.state = {
             profile: null,
-            mounted: false
+            mounted: false,
+            toProfile: false
         }
+
+        this.showProfile = this.showProfile.bind(this)
     }
 
     componentDidMount() {
@@ -113,13 +117,40 @@ class ProfileField extends Component {
         })
     }
 
+    showProfile(e, profileId) {
+        e.preventDefault()
+
+        this.setState({toProfile: true})
+    }
+
+    buttonAction(e, type, profileId, caseId) {
+        e.stopPropagation()
+        
+        console.log(profileId + ' ' + caseId)
+
+        switch(type) {
+            case 'approve':
+                this.props.approveButtonHandler(profileId, caseId)
+                break;
+            case 'decline':
+                this.props.declineButtonHandler(caseId)
+                break;
+            default:
+        }
+    }
+
     render() {
-        console.log(this.props)
+
         if(!this.state.mounted) {
             return <LoadingIndicator />
         }
+
+        if (this.state.toProfile === true) {
+            return <Redirect to={'/profile/user/' + this.props.profileId } push={true} />
+        }
+
         return (
-            <ProfileTile className="profile-tile">
+            <ProfileTile className="profile-tile" onClick={e => this.showProfile(e)}>
                 <ReportDetails>
                     {/* <img src={getAdvertImageURL(this.props.profileId)} alt="Ad" className="profile-photo"></img> */}
                     {
@@ -141,9 +172,9 @@ class ProfileField extends Component {
                     }
                 </ReportDetails>
                 <ButtonDiv>
-                    <Button className="button" id="accept-button" onClick={() => this.props.approveButtonHandler(this.props.profileId, this.props.caseId)}>OK</Button>
+                    <Button className="button" id="accept-button" onClick={(e) => this.buttonAction(e, 'approve', this.props.profileId, this.props.caseId)}>OK</Button>
                     { this.props.declineVisible ? (
-                        <Button className="button" id="decline-button" onClick={() => this.props.declineButtonHandler(this.props.caseId)}>NO</Button>
+                        <Button className="button" id="decline-button" onClick={(e) => this.buttonAction(e, 'decline', null, this.props.caseId)}>NO</Button>
                     ) : (
                         <div></div>
                     )

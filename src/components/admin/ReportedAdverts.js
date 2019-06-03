@@ -5,6 +5,7 @@ import { setAdvertStatus, setAdvertCaseStatus, getAdvertByAdvertId, getAdvertIma
 import { PageSelectionPanel } from '../advert/filters'
 import LoadingIndicator from '../../common/LoadingIndicator'
 import Alert from 'react-s-alert'
+import { Redirect } from 'react-router-dom'
 
 const AdvertTile = styled.div`
     display: flex;
@@ -82,8 +83,11 @@ class AdvertField extends Component {
 
         this.state = {
             advert: null,
-            mounted: false
+            mounted: false,
+            toDetails: false
         }
+
+        this.showAdvert = this.showAdvert.bind(this)
     }
 
     componentDidMount() {
@@ -109,13 +113,38 @@ class AdvertField extends Component {
         })
     }
 
+    showAdvert(e, advertId) {
+        e.preventDefault()
+
+        this.setState({toDetails: true})
+    }
+
+    buttonAction(e, type, advertId, caseId) {
+        e.stopPropagation()
+
+        switch(type) {
+            case 'approve':
+                this.props.approveButtonHandler(advertId, caseId)
+                break;
+            case 'decline':
+                this.props.declineButtonHandler(caseId)
+                break;
+            default:
+        }
+    }
+
     render() {
         console.log(this.props)
         if(!this.state.mounted) {
             return <LoadingIndicator />
         }
+
+        if (this.state.toDetails === true) {
+            return <Redirect to={'/advert/' + this.props.advertId } push={true} />
+        }
+        
         return (
-            <AdvertTile className="advert-tile">
+            <AdvertTile className="advert-tile" onClick={(e) => this.showAdvert(e)}>
                 <ReportDetails>
                     <img src={getAdvertImageURL(this.props.advertId)} alt="Ad" className="advert-photo"></img>
                     {
@@ -136,9 +165,9 @@ class AdvertField extends Component {
                     }
                 </ReportDetails>
                 <ButtonDiv>
-                    <Button className="button" id="accept-button" onClick={() => this.props.approveButtonHandler(this.props.advertId, this.props.caseId)}>OK</Button>
+                    <Button className="button" id="accept-button" onClick={(e) => this.buttonAction(e, 'approve', this.props.advertId, this.props.caseId)}>OK</Button>
                     { this.props.declineVisible ? (
-                        <Button className="button" id="decline-button" onClick={() => this.props.declineButtonHandler(this.state.caseId)}>NO</Button>
+                        <Button className="button" id="decline-button" onClick={(e) => this.buttonAction(e, 'decline', null, this.props.caseId)}>NO</Button>
                     ) : (
                         <div></div>
                     )
