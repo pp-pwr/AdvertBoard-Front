@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
-import LoadingIndicator from '../../../common/LoadingIndicator';
-import { getUsers } from '../../../utils/APIUtils'
+import LoadingIndicator from '../../../../common/LoadingIndicator';
+import { getUsers } from '../../../../utils/APIUtils'
 import Alert from 'react-s-alert'
-import bike from '../../../assets/images/bike.jpg'
-import profile_pic from '../../../assets/images/account.png'
+import bike from '../../../../assets/images/bike.jpg'
+import profile_pic from '../../../../assets/images/account.png'
 import styled from 'styled-components'
 
 const ProfileContainer = styled.div`

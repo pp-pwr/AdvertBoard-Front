@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import LoadingIndicator from '../../../common/LoadingIndicator';
-import { updateProfile, getCurrentUser } from "../../../utils/APIUtils"
+import LoadingIndicator from '../../../../common/LoadingIndicator';
+import { updateProfile, getCurrentUser } from "../../../../utils/APIUtils"
 import Alert from 'react-s-alert'
 import UserPreferences from './UserPreferences'
 

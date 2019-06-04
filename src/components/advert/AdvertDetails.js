@@ -5,7 +5,7 @@ import Alert from 'react-s-alert'
 import LoadingIndicator from '../../common/LoadingIndicator';
 import { Link } from 'react-router-dom'
 import styled from 'styled-components';
-import ProfileDetails from '../../user/profile/profile-view/ProfileDetails'
+import ProfileDetails from '../user/profile/profile-view/ProfileDetails'
 import { Button } from 'react-bootstrap'
 
 const AdvertContainer = styled.div`

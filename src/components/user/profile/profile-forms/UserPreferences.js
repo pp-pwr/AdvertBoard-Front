@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
-import { getCategories } from "../../../utils/APIUtils"
-import LoadingIndicator from '../../../common/LoadingIndicator';
+import { getCategories } from "../../../../utils/APIUtils"
+import LoadingIndicator from '../../../../common/LoadingIndicator';
 import ReactSearchBox from 'react-search-box'
 import styled from 'styled-components'
 
-import deleteButton from '../../../assets/images/deleteButton.png'
+import deleteButton from '../../../../assets/images/deleteButton.png'
 
 const Preferences = styled.div`
 

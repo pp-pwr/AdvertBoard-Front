@@ -3,11 +3,11 @@ import { Link, Redirect } from "react-router-dom"
 import Alert from "react-s-alert"
 
 import "./Login.css"
-import facebookLogo from "../../assets/images/fb-logo.png"
-import googleLogo from "../../assets/images/google-logo.png"
+import facebookLogo from "../../../assets/images/fb-logo.png"
+import googleLogo from "../../../assets/images/google-logo.png"
 
-import { GOOGLE_AUTH_URL, FACEBOOK_AUTH_URL, ACCESS_TOKEN } from "../../constants"
-import { login } from "../../utils/APIUtils"
+import { GOOGLE_AUTH_URL, FACEBOOK_AUTH_URL, ACCESS_TOKEN } from "../../../constants"
+import { login } from "../../../utils/APIUtils"
 
 class LoginForm extends Component {
     constructor(props) {

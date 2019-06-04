@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Redirect } from 'react-router-dom'
-import { getUrlParameter } from "../../utils/UrlParameter"
-import { confirmEmail } from "../../utils/APIUtils"
+import { getUrlParameter } from "../../../utils/UrlParameter"
+import { confirmEmail } from "../../../utils/APIUtils"
 import Alert from "react-s-alert"
 
 class SignupConfirm extends Component {

@@ -2,13 +2,13 @@ import React, { Component } from "react"
 import { Link, Redirect } from "react-router-dom"
 import Alert from "react-s-alert"
 
-import { GOOGLE_AUTH_URL, FACEBOOK_AUTH_URL } from "../../constants"
-import { signup } from "../../utils/APIUtils"
-import InputValidator from "../../utils/InputValidator"
+import { GOOGLE_AUTH_URL, FACEBOOK_AUTH_URL } from "../../../constants"
+import { signup } from "../../../utils/APIUtils"
+import InputValidator from "../../../utils/InputValidator"
 
 import "./Signup.css"
-import googleLogo from "../../assets/images/google-logo.png"
-import facebookLogo from "../../assets/images/fb-logo.png"
+import googleLogo from "../../../assets/images/google-logo.png"
+import facebookLogo from "../../../assets/images/fb-logo.png"
 
 class SignupForm extends Component {
     constructor(props) {

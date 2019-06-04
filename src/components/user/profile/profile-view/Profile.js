@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import { getCurrentUser, getUserById, getAdvertImageURL} from '../../../utils/APIUtils'
+import { getCurrentUser, getUserById, getAdvertImageURL} from '../../../../utils/APIUtils'
 import Alert from 'react-s-alert'
-import LoadingIndicator from '../../../common/LoadingIndicator';
+import LoadingIndicator from '../../../../common/LoadingIndicator';
 import { Redirect } from 'react-router-dom'
 import ProfileDetails from './ProfileDetails'
 import styled from 'styled-components'

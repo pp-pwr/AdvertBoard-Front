@@ -3,16 +3,12 @@ const monthList = {
     "Lipiec": 7, "Sierpień": 8, "Wrzesień": 9, "Październik": 10, "Listopad": 11, "Grudzień": 12
 }
 
-const MockReportStats = {
-
-}
-
 export function getYearsFromToDate(yearFrom) {
     const date = new Date()
     return getYearsFromTo(yearFrom, date.getFullYear())
 }
 
-function getYearsFromTo(yearFrom, yearTo) {
+export function getYearsFromTo(yearFrom, yearTo) {
     const years = []
 
     for(let i = yearTo; i >= yearFrom; i--) {
