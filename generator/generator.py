@@ -335,4 +335,11 @@ def generate_buildings(n):
         print(f'Building nr {i + 1} finished!')
 
 
-generate_cars(40)
+# generate_cars(40)
+# generate_bikes(40)
+# generate_animals(20)
+# generate_buildings(20)
+# generate_utility_cars(40)
+# generate_phones(40)
+# generate_utility_cars(40)
+generate_clothes(40)

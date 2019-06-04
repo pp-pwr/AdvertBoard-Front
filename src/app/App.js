@@ -112,9 +112,17 @@ class App extends Component {
 
                         <Route path="/signupConfirm" component={SignupConfirm}></Route>
 
-                        <Route path="/advert/:advert_id" user={this.state.user} component={AdvertDetails}></Route>
+                        {/* <Route path="/advert/:advert_id" user={this.state.user} component={AdvertDetails}></Route> */}
 
-                        <Route path="/profile/user/:user_id" user={this.state.user} component={Profile}></Route>
+                        <Route path="/advert/:advert_id" render={(props) => (
+                            <AdvertDetails user={this.state.user} current_user_id={this.state.user ? this.state.user.profileView.id : null} {...props} />
+                        )} />
+
+                        {/* <Route path="/profile/user/:user_id" user={this.state.user} component={Profile}></Route> */}
+
+                        <Route path="/profile/user/:user_id" render={(props) => (
+                            <Profile user={this.state.user} current_user_id={this.state.user ? this.state.user.profileView.id : null} {...props} />
+                        )} />
 
                         <PrivateRoute path="/profile/me" user={this.state.user} component={Profile}></PrivateRoute>
 
@@ -122,8 +130,10 @@ class App extends Component {
 
                         <PrivateRoute path="/admin" user={this.state.user} component={AdminPanel}></PrivateRoute>
 
-                        <Route path="/profile/search" user={this.state.user} component={ProfileList} history={this.props.history}></Route>
-
+                        {/* <Route path="/profile/search" user={this.state.user} component={ProfileList} history={this.props.history}></Route> */}
+                        <Route path="/profile/search" render={(props) => (
+                            <ProfileList user={this.state.user} current_user_id={this.state.user ? this.state.user.profileView.id : null} {...props} />
+                        )} />
                         <Route path="/error/noprofile" component={NoProfile}></Route>
                         
                         <Route exact path='/' render={() => (

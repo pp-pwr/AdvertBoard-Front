@@ -70,7 +70,6 @@ class ProfileCell extends Component {
 
     render() {
         const profile = this.props.profile
-
         return (
             <ProfileListEntry onClick={this.redirectToPage}>
                 <img src={profile_pic} alt="ProfileImage" className="profile-image" />
@@ -158,6 +157,8 @@ class ProfileList extends Component {
         if(!this.mounted) {
             return <LoadingIndicator />
         }
+
+        console.log(this.props)
 
         return (
             <ProfileContainer>

@@ -76,9 +76,11 @@ const TileImage = styled.div`
 `
 
 const TileInfo = styled.div`
-    background-color: #007bff;
-    opacity: 0.6;
-    color: white;
+    // background-color: #007bff;
+    background-color: lightgrey;
+    // color: white;
+    color: black;
+    opacity: 0.9;
     width: 100%;
     overflow: hidden;
     margin-bottom: -5px;

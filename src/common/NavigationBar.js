@@ -20,7 +20,7 @@ class NavigationBar extends Component {
                         { this.props.user !== null && this.props.user.role === "admin" ? (
                             <Nav.Link href="/admin">PANEL ADMINA</Nav.Link>
                         ) : (null)}
-                        <Nav.Link href="/profile/search" user={this.props.user}>Wyszukaj użytkownika</Nav.Link>
+                        <Nav.Link href="/profile/search">Wyszukaj użytkownika</Nav.Link>
                     </Nav>
                     { this.props.authenticated ? (
                         <Nav>

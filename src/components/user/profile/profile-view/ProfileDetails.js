@@ -333,6 +333,7 @@ class ProfileDetails extends Component {
 
         const unknownUser = !this.state.user.firstName || !this.state.user.lastName;
         console.log(this.state.user)
+        console.log(this.props)
         return (
             <ProfileView>
                 <StyledLink to={"/profile/user/" + this.user_id}>
