@@ -27,13 +27,14 @@ const ProfileContainer = styled.div`
 const ProfileListEntry = styled.div`
     box-shadow: 0 1px 11px rgba(0, 0, 0, 0.05);
     height: 120px;
-    width: 30%;
-    max-width: 30%;
+    width: 25%;
+    max-width: 25%;
     margin-left: 2rem;
     margin-right: 2rem;
     position: relative;
     margin-top: 2rem;
     display: flex;
+    flex: wrap;
     align-items: center;
     flex-grow: 1;
     text-align: center;
@@ -55,9 +56,12 @@ const ProfileListEntry = styled.div`
 
     & > .userlist-element-info {
         text-align: left;
+        display: flex;
+        flex: wrap;
         margin-left: 180px;
         position: absolute;
-        font-size: 2rem;
+        font-size: 1.2em;
+        overflow: hidden;   
         text-align: left;
     }
 `
@@ -157,8 +161,6 @@ class ProfileList extends Component {
         if(!this.mounted) {
             return <LoadingIndicator />
         }
-
-        console.log(this.props)
 
         return (
             <ProfileContainer>
