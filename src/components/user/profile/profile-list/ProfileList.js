@@ -5,6 +5,8 @@ import Alert from 'react-s-alert'
 import bike from '../../../../assets/images/bike.jpg'
 import profile_pic from '../../../../assets/images/account.png'
 import styled from 'styled-components'
+import PageSelectionPanel from "../../../advert/filters/PageSelectionPanel"
+
 
 const ProfileContainer = styled.div`
     text-align: center;
@@ -95,11 +97,14 @@ class ProfileList extends Component {
 
         this.state = {
             filter: "",
-            userList: []
+            userList: [],
+            limit: 9,
+            pageCount: 0
         }
 
         this.mounted = false
         this.showProfile = this.showProfile.bind(this)
+        this.pageChange = this.pageChange.bind(this)
     }
 
     componentDidMount() {
@@ -113,12 +118,17 @@ class ProfileList extends Component {
 
     updateUserList = (page) => {
         const userRequest = {
-            containsString: this.state.filter
+            containsString: this.state.filter,
+            page: page,
+            limit: this.state.limit
         }
         getUsers(userRequest).then(response => {
             if(this.mounted) {
                 this.setState({
-                    userList: response['content']
+                    userList: response['content'],
+                    pageCount: response['totalPages']
+                }, () => {
+                    console.log(this.state)
                 })
             }
         }).catch(error => {
@@ -161,6 +171,10 @@ class ProfileList extends Component {
         return user_cells
     }
 
+    pageChange(newPage) {
+        this.updateUserList(newPage)
+    }
+
     render() {
         if(!this.mounted) {
             return <LoadingIndicator />
@@ -177,6 +191,8 @@ class ProfileList extends Component {
             <div className="userlist-content">
                 { this.renderUserCells() }
             </div>
+
+            <PageSelectionPanel className='page-selection' pages={this.state.pageCount} changeHandler={this.pageChange}/>
             </ProfileContainer>
         )
     }

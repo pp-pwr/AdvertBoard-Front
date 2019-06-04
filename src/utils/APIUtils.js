@@ -94,11 +94,11 @@ export function getAdvertsBySubcategory(subcategoryRequest) {
 
 export function getUsers(userRequest) {
     const containsString = userRequest['containsString']
-    // const page = userRequest['page']
-    // const limit = userRequest['limit']
+     const page = userRequest['page']
+     const limit = userRequest['limit']
 
     return request({
-        url: API_BASE_URL + "/user/all?nameContains=" + containsString,
+        url: API_BASE_URL + "/user/all?nameContains=" + containsString + "&page=" + page + "&limit=" + limit,
         method: 'GET'
     })
 }
