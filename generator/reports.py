@@ -12,7 +12,7 @@ auth_tokens = [
 #auth_token='eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMSIsImlhdCI6MTU1OTA1MjA0MSwiZXhwIjoxNTU5OTE2MDQxfQ.lZWE5AbfUTdJjZvuhW_S75skz1uza5CxGn2ZWqWQo_rFT_a8sn2ni-mP2t5bsQPYKUhn1hcu4dwqfbCVej2MfQ'
 
 def send_advert_raport(i):
-    advert_id = r.randint(1, 283)
+    advert_id = r.randint(342, 561)
     random_description = r.sample(['Zły obrazek', 'Niestosowny opis', 'Brak opisu', 'Niestosowny obrazek', 'SPAM'], 1)[0]
 
     auth_token = r.sample(auth_tokens, 1)[0]
@@ -31,7 +31,7 @@ def send_advert_raport(i):
     print(f"{i}. Result: {response} Response: {response.text}")
 
 def send_user_raport(i):
-    user_id = r.randint(1, 15)
+    user_id = r.randint(1, 27)
     random_description = r.sample(['Niestosowny avatar', 'Multikonto', 'Fałszywe dane', 'Oszust', 'Troll', 'Bot'], 1)[0]    
 
     auth_token = r.sample(auth_tokens, 1)[0]
