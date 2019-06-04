@@ -64,11 +64,8 @@ const TileImage = styled.div`
     overflow: hidden;
 
     & > img {
-        width: 100%;
-        height: auto;
-        min-width: 15vw;
-        min-height: 20vh;
-        max-height: 20vh;
+        width: 15vw;
+        height: 20vh;
         display: block;
         overflow: hidden;
         margin: auto;
