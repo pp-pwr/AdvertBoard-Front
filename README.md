@@ -33,4 +33,4 @@ Budowanie aplikacji:
 ### ![alt Widok profilu użytkownika](https://imgur.com/bUT8fl8.png)
 ### ![alt Uzupełnianie profilu](https://imgur.com/92XcXRE.png)
 ### ![alt Statystyki dot. zgłoszeń](https://imgur.com/IkkHCe2.png)
-### ![alt Lista użytkowników](https://imgur.com/ugMHwaF.png)
+### ![alt Lista użytkowników](https://imgur.com/pY4S91E.png)
