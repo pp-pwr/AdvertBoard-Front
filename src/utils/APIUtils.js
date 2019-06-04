@@ -342,6 +342,9 @@ export function refreshConfirmToken() {
 }
 
 export function getCategoryLabel(categoryName) {
+    if(!categoryName)
+        return null
+
     let size = categoryName.split(" ").length
     let color = stringToRGB(categoryName)
 

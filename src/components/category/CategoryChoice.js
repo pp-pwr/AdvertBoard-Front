@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import ListGroup from 'react-bootstrap/ListGroup'
 import { getCategoryLabel } from '../../utils/APIUtils'
 import styled from 'styled-components'
+import LoadingIndicator from "../../common/LoadingIndicator"
 
 const ListItem = styled(ListGroup.Item)`
     width: 100%;
@@ -101,7 +102,14 @@ class CategoryDropList extends Component {
         this.setState({
             categoryList: this.props.categories,
             selectedId: this.props.categories[0],
-            level: this.props.next_level
+            level: this.props.next_level,
+            mounted: true
+        })
+    }
+
+    componentWillUnmount() {
+        this.setState({
+            mounted: false
         })
     }
 
@@ -184,7 +192,8 @@ class CategoryDropList extends Component {
     }
 
     render() {
-        console.log(this.props.categories)
+        if(!this.state.mounted)
+            return <LoadingIndicator />
 
         return (
             <ListGroup>
