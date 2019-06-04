@@ -11,6 +11,9 @@ const SliderAdvert = styled(AdvertTile)`
 
 class AdvertSlider extends Component {
     render() {
+        if(this.props.itemList.length < 3)
+            return null;
+
         var settings = {
             dots: true,
             infinite: true,
