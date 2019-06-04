@@ -20,15 +20,17 @@ Budowanie aplikacji:
 
 ## Zrzuty ekranu
 
-### ![alt Ogloszenia](https://imgur.com/NUv5Qlb.png)
-### ![alt Ogloszenia Promowane](https://imgur.com/AWJfcPJ.png)
+### ![alt Ogloszenia](https://imgur.com/IMrtTxT.png)
+### ![alt Ogloszenia Promowane](https://imgur.com/QxCSo8V.png)
 ### ![alt Strona ogloszenia](https://imgur.com/fbxWoDv.png)
 ### ![alt Strona użytkownika](https://imgur.com/kOSOafy.png)
-### ![alt Formularz dodawania ogloszenia](https://imgur.com/8t6Ccpr.png)
+### ![alt Formularz dodawania ogloszenia](https://imgur.com/kwFEQYe.png)
 ### ![alt Formularz zglaszania ogloszen](https://imgur.com/giXFLI1.png)
 ### ![alt Panel administratora - zgloszenia](https://imgur.com/HPiLDSQ.png)
 ### ![alt Panel administratora - zbanowani](https://imgur.com/S8nd67S.png)
 ### ![alt Formularz Logowania](https://imgur.com/bZvtGf6.png)
 ### ![alt Formularz rejestracji](https://imgur.com/QxRsPu8.png)
+### ![alt Widok profilu użytkownika](https://imgur.com/bUT8fl8.png)
 ### ![alt Uzupełnianie profilu](https://imgur.com/92XcXRE.png)
 ### ![alt Statystyki dot. zgłoszeń](https://imgur.com/IkkHCe2.png)
+### ![alt Lista użytkowników](https://imgur.com/ugMHwaF.png)
