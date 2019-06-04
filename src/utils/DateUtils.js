@@ -19,7 +19,6 @@ export function getYearsFromTo(yearFrom, yearTo) {
 }
 
 export function getMonths() {
-    console.log(monthList)
     return Object.keys(monthList)
 }
 
