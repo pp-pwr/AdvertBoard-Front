@@ -31,8 +31,8 @@ const ProfileContainer = styled.div`
 const ProfileListEntry = styled.div`
     box-shadow: 0 1px 11px rgba(0, 0, 0, 0.05);
     height: 120px;
-    width: 25%;
-    max-width: 25%;
+    width: 28%;
+    max-width: 28%;
     margin-left: 2rem;
     margin-right: 2rem;
     position: relative;
