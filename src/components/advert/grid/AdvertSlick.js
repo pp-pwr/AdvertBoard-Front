@@ -4,9 +4,14 @@ import Slider from "react-slick";
 import styled from 'styled-components'
 
 const StyledSlider = styled(Slider)`
+    width: 100%;
+    height: auto;
+    display: flex;
 `
 
 const SliderAdvert = styled(AdvertTile)`
+    width: 100%;
+    height: 100%;
 `
 
 class AdvertSlider extends Component {
