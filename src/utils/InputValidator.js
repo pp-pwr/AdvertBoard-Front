@@ -22,19 +22,16 @@ class InputValidator {
                 if(!rule.test.test(value)) {
                     this.validator[fieldName].errors.push(rule.message)
                     this.validator[fieldName].valid = false
-                    console.log('OJJJJJ WESZLEM 1')
                 }
             } else if (rule.type === 'function' && typeof rule.test === 'function') {
                 if(!rule.test(value)) {
                     this.validator[fieldName].errors.push(rule.message)
                     this.validator[fieldName].valid = false
-                    console.log('OJJJJJ WESZLEM 2')
                 }
             } else if (rule.type === 'comparator' && typeof rule.test === 'function') {
                 if(compared_value != null && !rule.test(value, compared_value)) {
                     this.validator[fieldName].errors.push(rule.message)
                     this.validator[fieldName].valid = false
-                    console.log('OJJJJJ WESZLEM')
                 }
             }
         })

@@ -100,7 +100,6 @@ class AdvertPanel extends Component {
     }
 
     loadRecommendedAdverts() {
-        console.log(this.props)
         if(!this.state.mounted || !this.props.user) {
             return
         }

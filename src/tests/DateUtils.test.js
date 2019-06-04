@@ -20,6 +20,18 @@ describe('Input test set', () => {
         })
     })
 
+    test('Months Ids <= 12', () => {
+        Object.keys(monthList).forEach((k) => {
+            expect(getMonthID(k) <= 12).toBe(true)
+        })
+    })
+
+    test('Months Ids >= 1', () => {
+        Object.keys(monthList).forEach((k) => {
+            expect(getMonthID(k) >= 1).toBe(true)
+        })
+    })
+
     test('All years in range (Years to Date)', () => {
         const yearFrom = 2010
         const currentDate = new Date().getFullYear()
