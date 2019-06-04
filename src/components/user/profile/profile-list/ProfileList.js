@@ -99,12 +99,14 @@ class ProfileList extends Component {
             filter: "",
             userList: [],
             limit: 9,
+            page: 0,
             pageCount: 0
         }
 
         this.mounted = false
         this.showProfile = this.showProfile.bind(this)
         this.pageChange = this.pageChange.bind(this)
+        this.updateUserList = this.updateUserList.bind(this)
     }
 
     componentDidMount() {
@@ -116,10 +118,10 @@ class ProfileList extends Component {
         this.mounted = false
     }
 
-    updateUserList = (page) => {
+    updateUserList() {
         const userRequest = {
             containsString: this.state.filter,
-            page: page,
+            page: this.state.page,
             limit: this.state.limit
         }
         getUsers(userRequest).then(response => {
@@ -141,7 +143,8 @@ class ProfileList extends Component {
         const inputValue = target.value;
 
         this.setState({
-            filter: inputValue
+            filter: inputValue,
+            page: 0
         }) 
     }
 
@@ -172,7 +175,11 @@ class ProfileList extends Component {
     }
 
     pageChange(newPage) {
-        this.updateUserList(newPage)
+        this.setState({
+            page: newPage
+        }, () => {
+            this.updateUserList()
+        })
     }
 
     render() {
