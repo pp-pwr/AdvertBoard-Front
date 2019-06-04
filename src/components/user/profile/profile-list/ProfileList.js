@@ -10,11 +10,15 @@ const ProfileContainer = styled.div`
     text-align: center;
     width: 100%;
     height: 100%;
+    display: flex-inline;
+    margin: auto;
 
     & > .userlist-content {
         background: #fff;
         width: 100%;
+        text-align: center;
         display: flex;
+        flex: justify;
         flex-wrap: wrap;
         border-radius: 2px;
         margin-top: 30px;
