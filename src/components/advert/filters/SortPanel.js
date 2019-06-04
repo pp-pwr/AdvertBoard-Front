@@ -2,15 +2,23 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 
 const SortBox = styled.div`
-    width: 100%;
+    width: 100%;    
+    text-align: center;
+    padding-bottom: 1rem;
 
     & > div {
         display: flex;
+        flex: justify;
+        align-items: center;
+        text-align: center;
+        margin: auto;
 
         & > button {
             display: flex;
             height: 100%;
             align-items: center;
+            text-align: center;
+            margin: auto;
         }
     }
 `;

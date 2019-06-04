@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 
 const SearchBox = styled.div`
-    items-align: flex-start;
+    align-items: flex-start;
     text-align: center;
 `;
 
