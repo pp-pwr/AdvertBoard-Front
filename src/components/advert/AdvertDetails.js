@@ -10,12 +10,8 @@ import { Button } from 'react-bootstrap'
 
 const AdvertContainer = styled.div`
     position: relative;
-    padding: 1em 1em 1em 1em;
     display: grid;
     grid-template-columns: 20vw auto;
-    grid-template-areas: 
-        "ProfileDetails AdvertInfo";
-        "ProfileDetails ReportForm";
 `
 
 const AdvertInfo = styled.div`
@@ -23,12 +19,15 @@ const AdvertInfo = styled.div`
     text-align: center;
     margin-top: 1em;
 
+    padding: 1rem 1rem 1rem 1rem;
+
     & > .crop-image {
         border-radius: 15px;
         min-width: 30vw;
         min-height: 30vh;
-        max-width: 50vw;
+        max-width: 100%;
         max-height: 50vh;
+        object-fit: cover;
         overflow: hidden;
     }
 
@@ -358,12 +357,31 @@ class AdvertDetails extends Component {
         
         return (
             <AdvertContainer>
-                <ProfileDetails 
-                user_id={this.state.advertInfo.authorId} 
-                show_adverts={false} 
-                rating_enabled={rating_enabled}
-                current_user_id={this.state.current_user_id}
-                is_verified={this.state.isVerified}/>
+                <div className='left--panel'>
+                    <ProfileDetails 
+                    user_id={this.state.advertInfo.authorId} 
+                    show_adverts={false} 
+                    rating_enabled={rating_enabled}
+                    current_user_id={this.state.current_user_id}
+                    is_verified={this.state.isVerified}/>
+
+                    <AdditionalActions>
+                    { !this.state.loadingUser && this.state.user_adverts.includes(this.state.advertInfo.id) ? (
+                        <div className="edit-link">
+                            <StyledLink className="link-to-edit" to={{
+                                pathname: '/add',
+                                advert: this.state.advertInfo
+                            }}> Edytuj ogłoszenie </StyledLink>
+                        </div>
+                        ) : (null)
+                    }
+                    {
+                        this.state.current_user_id && !this.state.reported ? (
+                            <StyledButton onClick={this.showReportDialog.bind(this)}>Zgłoś</StyledButton>
+                        ) : (null)
+                    }
+                    </AdditionalActions>
+                </div>
 
                 <AdvertInfo>
                     <img className="crop-image" src={getAdvertImageURL(this.state.advertInfo.id)} alt="Ad"></img>
@@ -380,22 +398,6 @@ class AdvertDetails extends Component {
                         <p className="advert-description">{this.state.advertInfo.description}</p>
                     </div>
                 </AdvertInfo>
-                <AdditionalActions>
-                { !this.state.loadingUser && this.state.user_adverts.includes(this.state.advertInfo.id) ? (
-                    <div className="edit-link">
-                        <StyledLink className="link-to-edit" to={{
-                            pathname: '/add',
-                            advert: this.state.advertInfo
-                        }}> Edytuj ogłoszenie </StyledLink>
-                    </div>
-                    ) : (null)
-                }
-                {
-                    this.state.current_user_id && !this.state.reported ? (
-                        <StyledButton onClick={this.showReportDialog.bind(this)}>Zgłoś</StyledButton>
-                    ) : (null)
-                }
-                </AdditionalActions>
                 {
                     this.state.showReportDialog ? (
                         <ReportForm 
