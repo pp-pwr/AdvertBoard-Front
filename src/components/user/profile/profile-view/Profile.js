@@ -9,6 +9,7 @@ import styled from 'styled-components'
 
 const Adverts = styled.div`
     padding-left: 1em;
+    width: 100%;
 
     & > .title {
         font-size: 2em;
@@ -17,10 +18,15 @@ const Adverts = styled.div`
         margin-bottom: 1em;
     }
 
+    & > .advert-list {
+        display: grid;
+        grid-gap: 1em;
+        grid-template-columns: 30% 30% 30%;
+    }
+
     & > .advert-list > .advert-list-element {
         border-radius: 10px;
-        min-width: 28%;
-        max-width: 28%
+        width: 100%;
 
         & > img {
             height: 128px;
@@ -31,7 +37,8 @@ const Adverts = styled.div`
 `
 
 const ProfileContainer = styled.div`
-    display: flex;
+    display: grid;
+    grid-template-columns: 20% auto;
 `
 
 class Profile extends Component {
