@@ -89,6 +89,12 @@ class AdvertPanel extends Component {
             this.loadAdverts();
             this.loadRecommendedAdverts();
         })
+
+        // setInterval(() => {
+        //     if(this.state.advertGrid.currentPage === 0) {
+        //         this.loadAdverts();
+        //     }
+        // }, 5000)
     }
 
     componentWillUnmount() {

@@ -31,6 +31,7 @@ const Adverts = styled.div`
         & > img {
             height: 128px;
             width: 128px;
+            object-fit: cover;
             overflow: hidden;
         }
     }

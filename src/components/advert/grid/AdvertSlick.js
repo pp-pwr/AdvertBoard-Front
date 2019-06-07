@@ -22,7 +22,7 @@ const SliderAdvert = styled(AdvertTile)`
 
 class AdvertSlider extends Component {
     render() {
-        if(this.props.itemList.length < 3)
+        if(this.props.itemList.length < 4)
             return null;
 
         var settings = {
