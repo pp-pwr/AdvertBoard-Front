@@ -6,7 +6,13 @@ AdvertBoard uses artifical inteligence to follow users actions and suggest recom
 ## Additional Information
 This repository contains only front-end part of the application written with the user of React.js. Back-end written in Spring is located here:
 
-https://github.com/pp-pwr/AdvertBoard-Backend.
+#### https://github.com/pp-pwr/AdvertBoard-Backend.
+
+Both parts are hosted on heroku:
+#### Front-end: https://pwr-advert-board-frontend.herokuapp.com
+#### Back-end: https://pwr-advert-board-backend.herokuapp.com
+
+Tests are located in `src/tests` directory
 
 
 ## Usage
