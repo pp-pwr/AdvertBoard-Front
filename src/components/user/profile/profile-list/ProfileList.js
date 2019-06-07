@@ -10,34 +10,32 @@ import PageSelectionPanel from "../../../advert/filters/PageSelectionPanel"
 
 const ProfileContainer = styled.div`
     text-align: center;
-    width: 100%;
-    height: 100%;
-    display: flex-inline;
-    margin: auto;
+    display: block;
+    height: 100vh;
 
     & > .userlist-content {
         background: #fff;
         width: 100%;
         text-align: center;
-        display: flex;
-        flex: justify;
-        flex-wrap: wrap;
+        display: grid;
+        grid-template-columns: 30% 30% 30%;
+        justify-content: center;
+        grid-gap: 3rem 1rem;
         border-radius: 2px;
         vertical-align: center;
-        position: relative;    
-        padding: 35px;
+        position: relative;
+    }
+
+    & > .page-selection {
+        margin-top: 5em;
     }
 `
 
 const ProfileListEntry = styled.div`
     box-shadow: 0 1px 11px rgba(0, 0, 0, 0.05);
-    height: 120px;
-    width: 28%;
-    max-width: 28%;
-    margin-left: 2rem;
-    margin-right: 2rem;
+    height: 100px;
+    width: 100%;
     position: relative;
-    margin-top: 0.5rem;
     display: flex;
     flex: wrap;
     align-items: center;
@@ -46,15 +44,14 @@ const ProfileListEntry = styled.div`
 
     border-radius: 75px 25px 25px 75px;
 
-    margin-top: 3.5rem;
-
     &:hover {
         box-shadow: 0 1px 24px lightblue;
     }
 
     & > img {
         width: auto;
-        height: 150px;
+        height: 120px;
+        border-radius: 60px;
         position: absolute;
         left: 0px;
     }
@@ -63,7 +60,7 @@ const ProfileListEntry = styled.div`
         text-align: left;
         display: flex;
         flex: wrap;
-        margin-left: 180px;
+        margin-left: 160px;
         position: absolute;
         font-size: 1.2em;
         overflow: hidden;   
