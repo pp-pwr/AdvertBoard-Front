@@ -23,7 +23,7 @@ Building production build
 Server address is defined in 'src/contants/index.js' as 'API_BASE_URL' variable. Default is
 ### `https://pwr-advert-board-backend.herokuapp.com/api`
 
-## Custom advert, and report generator
+## Custom advert and report generator
 Code for generators is located in `/generator` directory. Both generators were written in Python.
 
 Advert generator code snippet:
