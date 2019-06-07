@@ -4,14 +4,20 @@ import Slider from "react-slick";
 import styled from 'styled-components'
 
 const StyledSlider = styled(Slider)`
+    text-align: center;
     width: 100%;
-    height: auto;
-    display: flex;
+
+    & > .item-container {
+        border: 1px solid;
+        background-color: red;
+
+        & > p {
+            color: red;
+        }
+    }
 `
 
 const SliderAdvert = styled(AdvertTile)`
-    width: 100%;
-    height: 100%;
 `
 
 class AdvertSlider extends Component {
@@ -24,7 +30,7 @@ class AdvertSlider extends Component {
             infinite: true,
             arrows: true,
             speed: 500,
-            slidesToShow: 3,
+            slidesToShow: 4,
             slidesToScroll: 1,
             initialSlide: 0,
             responsive: [{breakpoint: 500, settings: {autoplay: true, slidesToShow: 1}}],
@@ -34,12 +40,10 @@ class AdvertSlider extends Component {
         };
 
         return (
-            <StyledSlider className="recommended-slider" {...settings}>
+            <StyledSlider {...settings}>
                 {
                     this.props.itemList.map((item) => (
-                        <div key={item.id}>
-                            <SliderAdvert advert={item} />
-                        </div>
+                        <SliderAdvert gap='0.2em' advert={item} />
                     ))
                 }
             </StyledSlider>

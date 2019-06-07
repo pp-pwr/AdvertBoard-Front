@@ -6,10 +6,14 @@ import styled from 'styled-components'
 
 const Grid = styled.div`
     text-align: center;
-    position: relative;
-    &:footer {
-        position:absolute;
-        width:100%;
+    width: 100%;
+
+    & > .advert-container {
+        width: calc(100%);
+        justify-content: center;
+        display: grid;
+        grid-template-columns: 20% 20% 20% 20%;
+        grid-gap: 1em;
     }
 `;
 
@@ -40,7 +44,7 @@ class AdvertGrid extends Component {
     render() {
         return (
             <Grid>
-                <div className="advert-flexbox">
+                <div className="advert-container">
                     {this.state.advertList.map(item =>
                         <AdvertTile key={ "tile_ " + item.id } className="advert-flexbox-item" advert={ item } />)}
                 </div>

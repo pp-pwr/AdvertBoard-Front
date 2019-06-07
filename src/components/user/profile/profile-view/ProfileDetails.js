@@ -374,7 +374,7 @@ class ProfileDetails extends Component {
                         name='rating'
                         />
                         <TotalRatings>
-                            (na podstawie {this.state.user.totalRatings} {this.state.user.totalRatings === 1 ? 'ogłoszenia' : 'ogłoszeń'})
+                            (na podstawie {this.state.user.totalRatings} {this.state.user.totalRatings === 1 ? 'oceny' : 'ocen'})
                         </TotalRatings>
                     </div>
                 ) : (null)}

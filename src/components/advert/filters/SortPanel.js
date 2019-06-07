@@ -7,19 +7,9 @@ const SortBox = styled.div`
     padding-bottom: 1rem;
 
     & > div {
-        display: flex;
-        flex: justify;
-        align-items: center;
-        text-align: center;
-        margin: auto;
-
-        & > button {
-            display: flex;
-            height: 100%;
-            align-items: center;
-            text-align: center;
-            margin: auto;
-        }
+        display: grid;
+        grid-template-columns: 15% 15% 15% 15% 15%;
+        justify-content: center;
     }
 `;
 
@@ -72,7 +62,7 @@ class SortPanel extends Component {
             <SortBox>
 
                 <div>
-                <button className="btn btn-block" name="title_desc" onClick={this.sortData}>Nazwa malejąco</button>
+                    <button className="btn btn-block" name="title_desc" onClick={this.sortData}>Nazwa malejąco</button>
                     <button className="btn btn-block" name="title_asc" onClick={this.sortData}>Nazwa rosnąco</button>
                     <button className="btn btn-block" name="date_desc" onClick={this.sortData}>Data malejąco</button>
                     <button className="btn btn-block" name="date_asc" onClick={this.sortData}>Data rosnąco</button>

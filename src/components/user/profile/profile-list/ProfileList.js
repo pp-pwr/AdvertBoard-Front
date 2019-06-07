@@ -23,7 +23,6 @@ const ProfileContainer = styled.div`
         flex: justify;
         flex-wrap: wrap;
         border-radius: 2px;
-        margin-top: 30px;
         vertical-align: center;
         position: relative;    
         padding: 35px;
@@ -38,7 +37,7 @@ const ProfileListEntry = styled.div`
     margin-left: 2rem;
     margin-right: 2rem;
     position: relative;
-    margin-top: 2rem;
+    margin-top: 0.5rem;
     display: flex;
     flex: wrap;
     align-items: center;

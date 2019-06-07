@@ -17,9 +17,16 @@ const Adverts = styled.div`
         margin-bottom: 1em;
     }
 
-    & * .advert-list-element {
-        border-radius: 3px;
-        min-width: 35vw;
+    & > .advert-list > .advert-list-element {
+        border-radius: 10px;
+        min-width: 28%;
+        max-width: 28%
+
+        & > img {
+            height: 128px;
+            width: 128px;
+            overflow: hidden;
+        }
     }
 `
 

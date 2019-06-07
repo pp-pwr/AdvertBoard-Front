@@ -14,10 +14,8 @@ import {SortPanel, SearchBoxPanel, PageSelectionPanel} from './filters'
 import './Advert.css'
 
 const Panel = styled.div`
-    display: flex;
-    align-items: flex-start;
-    flex-grow: 1;
-    justify-content: space-around;
+    display: grid;
+    grid-template-columns: 12% auto;
 `;
 
 const Details = styled.div`

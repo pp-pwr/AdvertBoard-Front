@@ -13,10 +13,14 @@ const Tile = styled.div`
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     padding: 0vw 0vh 0.2vw 0vh;
     border-radius: 10px;
-    margin: 1vw 2vh 1vw 2vh;
     text-align:center;
     position: relative;
-    min-height: 15vh;
+    width: 100%;
+    height: 100%;
+
+    transform: scale(${props => props.gap ? '0.9': '1.0'}, ${props => props.gap ? '0.9': '1.0'});
+
+    margin: ${props => props.gap ? '' + props.gap : '0'};
 
     --webkit-transition: 
         transform 250ms,
@@ -28,7 +32,7 @@ const Tile = styled.div`
 
     &:hover {
         z-index: 9999;
-        transform: scale(1.05, 1.05);
+        transform: scale(${props => props.gap ? '0.95': '1.05'}, ${props => props.gap ? '0.95': '1.05'});
         filter: drop-shadow(16px 16px 20px rgba(0, 0, 0, 0.19));
     }
 
@@ -41,6 +45,8 @@ const TileTitle = styled.div`
     font-weight: bold;
     font-size: 1.2em;
     text-align: left;
+
+    height: calc(1.5vh + 3.2em)
 `
 
 const TileDetails = styled.div`
@@ -65,9 +71,9 @@ const TileImage = styled.div`
 
     & > img {
         width: 15vw;
-        height: 20vh;
+        height: 15vw;
         display: block;
-        overflow: hidden;
+        object-fit: cover;
         margin: auto;
     }
 `
@@ -118,7 +124,7 @@ class AdvertTile extends Component {
         }
         
         return (
-            <Tile style={this.advert.recommended ? recommended : normal} onClick={this.handleTileClick.bind(this)}>
+            <Tile gap={this.props.gap} style={this.advert.recommended ? recommended : normal} onClick={this.handleTileClick.bind(this)}>
                 <TileImage>
                     <img src={getAdvertImageURL(this.advert.id)} alt="Ad" className="advert-photo" id={'advert_' + this.advert.id}></img>
                 </TileImage>
