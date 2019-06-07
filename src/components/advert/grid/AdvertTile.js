@@ -63,14 +63,12 @@ const TileDetails = styled.div`
 `
 
 const TileImage = styled.div`
-    max-width: 15vw;
-    max-height: 10vw;
     text-align: center;
     position: relative;
     overflow: hidden;
 
     & > img {
-        width: 15vw;
+        width: 100%;
         height: 15vw;
         display: block;
         object-fit: cover;

@@ -98,7 +98,7 @@ def add_advert(advert, auth_token):
 def create_advert(main_category, random_category, random_model, year, infoList, keywords, all_categories):
     def _get_search_params(queryBody):
         _search_params = {'q': queryBody, 'num': 1, 'safe': 'medium',
-        'fileType': 'png', 'imgType': 'photo', 'imgSize': 'medium',
+        'fileType': 'png', 'imgType': 'photo', 'imgSize': 'large',
         'searchType': 'image'
         }
         return _search_params
@@ -335,11 +335,11 @@ def generate_buildings(n):
         print(f'Building nr {i + 1} finished!')
 
 
-# generate_cars(40)
-# generate_bikes(40)
-# generate_animals(20)
-# generate_buildings(20)
-# generate_utility_cars(40)
-# generate_phones(40)
-# generate_utility_cars(40)
-generate_clothes(40)
+for i in range(10):
+    generate_cars(4)
+    generate_bikes(4)
+    generate_animals(1)
+    generate_buildings(2)
+    generate_phones(4)
+    generate_utility_cars(4)
+    generate_clothes(2)
