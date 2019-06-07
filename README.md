@@ -174,7 +174,7 @@ def send_user_raport(i):
 ![alt Formularz rejestracji](https://imgur.com/QxRsPu8.png)
 
 ### Verification by email
-![alt Weryfikacja mailem]()
+![alt Weryfikacja mailem](https://imgur.com/YkKfixh.png)
 
 ### User list
 ![alt Lista użytkowników](https://imgur.com/WwwR5cU.png)
