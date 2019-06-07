@@ -14,6 +14,10 @@ Both parts are hosted on heroku:
 
 Tests are located in `src/tests` directory
 
+<p align='center'>
+    <img src='https://imgur.com/WfpRdon.png' alt='test />
+</p>
+
 
 ## Usage
 
@@ -147,7 +151,8 @@ def send_user_raport(i):
 ![alt Ogloszenia Promowane](https://imgur.com/JqesClJ.png)
 
 ### Nested categories
-<div style='display: grid;grid-template-columns: 30% 30% 30%; justify-content: space-between;'>
+<
+style='display: grid;grid-template-columns: 30% 30% 30%; justify-content: space-between;'>
     <img src='https://imgur.com/fIIJ2Eb.png' alt='cat' />
     <img src='https://imgur.com/ANP3wTN.png' alt='cat' />
     <img src='https://imgur.com/VdMIRdm.png' alt='cat' />
@@ -163,9 +168,9 @@ def send_user_raport(i):
 ![alt Strona użytkownika](https://imgur.com/OZnTUgk.png)
 
 ### Profile info with star ratings, reporting
-<div style='text-align: center'>
+<p align='center'>
     <img src='https://imgur.com/bUT8fl8.png' alt='prof' />
-</div>
+</p>
 
 ### Reporting advert
 ![alt Formularz zglaszania ogloszen](https://imgur.com/giXFLI1.png)
